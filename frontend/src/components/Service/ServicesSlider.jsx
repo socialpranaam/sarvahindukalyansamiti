@@ -1,0 +1,149 @@
+import React, { useState } from "react";
+import { FaArrowDown, FaArrowUp, FaArrowRight } from "react-icons/fa";
+import { motion } from "framer-motion";
+
+const services = [
+  {
+    title: "मंदिर निर्माण और सनातन धर्म का प्रचार",
+    desc: "पारंपरिक वास्तुकला के साथ भव्य मंदिरों का निर्माण और धार्मिक शिक्षा का प्रचार। मंदिर निर्माण, गौशाला, शिक्षा और समाज सेवा के लिए दान दें।",
+    img: "/images/deep.jpg",
+  },
+  {
+    title: "गौशाला और सेवा",
+    desc: "गौशाला का निर्माण और गौ सेवा। धर्म और समाज कल्याण में योगदान।",
+    img: "/images/aarti.jpg",
+  },
+  {
+    title: "शिक्षा और समाज कल्याण",
+    desc: "धर्म और समाज के लिए शिक्षा का प्रसार। बच्चों और युवाओं को संस्कार देना।",
+    img: "/images/hero.jpg",
+  },
+  {
+    title: "समाज सेवा और स्वास्थ्य",
+    desc: "स्वास्थ्य शिविर और सामाजिक कल्याण में योगदान। समाज के लिए जागरूकता अभियान।",
+    img: "/images/aarti.jpg",
+  },
+  {
+    title: "धार्मिक कार्यक्रम और आयोजन",
+    desc: "भजन, कीर्तन और धार्मिक आयोजन। समाज में सांस्कृतिक और धार्मिक चेतना बढ़ाना।",
+    img: "/images/deep.jpg",
+  },
+  {
+    title: "नया कार्ड 6",
+    desc: "यह एक नया कार्ड है यह देखने के लिए कि कोड डायनामिक हुआ है या नहीं।",
+    img: "/images/hero.jpg",
+  },
+  {
+    title: "नया कार्ड 7",
+    desc: "यह एक और नया कार्ड है। अब आप जितने चाहें उतने कार्ड्स जोड़ सकते हैं।",
+    img: "/images/aarti.jpg",
+  },
+  {
+    title: "नया कार्ड 8",
+    desc: "धर्म और समाज के लिए शिक्षा का प्रसार। बच्चों और युवाओं को संस्कार देना।",
+    img: "/images/hero.jpg",
+  },
+  {
+    title: "नया कार्ड 9",
+    desc: "स्वास्थ्य शिविर और सामाजिक कल्याण में योगदान। समाज के लिए जागरूकता अभियान।",
+    img: "/images/aarti.jpg",
+  },
+  {
+    title: "नया कार्ड 10",
+    desc: "भजन, कीर्तन और धार्मिक आयोजन। समाज में सांस्कृतिक और धार्मिक चेतना बढ़ाना।",
+    img: "/images/deep.jpg",
+  },
+];
+
+const ServicesSlider = () => {
+  const [current, setCurrent] = useState(0);
+  const servicesLength = services.length;
+
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % servicesLength);
+  const prevSlide = () =>
+    setCurrent((prev) => (prev - 1 + servicesLength) % servicesLength);
+
+  // Optional: आप यह तय कर सकते हैं कि एक बार में कितने कार्ड्स दिखने चाहिए
+  // इससे UI साफ-सुथरा रहता है, भले ही लिस्ट में 50 आइटम क्यों न हों।
+  const VISIBLE_CARDS = 5;
+
+  return (
+    <section className="bg-[#ffeed8] py-16">
+      <h2 className="text-center text-3xl md:text-4xl font-bold mb-12">
+        हमारी <span className="text-orange-500">मुख्य सेवाएँ</span>
+      </h2>
+
+      <div className="relative max-w-6xl mx-auto h-[450px] flex justify-center items-center">
+        {services.map((item, i) => {
+          const position = (i - current + servicesLength) % servicesLength;
+
+          // [बदलाव 1] हार्डकोडेड लिमिट को हटा दिया गया है।
+          // अब यह सिर्फ उन कार्ड्स को छिपाएगा जो VISIBLE_CARDS की गिनती से बाहर हैं।
+          // अगर आप सभी कार्ड्स को हमेशा स्टैक में दिखाना चाहते हैं, तो इस if कंडीशन को पूरी तरह हटा दें।
+          if (position >= VISIBLE_CARDS) {
+             // हम यहां पर एक खाली div return कर रहे हैं ताकि एनीमेशन स्मूथ रहे
+             // और जब कार्ड्स साइकिल हों तो कोई झटका महसूस न हो।
+             return <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 0 }} />;
+          }
+
+          return (
+            <motion.div
+              key={i}
+              initial={{ y: -400, opacity: 0 }}
+              animate={{
+                y: -position * 20,
+                scale: 1 - position * 0.05,
+                opacity: 1 - position * 0.15,
+                // [बदलाव 2] zIndex को डायनामिक बनाया गया है।
+                // यह कुल कार्ड्स की संख्या पर निर्भर करता है, न कि 5 पर।
+                zIndex: servicesLength - position,
+              }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="absolute w-full max-w-6xl"
+            >
+              <div className="bg-white rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden h-[380px]">
+                {/* Left */}
+                <div className="p-8 md:w-1/2 flex flex-col justify-center">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">{item.desc}</p>
+                  <button className="px-3 py-1 w-auto rounded-lg bg-orange-400 text-white font-semibold flex items-center gap-2">
+                    दान करें अभी <FaArrowRight />
+                  </button>
+                </div>
+
+                {/* Right Image */}
+                <div className="md:w-1/2">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Arrows */}
+      <div className="flex justify-center gap-6 mt-10">
+        <button
+          onClick={prevSlide}
+          className="bg-white border border-orange-500 text-orange-500 p-4 rounded-full hover:bg-orange-500 hover:text-white transition cursor-pointer"
+        >
+          <FaArrowUp size={15} />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="bg-white border border-orange-500 text-orange-500 p-4 rounded-full hover:bg-orange-500 hover:text-white transition cursor-pointer"
+        >
+          <FaArrowDown size={15} />
+        </button>
+      </div>
+    </section>
+  );
+};
+
+export default ServicesSlider;
