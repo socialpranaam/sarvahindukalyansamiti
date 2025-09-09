@@ -5,53 +5,53 @@ const testimonials = [
         id: 1,
         name: "राजेश शर्मा",
         text: "सर्व हिन्दू कल्याण समिति का कार्य अत्यंत सराहनीय है। मंदिर निर्माण से लेकर गरीबों की सेवा तक, हर क्षेत्र में उनका योगदान अमूल्य है!",
-        avatar: "https://via.placeholder.com/150/FF8C00/FFFFFF?text=RS",
+        avatar: "/images/deep.jpg",
     },
     {
         id: 2,
         name: "अंजलि गुप्ता",
         text: "इस समिति से जुड़कर मुझे समाज सेवा का सही अर्थ समझने का अवसर मिला। शिक्षा के क्षेत्र में इनका प्रयास काबिले तारीफ है।",
-        avatar: "https://via.placeholder.com/150/FF6347/FFFFFF?text=AG",
+        avatar: "/images/aarti.jpg",
     },
     {
         id: 3,
         name: "रवि कुमार",
         text: "गौशाला की सेवा और गौ माता के प्रति इनका समर्पण देखकर मन प्रसन्न हो जाता है। मैं सभी से इस पुण्य कार्य में सहयोग करने का आग्रह करता हूँ।",
-        avatar: "https://via.placeholder.com/150/4682B4/FFFFFF?text=RK",
+        avatar: "/images/boy3.jpg",
     },
     {
         id: 4,
         name: "प्रिया सिंह",
         text: "स्वास्थ्य शिविरों के माध्यम से जरूरतमंदों तक चिकित्सा पहुंचाना एक महान कार्य है। समिति का यह कदम बहुतों के लिए जीवनदान है।",
-        avatar: "https://via.placeholder.com/150/32CD32/FFFFFF?text=PS",
+        avatar: "/images/girl3.jpeg",
     },
     {
         id: 5,
         name: "सुरेश वर्मा",
         text: "धार्मिक कार्यक्रमों के आयोजन से हमारी संस्कृति और संस्कार जीवित रहते हैं। यह समिति हमारी जड़ों को मजबूत कर रही है।",
-        avatar: "https://via.placeholder.com/150/6A5ACD/FFFFFF?text=SV",
+        avatar: "/images/boy1.jpg",
     },
     {
         id: 6,
         name: "कविता मिश्रा",
         text: "समाज के कमजोर वर्ग के लिए इस समिति का काम प्रेरणादायक है। मैं इनके प्रयासों की सराहना करती हूँ।",
-        avatar: "https://via.placeholder.com/150/DEB887/FFFFFF?text=KM",
+        avatar: "/images/girl2.jpg",
     },
     {
         id: 7,
         name: "मोहन अग्रवाल",
         text: "पारदर्शिता और समर्पण इस संगठन की पहचान है। दिया गया हर दान सही हाथों में और सही काम में लगता है।",
-        avatar: "https://via.placeholder.com/150/7FFF00/FFFFFF?text=MA",
+        avatar: "/images/boy2.jpg",
     },
     {
         id: 8,
         name: "साक्षी चौहान",
         text: "युवाओं को सनातन धर्म और संस्कृति से जोड़ने का जो प्रयास यह समिति कर रही है, वह अद्भुत है।",
-        avatar: "https://via.placeholder.com/150/DC143C/FFFFFF?text=SC",
+        avatar: "/images/girl1.jpeg",
     },
 ];
 
-const TestimonialSection = () => {
+const Testimonial = () => {
     const [currentMainTestimonial, setCurrentMainTestimonial] = useState(testimonials[0]);
 
     return (
@@ -67,7 +67,7 @@ const TestimonialSection = () => {
                     {/* Left Side Main Display */}
                     <div className="relative flex flex-col md:flex-row items-center lg:items-start text-center lg:text-left p-6 lg:p-0 w-full lg:w-2/3 xl:w-3/4">
                         <div className="relative -mt-24 md:-mt-12 lg:mt-0 flex-shrink-0">
-                            <div className="w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl border-4 border-white z-10">
+                            <div className="w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl border-6 border-white z-10">
                                 <img
                                     src={currentMainTestimonial.avatar}
                                     alt={currentMainTestimonial.name}
@@ -130,4 +130,4 @@ const TestimonialSection = () => {
     );
 };
 
-export default TestimonialSection;
+export default Testimonial;

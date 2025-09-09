@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Header from './components/Navbar/Header'
-import { BrowserRouter } from "react-router-dom";
-import Hero from './components/Hero/Hero';
-import Bhakti from './components/Bhakti/Bhakti';
-import ServicesSlider from './components/Service/ServicesSlider';
-import Testimonials from './components/Testimonial/Testimonials';
+import Header from './components/Header/Header'
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import Home from './pages/Home';
+import AboutUs from './pages/AboutUs';
+import OurWorks from './pages/OurWorks';
+import Donation from './pages/Donation';
 
 function App() {
   
@@ -13,10 +13,13 @@ function App() {
     <>
     <BrowserRouter>
       <Header/>
-      <Hero/>
-      <Bhakti/>
-      <ServicesSlider/>
-      <Testimonials/>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/about' element={<AboutUs/>}/>
+          <Route path='/ourworks' element={<OurWorks/>}/>
+          <Route path='/donation' element={<Donation/>}/>
+        </Routes>
+     
       </BrowserRouter>
      
     </>

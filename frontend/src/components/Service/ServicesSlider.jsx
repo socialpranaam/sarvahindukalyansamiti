@@ -63,8 +63,7 @@ const ServicesSlider = () => {
   const prevSlide = () =>
     setCurrent((prev) => (prev - 1 + servicesLength) % servicesLength);
 
-  // Optional: आप यह तय कर सकते हैं कि एक बार में कितने कार्ड्स दिखने चाहिए
-  // इससे UI साफ-सुथरा रहता है, भले ही लिस्ट में 50 आइटम क्यों न हों।
+
   const VISIBLE_CARDS = 5;
 
   return (
@@ -77,12 +76,8 @@ const ServicesSlider = () => {
         {services.map((item, i) => {
           const position = (i - current + servicesLength) % servicesLength;
 
-          // [बदलाव 1] हार्डकोडेड लिमिट को हटा दिया गया है।
-          // अब यह सिर्फ उन कार्ड्स को छिपाएगा जो VISIBLE_CARDS की गिनती से बाहर हैं।
-          // अगर आप सभी कार्ड्स को हमेशा स्टैक में दिखाना चाहते हैं, तो इस if कंडीशन को पूरी तरह हटा दें।
+          
           if (position >= VISIBLE_CARDS) {
-             // हम यहां पर एक खाली div return कर रहे हैं ताकि एनीमेशन स्मूथ रहे
-             // और जब कार्ड्स साइकिल हों तो कोई झटका महसूस न हो।
              return <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 0 }} />;
           }
 
@@ -94,8 +89,6 @@ const ServicesSlider = () => {
                 y: -position * 20,
                 scale: 1 - position * 0.05,
                 opacity: 1 - position * 0.15,
-                // [बदलाव 2] zIndex को डायनामिक बनाया गया है।
-                // यह कुल कार्ड्स की संख्या पर निर्भर करता है, न कि 5 पर।
                 zIndex: servicesLength - position,
               }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -104,11 +97,11 @@ const ServicesSlider = () => {
               <div className="bg-white rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden h-[380px]">
                 {/* Left */}
                 <div className="p-8 md:w-1/2 flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                  <h3 className="text-2xl font-bold mb-4 text-black">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">{item.desc}</p>
-                  <button className="px-3 py-1 w-auto rounded-lg bg-orange-400 text-white font-semibold flex items-center gap-2">
+                  <button className="px-3 py-1 w-fit cursor-pointer rounded-lg bg-orange-400 text-white font-semibold flex items-center gap-2">
                     दान करें अभी <FaArrowRight />
                   </button>
                 </div>
