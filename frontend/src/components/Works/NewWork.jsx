@@ -44,7 +44,7 @@ const NewServices = () => {
             className="bg-white shadow-md rounded-xl p-6 flex flex-col space-y-4 h-[320px] w-full max-w-sm"
           >
             {/* Icon */}
-            <div className="w-12 h-12 bg-orange-100 text-orange-600 flex items-center justify-center rounded-lg">
+            <div className="w-12 h-12 bg-orange-400 text-white flex items-center justify-center rounded-lg">
               <Landmark size={28} />
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdCall } from "react-icons/io";
@@ -6,9 +6,28 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="bg-transparent fixed top-0 left-0 w-full z-50">
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
+        isScrolled ? "bg-orange-300" : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="text-2xl font-bold text-white cursor-pointer">
@@ -35,8 +54,8 @@ const Header = () => {
         {/* Login Button (Desktop only) */}
         <div className="hidden md:block">
           <Link
-            to="/login"
-            className="px-5 py-2 rounded-lg bg-orange-400 text-white font-semibold transition"
+            to="/donation"
+            className="px-5 py-2 rounded-lg bg-orange-400 text-white font-semibold hover:bg-orange-500 transition"
           >
             दान करें
           </Link>
@@ -69,7 +88,7 @@ const Header = () => {
             संपर्क करें
           </Link>
           <Link
-            to="/login"
+            to="/donation"
             className="px-5 py-2 rounded-lg bg-orange-400 text-white font-semibold text-center transition"
             onClick={() => setIsOpen(false)}
           >

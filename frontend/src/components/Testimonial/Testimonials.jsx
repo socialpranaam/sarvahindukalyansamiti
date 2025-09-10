@@ -67,7 +67,7 @@ const Testimonial = () => {
                     {/* Left Side Main Display */}
                     <div className="relative flex flex-col md:flex-row items-center lg:items-start text-center lg:text-left p-6 lg:p-0 w-full lg:w-2/3 xl:w-3/4">
                         <div className="relative -mt-24 md:-mt-12 lg:mt-0 flex-shrink-0">
-                            <div className="w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl border-6 border-white z-10">
+                            <div className="w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl border-6 border-orange-400 z-10">
                                 <img
                                     src={currentMainTestimonial.avatar}
                                     alt={currentMainTestimonial.name}

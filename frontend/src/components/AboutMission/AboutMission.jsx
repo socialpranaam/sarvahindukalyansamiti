@@ -1,25 +1,48 @@
 import React from "react";
 
-const AboutMission = () => {
+const AboutPage = () => {
   return (
-    <div className="relative w-full bg-[#fff7f0]">
-      {/* Heading */}
-      <div className="text-center py-10">
-        <h2 className="text-3xl font-bold">
-          हमारे <span className="text-orange-500">बारे</span> में
-        </h2>
-        <div className="w-16 h-[2px] bg-black mx-auto mt-2"></div>
+    <div className="relative bg-[#fdf3e7]">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute top-0 left-0 w-full h-72 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/hero.jpg')", // apna image path lagaye
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
-      {/* Content */}
-      <div className="pb-16 max-w-4xl mx-auto text-center px-6">
-        <p className="text-lg text-gray-800 mb-10">
-          सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
-          जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
-          सशक्त बनाने के लिए कार्यरत है।
-        </p>
+      {/* White Triangle Box Full Width */}
+      <div className="relative z-10 text-center pt-80 pb-12">
+        <div className="bg-[#fdf3e7] relative inline-block w-full">
+          {/* Triangle Shape Full Width */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
+          w-0 h-0 border-l-[180px] border-r-[180px] border-b-[180px] 
+        border-l-transparent border-r-transparent border-b-[#fdf3e7] "></div>
 
-        {/* Mission & Vision Cards */}
+        <div className="relative mt-[-60px] flex flex-col items-center">
+        <h2 className="text-3xl font-bold text-gray-900 whitespace-nowrap">
+          हमारे <span className="text-orange-500">बारे</span> में
+          </h2>
+          <div className="w-20 h-[2px] bg-gray-400 mt-2"></div>
+      </div>
+
+          {/* Text Content */}
+          <div className=" max-w-4xl mx-auto text-center mt-6 px-6">
+            
+            
+            <p className="ttext-lg text-gray-800 leading-relaxed">
+              सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
+              जो भारत की सनातन संस्कृति, परंपराओं और आध्यात्मिकता को 
+              सशक्त बनाने के लिए कार्यरत है।
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Mission & Vision Section */}
+      <div className="pb-16 max-w-5xl mx-auto text-center px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Mission Card */}
           <div
@@ -31,9 +54,9 @@ const AboutMission = () => {
             }}
           >
             <div className="absolute inset-0 bg-black/50"></div>
-            <div className="relative  top-0 left-0 right-0 z-10">
-              <div className="bg-orange-500/40 p-4 rounded-md mx-8 inline-block">
-                <h3 className="text-2xl font-bold text-white text-center mb-3 pt-6">
+            <div className="relative z-10 w-full">
+              <div className="bg-orange-500/40 p-6 rounded-md mx-9  inline-block">
+                <h3 className="text-2xl font-bold text-white text-center mb-8">
                   हमारा मिशन
                 </h3>
                 <p className="text-base leading-relaxed text-white">
@@ -57,9 +80,9 @@ const AboutMission = () => {
             }}
           >
             <div className="absolute inset-0 bg-black/50"></div>
-            <div className="relative  top-0 left-0 right-0 z-10">
-              <div className="bg-orange-500/40 p-4 rounded-md mx-8 inline-block">
-                <h3 className="text-2xl font-bold text-white text-center mb-3 pt-6">
+            <div className="relative z-10 w-full">
+              <div className="bg-orange-500/40 p-6 rounded-md mx-9  inline-block">
+                <h3 className="text-2xl font-bold text-white text-center mb-8">
                   हमारा विज़न
                 </h3>
                 <p className="text-base leading-relaxed text-white">
@@ -78,4 +101,4 @@ const AboutMission = () => {
   );
 };
 
-export default AboutMission;
+export default AboutPage;

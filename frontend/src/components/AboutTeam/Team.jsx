@@ -8,22 +8,22 @@ const Team = () => {
       img: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
-      name: "आदित्य शर्मा",
+      name: "मनोज सिंह",
       role: "महासचिव",
       img: "https://randomuser.me/api/portraits/men/45.jpg",
     },
     {
-      name: "आदित्य शर्मा",
+      name: "प्रिया जायसवाल",
       role: "धार्मिक कार्य प्रमुख",
       img: "https://randomuser.me/api/portraits/women/46.jpg",
     },
     {
-      name: "आदित्य शर्मा",
+      name: "सोनी वर्मा",
       role: "धार्मिक कार्य प्रमुख",
       img: "https://randomuser.me/api/portraits/women/65.jpg",
     },
     {
-      name: "आदित्य शर्मा",
+      name: "शाक्षी सिंह",
       role: "महासचिव",
       img: "https://randomuser.me/api/portraits/women/52.jpg",
     },
@@ -46,11 +46,11 @@ const Team = () => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 px-4">
         {team.map((member, index) => (
           <div key={index} className="text-center">
-            <div className="bg-orange-200 relative w-full rounded-t-[50%] rounded-b-[50%] overflow-hidden">
+            <div className="relative w-full overflow-hidden">
               <img
                 src={member.img}
                 alt={member.name}
-                className="w-full h-64 object-cover"
+                className="w-full h-64 object-cover custom-shape"
               />
             </div>
             <h3 className="mt-4 text-lg font-semibold">{member.name}</h3>

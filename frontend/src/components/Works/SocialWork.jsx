@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
 const slides = [
   {
@@ -81,8 +81,9 @@ const SocialWork = () => {
               {slides[current].title}
             </h3>
             <p className="text-sm md:text-base mb-6">{slides[current].text}</p>
-            <button className="bg-white text-orange-600 px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-100">
+            <button className="bg-white text-orange-600 px-5 py-2 rounded-lg font-semibold cursor-pointer shadow-md hover:bg-gray-100 flex items-center gap-2">
               {slides[current].button}
+              <ArrowRight size={24} className="transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

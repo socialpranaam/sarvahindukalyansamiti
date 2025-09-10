@@ -5,3 +5,7 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+.custom-shape {
+  clip-path: ellipse(100% 80% at 50% 20%);
+}

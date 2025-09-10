@@ -1,5 +1,5 @@
 import React from "react";
-// import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const Bhakti = () => {
   return (
@@ -18,9 +18,9 @@ const Bhakti = () => {
             का प्रसार मंदिर निर्माण, गौशाला, शिक्षा और समाज सेवा के लिए दान दें।
           </p>
 
-          <button className="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md flex items-center gap-2 shadow-md">
+          <button className="mt-8 bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 cursor-pointer rounded-md flex items-center gap-2 shadow-md">
             स्वयंसेवक बनें 
-            {/* <ArrowRight size={18} /> */}
+            <ArrowRight size={18} />
           </button>
         </div>
 

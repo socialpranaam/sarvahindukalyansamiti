@@ -7,7 +7,7 @@ import NewWork from '../components/Works/NewWork'
 const OurWorks = () => {
   return (
     <div>
-      <AboutHero/>
+      {/* <AboutHero/> */}
       <ReligiousWork/>
       <SocialWork/>
       <NewWork/>

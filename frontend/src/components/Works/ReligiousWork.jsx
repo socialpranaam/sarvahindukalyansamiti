@@ -20,27 +20,47 @@ const ReligiousWork = () => {
   ];
 
   return (
-    <section className="bg-orange-50 py-12">
-<div className="relative w-full">
-      {/* Heading */}
-      <div className="text-center py-10">
-        <h2 className="text-3xl font-bold ">
-           <span className="text-orange-500">धार्मिक</span> कार्य
-        </h2>
-        <div className="w-16 h-[2px] bg-black mx-auto "></div>
+    <section className="relative bg-orange-50">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute top-0 left-0 w-full h-72 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/deep.jpg')", // apni image ka path
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
-      {/* Content */}
-      <div className="pb-16 max-w-4xl mx-auto text-center px-6">
-        <p className="text-lg text-gray-800 mb-10">
-          सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
-          जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
-          सशक्त बनाने के लिए कार्यरत है।
-        </p>
-        </div>
-        </div>
+      {/* Triangle Heading */}
+      <div className="relative z-10 text-center pt-80 pb-12">
+        <div className="bg-orange-50 relative inline-block w-full">
+          {/* Triangle */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
+            w-0 h-0 border-l-[180px] border-r-[180px] border-b-[180px] 
+            border-l-transparent border-r-transparent border-b-orange-50 ">
+          </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4">
+          {/* Heading + Line */}
+          <div className="relative mt-[-60px] flex flex-col items-center">
+            <h2 className="text-3xl font-bold text-gray-900 whitespace-nowrap">
+              <span className="text-orange-500">धार्मिक</span> कार्य
+            </h2>
+            <div className="w-20 h-[2px] bg-gray-400 mt-2"></div>
+          </div>
+
+          {/* Short Intro */}
+          <div className="max-w-4xl mx-auto text-center mt-6 px-6">
+            <p className="text-lg text-gray-800 leading-relaxed">
+              सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
+              जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
+              सशक्त बनाने के लिए कार्यरत है।
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Project Cards */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 pb-16">
         {projects.map((item, index) => (
           <div
             key={index}

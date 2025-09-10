@@ -7,7 +7,7 @@ import AboutCrad from '../components/AboutCard/AboutCard'
 const AboutUs = () => {
   return (
     <div>
-      <AboutHero/>
+      {/* <AboutHero/> */}
       <AboutMission/>
       <Team/>
       <AboutCrad/>

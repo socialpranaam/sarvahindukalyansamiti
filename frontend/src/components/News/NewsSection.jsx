@@ -46,7 +46,7 @@ const NewsSection = () => {
               <p className="text-gray-600 mt-2">{item.desc}</p>
               <div className="mt-4 flex justify-between items-center">
                 <span className="text-orange-500 font-semibold">{item.date}</span>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 cursor-pointer rounded-md text-sm font-medium">
                   अधिक जानें
                 </button>
               </div>

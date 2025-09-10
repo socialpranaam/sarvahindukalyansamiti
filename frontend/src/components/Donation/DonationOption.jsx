@@ -33,8 +33,7 @@ const DonationOption = () => {
         {options.map((item, index) => (
           <div
             key={index}
-            className="bg-white rounded-2xl shadow-md p-8 text-center min-h-[300px] cursor-pointer hover:shadow-lg transition"
-          >
+            className="bg-white rounded-2xl shadow-md p-8 text-center min-h-[300px] cursor-pointer hover:shadow-lg hover:bg-orange-100 hover:border-3 hover:border-orange-500 transition">
             {/* Icon Center */}
             <div className="flex justify-center">{item.icon}</div>
 

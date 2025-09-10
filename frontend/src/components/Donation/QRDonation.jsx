@@ -13,7 +13,7 @@ const QRDonation = () => {
       </div>
 
       <div className="flex justify-center">
-        <div className="bg-white p-4 rounded-lg shadow-md">
+        <div className="bg-white p-4 rounded-sm shadow-md">
           <img
             src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=dummy@upi"
             alt="Donate via QR"
