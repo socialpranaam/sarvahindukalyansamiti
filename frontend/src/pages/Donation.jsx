@@ -6,7 +6,7 @@ import QRDonation from '../components/Donation/QRDonation'
 const Donation = () => {
   return (
     <div>
-      <AboutHero/>
+      {/* <AboutHero/> */}
       <DonationOption/>
       <QRDonation/>
     </div>

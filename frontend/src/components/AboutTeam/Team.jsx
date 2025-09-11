@@ -5,27 +5,27 @@ const Team = () => {
     {
       name: "आदित्य शर्मा",
       role: "संस्थापक एवं अध्यक्ष",
-      img: "https://randomuser.me/api/portraits/men/32.jpg",
+      img: "/images/boy1.jpg",
     },
     {
       name: "मनोज सिंह",
       role: "महासचिव",
-      img: "https://randomuser.me/api/portraits/men/45.jpg",
+      img: "/images/boy2.jpg",
     },
     {
       name: "प्रिया जायसवाल",
       role: "धार्मिक कार्य प्रमुख",
-      img: "https://randomuser.me/api/portraits/women/46.jpg",
+      img: "/images/girl1.jpeg",
     },
     {
       name: "सोनी वर्मा",
       role: "धार्मिक कार्य प्रमुख",
-      img: "https://randomuser.me/api/portraits/women/65.jpg",
+      img: "/images/girl2.jpg",
     },
     {
       name: "शाक्षी सिंह",
       role: "महासचिव",
-      img: "https://randomuser.me/api/portraits/women/52.jpg",
+      img: "/images/girl3.jpeg",
     },
   ];
 

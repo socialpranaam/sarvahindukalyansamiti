@@ -49,9 +49,9 @@ const Bhakti = () => {
           {/* Side Content */}
           <div className="flex flex-col items-center gap-6">
             <div className="text-center">
-              <h2 className="text-3xl font-bold">56+</h2>
+              <h2 className="text-5xl">56+</h2>
               <p className="text-gray-600">पारंपरिक वास्तुकला</p><br />
-              <span className="text-orange-500 text-5xl font-bold">ॐ</span>
+              <span className="text-orange-500 text-5xl font-bold font-devnagari">ॐ</span>
             </div>
 
             <img

@@ -9,3 +9,21 @@ body {
 .custom-shape {
   clip-path: ellipse(100% 80% at 50% 20%);
 }
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+  animation-play-state: running;
+}
+
+.group:hover .animate-spin-slow {
+  animation-play-state: paused; /* Hover करने पर रुकेगा */
+}

@@ -25,7 +25,7 @@ const ReligiousWork = () => {
       <div
         className="absolute top-0 left-0 w-full h-72 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/deep.jpg')", // apni image ka path
+          backgroundImage: "url('/images/deep.jpg')",
         }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
