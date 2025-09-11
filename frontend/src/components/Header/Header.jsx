@@ -77,7 +77,7 @@ const Header = () => {
         <div className="md:hidden bg-black bg-opacity-90 text-white font-medium flex flex-col space-y-4 px-6 py-6">
           <Link to="/" className="hover:text-orange-600 transition" onClick={() => setIsOpen(false)}>मुख्य पृष्ठ</Link>
           <Link to="/about" className="hover:text-orange-600 transition" onClick={() => setIsOpen(false)}>हमारे बारे में</Link>
-          <Link to="/ourorks" className="hover:text-orange-600 transition" onClick={() => setIsOpen(false)}>हमारे कार्य</Link>
+          <Link to="/ourworks" className="hover:text-orange-600 transition" onClick={() => setIsOpen(false)}>हमारे कार्य</Link>
           <Link to="/donation" className="hover:text-orange-600 transition" onClick={() => setIsOpen(false)}>दान करें</Link>
           <Link to="/news" className="hover:text-orange-600 transition" onClick={() => setIsOpen(false)}>समाचार</Link>
           <Link to="/cart" className="hover:text-orange-600 transition flex items-center gap-2 text-xl" onClick={() => setIsOpen(false)}>
