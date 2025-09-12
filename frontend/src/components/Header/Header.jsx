@@ -25,17 +25,17 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
-        isScrolled ? "bg-orange-300" : "bg-transparent"
+        isScrolled ? "bg-black/60" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold text-white cursor-pointer">
-          <Link to="/">Logo</Link>
+        <div className="text-2xl font-md text-white cursor-pointer">
+          <Link to="/">LOGO</Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8 text-white font-medium gap-6">
+        <nav className="hidden md:flex space-x-8 text-white font-sm gap-6">
           <Link to="/" className="hover:text-orange-600 transition">मुख्य पृष्ठ</Link>
           <Link to="/about" className="hover:text-orange-600 transition">हमारे बारे में</Link>
           <Link to="/ourworks" className="hover:text-orange-600 transition">हमारे कार्य</Link>
@@ -55,7 +55,7 @@ const Header = () => {
         <div className="hidden md:block">
           <Link
             to="/donation"
-            className="px-5 py-2 rounded-lg bg-orange-400 text-white font-semibold hover:bg-orange-500 transition"
+            className="px-5 py-3 rounded-lg bg-orange-400 text-white font-semibold hover:bg-orange-500 transition"
           >
             दान करें
           </Link>

@@ -2,7 +2,8 @@ import React from 'react'
 import AboutHero from '../components/AboutHero/AboutHero'
 import AboutMission from '../components/AboutMission/AboutMission'
 import Team from '../components/AboutTeam/Team'
-import AboutCrad from '../components/AboutCard/AboutCard'
+import AboutCard from '../components/AboutCard/AboutCard'
+
 
 const AboutUs = () => {
   return (
@@ -10,7 +11,7 @@ const AboutUs = () => {
       {/* <AboutHero/> */}
       <AboutMission/>
       <Team/>
-      <AboutCrad/>
+      <AboutCard/>
     </div>
   )
 }

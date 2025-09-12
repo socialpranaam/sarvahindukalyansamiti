@@ -10,6 +10,7 @@ body {
   clip-path: ellipse(100% 80% at 50% 20%);
 }
 
+
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);

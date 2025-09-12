@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaArrowDown, FaArrowUp, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { ChevronUp, ChevronDown } from "lucide-react";
+
 
 const services = [
   {
@@ -68,10 +70,11 @@ const ServicesSlider = () => {
 
   return (
     <section className="bg-[#ffeed8] py-16">
-      <h2 className="text-center text-3xl md:text-4xl font-bold mb-12">
+      <h2 className="text-center text-3xl md:text-5xl font-semibold mb-12">
         हमारी <span className="text-orange-500">मुख्य सेवाएँ</span>
-      </h2>
-
+      
+      <div className="mx-auto mt-5 h-1 w-40 bg-gradient-to-r from-transparent via-black to-transparent"></div>
+        </h2>
       <div className="relative max-w-6xl mx-auto h-[450px] flex justify-center items-center">
         {services.map((item, i) => {
           const position = (i - current + servicesLength) % servicesLength;
@@ -92,16 +95,16 @@ const ServicesSlider = () => {
                 zIndex: servicesLength - position,
               }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="absolute w-full max-w-6xl"
+              className="absolute w-full mt-20 max-w-5xl"
             >
-              <div className="bg-white rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden h-[380px]">
+              <div className="bg-white rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden h-[400px]">
                 {/* Left */}
                 <div className="p-8 md:w-1/2 flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold mb-4 text-black">
+                  <h3 className="text-4xl font-semibold mb-4 text-black">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">{item.desc}</p>
-                  <button className="px-3 py-1 w-fit cursor-pointer rounded-lg bg-orange-400 text-white font-semibold flex items-center gap-2">
+                  <p className="text-gray-600 mb-6 max-w-sm leading-relaxed">{item.desc}</p>
+                  <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3">
                     दान करें अभी <FaArrowRight />
                   </button>
                 </div>
@@ -126,13 +129,13 @@ const ServicesSlider = () => {
           onClick={prevSlide}
           className="bg-white border border-orange-500 text-orange-500 p-4 rounded-full hover:bg-orange-500 hover:text-white transition cursor-pointer"
         >
-          <FaArrowUp size={15} />
+          <ChevronUp size={28} strokeWidth={1.5}  />
         </button>
         <button
           onClick={nextSlide}
           className="bg-white border border-orange-500 text-orange-500 p-4 rounded-full hover:bg-orange-500 hover:text-white transition cursor-pointer"
         >
-          <FaArrowDown size={15} />
+          <ChevronDown size={28} strokeWidth={1.5} />
         </button>
       </div>
     </section>

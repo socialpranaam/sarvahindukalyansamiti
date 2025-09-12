@@ -1,20 +1,21 @@
 import React from "react";
+import { FaArrowRight } from "react-icons/fa";
 
 const ContactForm = () => {
   return (
     <section className="bg-[#fdf3e7] py-16 px-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-8">
+      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-8">
         {/* Heading */}
-        <h2 className="text-3xl font-bold text-center mb-8">
+        <h2 className="text-5xl font-medium text-center mb-8">
           संपर्क <span className="text-orange-500">फ़ॉर्म</span>
         </h2>
 
         {/* Form */}
         <form className="space-y-6">
           {/* Name & Email */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
+              <label className="block text-md font-bold  mb-1">
                 नाम
               </label>
               <input
@@ -24,7 +25,7 @@ const ContactForm = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
+              <label className="block text-md font-bold  mb-1">
                 ईमेल
               </label>
               <input
@@ -38,7 +39,7 @@ const ContactForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
+              <label className="block text-md font-bold  mb-1">
                 फोन नंबर
               </label>
               <input
@@ -48,7 +49,7 @@ const ContactForm = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
+              <label className="block text-md font-bold  mb-1">
                 विषय
               </label>
               <input
@@ -61,7 +62,7 @@ const ContactForm = () => {
 
           {/* Message */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label className="block text-md font-bold  mb-1">
               संदेश
             </label>
             <textarea
@@ -72,12 +73,12 @@ const ContactForm = () => {
           </div>
 
           
-          <div className="text-center">
-            <button
-              type="submit"
-              className="bg-orange-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-orange-600 transition"
-            >
-              संपर्क करें अभी →
+          <div className="flex justify-center">
+            
+            <button 
+            type="submit"
+            className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3">
+             संपर्क करें अभी <FaArrowRight />
             </button>
           </div>
         </form>

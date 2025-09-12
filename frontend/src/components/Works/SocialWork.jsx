@@ -49,14 +49,14 @@ const SocialWork = () => {
   }, []);
 
   return (
-    <div className="bg-[#fff2e5] py-12 font-sans">
+    <div className="bg-[#ffeed8] py-12">
       {/* Heading */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold ">
-          <span className="text-orange-600">सामाजिक </span>कार्य
+        <h2 className="text-3xl md:text-5xl font-medium ">
+          <span className="text-orange-400">सामाजिक </span>कार्य
         </h2>
-        <div className="w-16 h-[3px] bg-black mx-auto "></div><br />
-        <p className="text-gray-700 mt-2 max-w-2xl mx-auto px-4">
+        <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div> 
+        <p className="text-gray-700 mt-6 max-w-4xl text-lg mx-auto px-4">
           सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
           जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
           सशक्त बनाने के लिए कार्यरत है।
@@ -64,7 +64,7 @@ const SocialWork = () => {
       </div>
 
       {/* Slider */}
-      <div className="relative max-w-5xl mx-auto px-6">
+      <div className="relative max-w-5xl mx-auto mt-20 px-6 ">
         <div className="bg-orange-500 rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center transition-all duration-700 ease-in-out">
           {/* Left Image */}
           <div className="w-full md:w-1/2 p-3">
@@ -77,11 +77,11 @@ const SocialWork = () => {
 
           {/* Right Content */}
           <div className="w-full md:w-1/2 text-white p-6 md:p-10">
-            <h3 className="text-xl md:text-2xl font-bold leading-snug mb-4">
+            <h3 className="text-xl md:text-4xl font-semibold leading-snug mb-4">
               {slides[current].title}
             </h3>
-            <p className="text-sm md:text-base mb-6">{slides[current].text}</p>
-            <button className="bg-white text-orange-600 px-5 py-2 rounded-lg font-semibold cursor-pointer shadow-md hover:bg-gray-100 flex items-center gap-2">
+            <p className="text-sm md:text-bold max-w-4xl mb-6">{slides[current].text}</p>
+            <button className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold cursor-pointer shadow-md hover:bg-gray-100 flex items-center gap-2">
               {slides[current].button}
               <ArrowRight size={24} className="transition-transform duration-200 group-hover:translate-x-1" />
             </button>
@@ -91,15 +91,15 @@ const SocialWork = () => {
         {/* Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute -left-8 top-1/2 -translate-y-1/2 bg-white shadow p-2 rounded-full"
+          className="absolute -left-14 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
         >
-          <ChevronLeft className="w-8 h-8 text-orange-600" />
+          <ChevronLeft className="w-10 h-10 text-black" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute -right-8 top-1/2 -translate-y-1/2 bg-white shadow p-2 rounded-full"
+          className="absolute -right-14 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
         >
-          <ChevronRight className="w-8 h-8 text-orange-600" />
+          <ChevronRight className="w-10 h-10 text-black" />
         </button>
       </div>
     </div>

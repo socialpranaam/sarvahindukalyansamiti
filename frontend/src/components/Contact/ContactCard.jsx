@@ -29,7 +29,7 @@ const ContactCard = () => {
     <section className="relative bg-[#fdf3e7]">
       {/* Background Image with Overlay */}
       <div
-        className="absolute top-0 left-0 w-full h-72 bg-cover bg-center"
+        className="absolute top-0 left-0 w-full h-90 bg-cover bg-center"
         style={{
           backgroundImage: "url('/images/deep.jpg')", 
         }}
@@ -43,20 +43,20 @@ const ContactCard = () => {
           {/* Triangle */}
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
-            w-0 h-0 border-l-[180px] border-r-[180px] border-b-[180px] 
+            w-0 h-0 border-l-[250px] border-r-[250px] border-b-[180px] 
             border-l-transparent border-r-transparent border-b-[#fdf3e7]"
           ></div>
 
           {/* Heading + Line */}
           <div className="relative mt-[-60px] flex flex-col items-center">
-            <h2 className="text-3xl font-bold text-gray-900 whitespace-nowrap">
-              संपर्क <span className="text-orange-500">करें</span>
+            <h2 className="text-5xl font-medium text-gray-900 whitespace-nowrap">
+               <span className="text-orange-500">संपर्क</span> करें
             </h2>
-            <div className="w-20 h-[2px] bg-gray-400 mt-2"></div>
+            <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
           </div>
 
           {/* Short Intro */}
-          <div className="max-w-4xl mx-auto text-center mt-6 px-6">
+          <div className="max-w-xl mx-auto text-center mt-6 px-6">
             <p className="text-lg text-gray-800 leading-relaxed">
               हमसे जुड़ें और अपने सवाल, सुझाव या सेवा संबंधी जानकारी के लिए संपर्क करें।
             </p>
@@ -76,7 +76,7 @@ const ContactCard = () => {
               {item.icon}
             </div>
             {/* Text */}
-            <h3 className="text-lg font-bold text-gray-800">{item.title}</h3>
+            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
             <p className="text-gray-600 text-sm mt-2">{item.desc}</p>
           </div>
         ))}

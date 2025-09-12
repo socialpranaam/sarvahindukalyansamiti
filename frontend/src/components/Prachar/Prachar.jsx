@@ -1,4 +1,5 @@
 import React from "react";
+import {FaArrowRight} from "react-icons/fa" 
 
 const Prachar = () => {
   return (
@@ -12,17 +13,17 @@ const Prachar = () => {
         />
 
         {/* Overlay */}
-        <div className="absolute inset-0  bg-opacity-40 flex flex-col justify-center px-8 md:px-16">
-          <h1 className="text-3xl md:text-5xl font-bold text-white leading-snug">
+        <div className="absolute inset-0  bg-black/30 flex flex-col justify-center px-8 md:px-16">
+          <h1 className="text-3xl md:text-5xl font-semibold text-white leading-snug">
             मंदिर निर्माण और सनातन <br /> धर्म का प्रचार
           </h1>
-          <p className="text-gray-200 mt-4 max-w-2xl text-base md:text-md">
+          <p className="text-gray-200 mt-4 max-w-2xl text-base text-md md:text-lg">
             पारंपरिक वास्तुकला के साथ भव्य मंदिरों का निर्माण और धार्मिक शिक्षा का
             प्रचार पारंपरिक वास्तुकला दें।
-          </p>
-          <button className="mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-md w-fit cursor-pointer">
-            दान करें अभी →
-          </button>
+          </p><br />
+          <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3">
+                              दान करें अभी <FaArrowRight />
+                            </button>
         </div>
       </div>
     </div>

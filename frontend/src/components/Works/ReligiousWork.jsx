@@ -23,7 +23,7 @@ const ReligiousWork = () => {
     <section className="relative bg-orange-50">
       {/* Background Image with Overlay */}
       <div
-        className="absolute top-0 left-0 w-full h-72 bg-cover bg-center"
+        className="absolute top-0 left-0 w-full h-90 bg-cover bg-center"
         style={{
           backgroundImage: "url('/images/deep.jpg')",
         }}
@@ -36,16 +36,16 @@ const ReligiousWork = () => {
         <div className="bg-orange-50 relative inline-block w-full">
           {/* Triangle */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
-            w-0 h-0 border-l-[180px] border-r-[180px] border-b-[180px] 
+            w-0 h-0 border-l-[250px] border-r-[250px] border-b-[180px] 
             border-l-transparent border-r-transparent border-b-orange-50 ">
           </div>
 
           {/* Heading + Line */}
           <div className="relative mt-[-60px] flex flex-col items-center">
-            <h2 className="text-3xl font-bold text-gray-900 whitespace-nowrap">
+            <h2 className="text-5xl font-medium text-gray-900 whitespace-nowrap">
               <span className="text-orange-500">धार्मिक</span> कार्य
             </h2>
-            <div className="w-20 h-[2px] bg-gray-400 mt-2"></div>
+            <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
           </div>
 
           {/* Short Intro */}
@@ -60,7 +60,7 @@ const ReligiousWork = () => {
       </div>
 
       {/* Project Cards */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 pb-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 pb-16">
         {projects.map((item, index) => (
           <div
             key={index}
@@ -72,7 +72,7 @@ const ReligiousWork = () => {
               className="w-full h-64 object-cover rounded-xl"
             />
             <div className="p-5">
-              <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
               <p className="text-gray-600 text-sm">{item.desc}</p>
             </div>
           </div>

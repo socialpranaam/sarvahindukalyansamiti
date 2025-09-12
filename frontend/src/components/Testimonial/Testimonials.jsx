@@ -59,16 +59,16 @@ const Testimonial = () => {
   return (
     <section className="bg-[#fff6eb] py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-3xl md:text-4xl font-bold mb-12">
+        <h2 className="text-center text-3xl md:text-5xl font-semibold mb-12">
           लोग क्या <span className="text-orange-500">कहते हैं</span>
-          <div className="w-24 h-1 bg-orange-500 mx-auto mt-2"></div>
+          <div className="w-32 h-1  mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
         </h2>
 
         <div className="relative flex flex-col lg:flex-row items-center justify-center p-8  max-w-7xl mx-auto min-h-[450px]">
           {/* Left Side Main Display */}
           <div className="relative flex flex-col md:flex-row items-center lg:items-start text-center lg:text-left p-6 lg:p-0 w-full lg:w-2/3 xl:w-3/4">
             <div className="relative -mt-24 md:-mt-12 lg:mt-0 flex-shrink-0">
-              <div className="w-60 h-60 md:w-72 md:h-72 rounded-full overflow-hidden shadow-xl border-6 border-orange-400 z-10">
+              <div className="w-60 h-60 md:w-90 md:h-90 rounded-full overflow-hidden shadow-xl border-6 border-orange-400 z-10">
                 <img
                   src={currentMainTestimonial.avatar}
                   alt={currentMainTestimonial.name}
@@ -76,14 +76,14 @@ const Testimonial = () => {
                 />
               </div>
             </div>
-            <div className="md:ml-8 mt-6 md:mt-0 max-w-md">
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
+            <div className="md:ml-8 mt-6 md:mt-18 max-w-md">
+              <h3 className="text-3xl font-bold text-gray-800 mb-2">
                 {currentMainTestimonial.name}
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-lg">
+              </h3><br />
+              <p className="text-black max-w-sm leading-relaxed text-lg">
                 {currentMainTestimonial.text}
               </p>
-              <div className="w-16 h-1 bg-orange-500 mt-4 mx-auto lg:mx-0"></div>
+              <div className="w-9 h-4 bg-orange-500 mt-4 rounded-xl mx-auto lg:mx-0"></div>
             </div>
           </div>
 

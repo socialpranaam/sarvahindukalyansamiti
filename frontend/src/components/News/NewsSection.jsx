@@ -22,15 +22,15 @@ const NewsSection = () => {
     <div className="bg-[#fff4ec] py-16 px-6">
       {/* Heading */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        <h2 className="text-3xl md:text-5xl font-semibold text-gray-900">
           ताजा <span className="text-orange-500">समाचार</span> और{" "}
           <span className="text-orange-500">अपडेट</span>
         </h2>
-        <div className="mt-2 w-20 h-[2px] bg-black mx-auto rounded"></div>
+        <div className="w-36 h-1  mx-auto mt-2 bg-gradient-to-r from-transparent via-black to-transparent"></div>
       </div>
 
       {/* News Cards */}
-      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-5 max-w-5xl h-120 mx-auto">
         {newsData.map((item) => (
           <div
             key={item.id}
@@ -39,14 +39,14 @@ const NewsSection = () => {
             <img
               src={item.img}
               alt={item.title}
-              className="w-full h-64 object-cover rounded-xl"
+              className="w-full h-60 object-cover rounded-xl"
             />
-            <div className="p-6 flex flex-col justify-between flex-1">
-              <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-              <p className="text-gray-600 mt-2">{item.desc}</p>
+            <div className="mt-5 flex flex-col justify-between flex-1">
+              <h3 className="text-3xl font-semibold text-gray-900">{item.title}</h3>
+              <p className="text-gray-600 mt-2 text-lg max-w-xs">{item.desc}</p>
               <div className="mt-4 flex justify-between items-center">
-                <span className="text-orange-500 font-semibold">{item.date}</span>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 cursor-pointer rounded-md text-sm font-medium">
+                <span className="text-orange-500  text-lg font-medium">{item.date}</span>
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 mb-5 cursor-pointer rounded-md text-md font-medium">
                   अधिक जानें
                 </button>
               </div>
