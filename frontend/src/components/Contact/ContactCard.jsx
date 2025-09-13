@@ -55,7 +55,7 @@ const ContactCard = () => {
             <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
           </div>
 
-          {/* Short Intro */}
+         
           <div className="max-w-xl mx-auto text-center mt-6 px-6">
             <p className="text-lg text-gray-800 leading-relaxed">
               हमसे जुड़ें और अपने सवाल, सुझाव या सेवा संबंधी जानकारी के लिए संपर्क करें।
@@ -69,7 +69,7 @@ const ContactCard = () => {
         {options.map((item, index) => (
           <div
             key={index}
-            className="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-6 flex flex-col items-center"
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-105 cursor-pointer transition p-6 flex flex-col items-center"
           >
            
             <div className="bg-orange-500 p-3 rounded-xl shadow-md mb-4">

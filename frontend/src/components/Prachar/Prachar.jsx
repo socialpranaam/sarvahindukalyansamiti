@@ -21,7 +21,8 @@ const Prachar = () => {
             पारंपरिक वास्तुकला के साथ भव्य मंदिरों का निर्माण और धार्मिक शिक्षा का
             प्रचार पारंपरिक वास्तुकला दें।
           </p><br />
-          <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3">
+          <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3
+          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
                               दान करें अभी <FaArrowRight />
                             </button>
         </div>

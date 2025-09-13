@@ -28,3 +28,5 @@ body {
 .group:hover .animate-spin-slow {
   animation-play-state: paused; /* Hover करने पर रुकेगा */
 }
+
+

@@ -104,7 +104,8 @@ const ServicesSlider = () => {
                     {item.title}
                   </h3>
                   <p className="text-gray-600 mb-6 max-w-sm leading-relaxed">{item.desc}</p>
-                  <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3">
+                  <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3
+                  transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
                     दान करें अभी <FaArrowRight />
                   </button>
                 </div>

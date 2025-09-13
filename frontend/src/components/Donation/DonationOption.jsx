@@ -23,7 +23,7 @@ const DonationOption = () => {
       <div
         className="absolute top-0 left-0 w-full h-90 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/deep.jpg')", // apni image ka path
+          backgroundImage: "url('/images/deep.jpg')", 
         }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
@@ -41,8 +41,8 @@ const DonationOption = () => {
 
           {/* Heading + Line */}
           <div className="relative mt-[-60px] flex flex-col items-center">
-            <h2 className="text-4xl font-semibold text-gray-900 whitespace-nowrap">
-              <span className="text-orange-500">दान</span> का तरीका चुनें
+            <h2 className="text-5xl font-medium text-gray-900 whitespace-nowrap">
+              <span className="text-orange-500">दान</span> का तरीका<br /> चुनें
             </h2>
             <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
           </div>
