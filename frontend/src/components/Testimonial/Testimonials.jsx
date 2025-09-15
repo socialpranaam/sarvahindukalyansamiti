@@ -108,18 +108,42 @@ const Testimonial = () => {
 
         {/* -------- Desktop Layout -------- */}
         <div className="hidden lg:flex relative flex-row items-center justify-center p-8 max-w-7xl mx-auto min-h-[500px]">
-          {/* Left Side (Main Image + Text side by side) */}
+          
           <div className="flex flex-row items-center text-left w-2/3 xl:w-3/4">
+            
             {/* Main Image */}
             <div className="flex-shrink-0">
-              <div className="w-80 h-80 rounded-full overflow-hidden shadow-xl border-4 border-orange-400">
-                <img
-                  src={currentMainTestimonial.avatar}
-                  alt={currentMainTestimonial.name}
-                  className="w-full h-full object-cover"
-                />
+              {/* Relative container for positioning the decorative elements */}
+              <div className="relative w-80 h-80">
+                
+                {/* Decorative dotted pattern (top-right) */}
+                <div
+                  className="absolute -top-12 -right-10 w-32 h-32"
+                  style={{
+                    backgroundImage: 'radial-gradient(#d1d5db 2px, transparent 2px)',
+                    backgroundSize: '1rem 1rem',
+                  }}
+                ></div>
+
+                {/* Decorative orange circle outline (bottom-left) */}
+                <div className="absolute -bottom-5 -left-5 w-32 h-32 border-4 border-orange-500 rounded-full z-0"></div>
+                <div
+                  className="w-full h-full overflow-hidden shadow-xl relative z-10"
+                  style={{
+                     
+                     borderRadius: '50% 0 50% 50%',
+                  }}
+                >
+                  <img
+                    src={currentMainTestimonial.avatar}
+                    alt={currentMainTestimonial.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
               </div>
             </div>
+
 
             {/* Text */}
             <div className="ml-10 max-w-md">
