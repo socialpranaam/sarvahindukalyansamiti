@@ -1,54 +1,64 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
-
 const Bhakti = () => {
   return (
     <section className="bg-[#fdf6ef] py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+        
         {/* LEFT CONTENT */}
-        <div>
+        <div className="order-2 md:order-1 text-center md:text-left">
           <h1 className="text-5xl md:text-5xl font-medium leading-snug">
             धर्म, सेवा और <br />
             <span className="text-orange-500">कल्याण</span> की ओर
           </h1>
 
-          <p className="mt-6 text-gray-700 text-xl max-w-lg leading-relaxed">
+          <p className="mt-6 text-gray-700 text-lg md:text-xl max-w-lg  mx-auto md:mx-0 leading-relaxed">
             पारंपरिक वास्तुकला के साथ भव्य मंदिरों का निर्माण और धार्मिक शिक्षा का 
             प्रसार पारंपरिक वास्तुकला के साथ भव्य मंदिरों का निर्माण और धार्मिक शिक्षा 
             का प्रसार मंदिर निर्माण, गौशाला, शिक्षा और समाज सेवा के लिए दान दें।
           </p><br />
 
-          <button className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
+          <button className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
           transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
-          स्वयंसेवक बने <FaArrowRight />
-        </button>
+            स्वयंसेवक बने <FaArrowRight />
+          </button>
         </div>
 
         {/* RIGHT CONTENT */}
-        <div className="flex flex-col md:flex-row items-center gap-8 relative ml-28">
+        <div className="flex items-center justify-center md:flex-row gap-8 relative ml-0 md:ml-28 order-1 md:order-2">
           {/* Main Image */}
           <div className="relative">
-             <img
-            src="/images/aarti.jpg"
-            alt="Hero"
-            className="rounded-lg shadow-lg object-cover w-[280px] h-[450px]"/>
+            <img
+              src="/images/aarti.jpg"
+              alt="Hero"
+              className="rounded-lg shadow-lg object-cover w-[280px] h-[450px]"
+            />
 
             {/* White floating card */}
-            <div className="absolute bottom-0 -left-45 bg-white shadow-lg  p-2 max-w-[17rem] text-base md:text-md leading-relaxed rounded-tl-lg rounded-bl-lg">
-              <div className="bg-gray-200 p-[1px] inline-block ">              
-                 <p className="bg-white  leading-relaxed p-2">
-                सामूहिक <span className="text-orange-500 font-medium">अनुष्ठान</span>, 
-                भजन और यज्ञ से समाज में सामूहिक अनुष्ठान,{" "}
-                <span className="text-orange-500 font-medium">भजन</span> और यज्ञ से समाज में 
-                सामूहिक अनुष्ठान।
-                <span className="text-orange-500 font-medium">भजन</span> और यज्ञ से समाज में 
-                सामूहिक अनुष्ठान।
-            </p>
-            </div>
-            </div>
-
-          </div>
+           <div className="
+    absolute bottom-0 
+    -left-4 md:-left-45   
+    bg-white shadow-lg  
+    p-1 md:p-2          
+    max-w-[15rem] md:max-w-[17rem]  
+    text-sm md:text-md   
+    leading-relaxed 
+    rounded-tl-lg rounded-bl-lg
+  "
+>
+  <div className="bg-gray-200 p-[1px] inline-block">              
+    <p className="bg-white leading-relaxed p-2 md:p-3">
+      सामूहिक <span className="text-orange-500 font-medium">अनुष्ठान</span>, 
+      भजन और यज्ञ से समाज में सामूहिक अनुष्ठान,{" "}
+      <span className="text-orange-500 font-medium">भजन</span> और यज्ञ से समाज में 
+      सामूहिक अनुष्ठान।
+      <span className="text-orange-500 font-medium">भजन</span> और यज्ञ से समाज में 
+      सामूहिक अनुष्ठान।
+    </p>
+  </div>
+</div>
+</div>
 
           {/* Side Content */}
           <div className="flex flex-col items-center justify-center">

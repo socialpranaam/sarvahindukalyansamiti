@@ -23,7 +23,6 @@ const services = [
 const NewServices = () => {
   return (
     <div className="bg-[#fff6eb] py-12">
-      {/* Heading */}
       <div className="text-center mb-10">
         <h2 className="text-4xl md:text-5xl font-medium">
           <span className="text-orange-500">नई </span>सेवाएँ
@@ -53,7 +52,6 @@ const NewServices = () => {
               {service.title}
             </h3>
 
-            {/* Points */}
             <ul className="text-gray-700 space-y-2 text-md">
             {service.points.map((point, i) => (
            <li key={i} className="flex items-start gap-2">

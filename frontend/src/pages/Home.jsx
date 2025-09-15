@@ -7,6 +7,7 @@ import TestimonialSection from '../components/Testimonial/Testimonials'
 import Prachar from '../components/Prachar/Prachar'
 import NewsSection from '../components/News/NewsSection'
 
+
 const Home = () => {
   return (
     <div>
@@ -17,6 +18,7 @@ const Home = () => {
       <TestimonialSection/>
       <Prachar/>
       <NewsSection/>
+      
     </div>
   )
 }

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import Header from './components/Header/Header'
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import OurWorks from './pages/OurWorks';
 import Donation from './pages/Donation';
 import ContactUs from './pages/ContactUs';
+import Footer from './components/Footer/Footer';
 
 function App() {
   
@@ -21,7 +22,7 @@ function App() {
           <Route path='/donation' element={<Donation/>}/>
           <Route path='/contact' element={<ContactUs/>}/>
         </Routes>
-     
+      <Footer/>
       </BrowserRouter>
      
     </>

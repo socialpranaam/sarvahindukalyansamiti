@@ -59,16 +59,60 @@ const Testimonial = () => {
   return (
     <section className="bg-[#fff6eb] py-20">
       <div className="container mx-auto px-4">
+        {/* Heading */}
         <h2 className="text-center text-3xl md:text-5xl font-semibold mb-12">
           लोग क्या <span className="text-orange-500">कहते हैं</span>
-          <div className="w-32 h-1  mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
+          <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
         </h2>
 
-        <div className="relative flex flex-col lg:flex-row items-center justify-center p-8  max-w-7xl mx-auto min-h-[450px]">
-          {/* Left Side Main Display */}
-          <div className="relative flex flex-col md:flex-row items-center lg:items-start text-center lg:text-left p-6 lg:p-0 w-full lg:w-2/3 xl:w-3/4">
-            <div className="relative -mt-24 md:-mt-12 lg:mt-0 flex-shrink-0">
-              <div className="w-60 h-60 md:w-90 md:h-90 rounded-full overflow-hidden shadow-xl border-6 border-orange-400 z-10">
+        {/* -------- Mobile Layout -------- */}
+        <div className="flex flex-col lg:hidden items-center text-center space-y-6">
+          {/* Main Image */}
+          <div className="w-60 h-60 rounded-full overflow-hidden shadow-xl border-4 border-orange-400">
+            <img
+              src={currentMainTestimonial.avatar}
+              alt={currentMainTestimonial.name}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Text */}
+          <div className="max-w-md">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              {currentMainTestimonial.name}
+            </h3>
+            <p className="text-black leading-relaxed text-lg">
+              {currentMainTestimonial.text}
+            </p>
+          </div>
+
+          {/* Small Avatars Below */}
+          <div className="relative w-full flex justify-center items-center flex-wrap gap-4 mt-6">
+            {testimonials
+              .filter((t) => t.id !== currentMainTestimonial.id)
+              .map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="w-16 h-16 rounded-full overflow-hidden border-2 border-orange-400 shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
+                  onClick={() => setCurrentMainTestimonial(testimonial)}
+                >
+                  <img
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
+
+        {/* -------- Desktop Layout -------- */}
+        <div className="hidden lg:flex relative flex-row items-center justify-center p-8 max-w-7xl mx-auto min-h-[500px]">
+          {/* Left Side (Main Image + Text side by side) */}
+          <div className="flex flex-row items-center text-left w-2/3 xl:w-3/4">
+            {/* Main Image */}
+            <div className="flex-shrink-0">
+              <div className="w-80 h-80 rounded-full overflow-hidden shadow-xl border-4 border-orange-400">
                 <img
                   src={currentMainTestimonial.avatar}
                   alt={currentMainTestimonial.name}
@@ -76,22 +120,24 @@ const Testimonial = () => {
                 />
               </div>
             </div>
-            <div className="md:ml-8 mt-6 md:mt-18 max-w-md">
-              <h3 className="text-3xl font-bold text-gray-800 mb-2">
+
+            {/* Text */}
+            <div className="ml-10 max-w-md">
+              <h3 className="text-3xl font-bold text-gray-800 mb-4">
                 {currentMainTestimonial.name}
-              </h3><br />
-              <p className="text-black max-w-sm leading-relaxed text-lg">
+              </h3>
+              <p className="text-black leading-relaxed text-lg">
                 {currentMainTestimonial.text}
               </p>
-              <div className="w-9 h-4 bg-orange-500 mt-4 rounded-xl mx-auto lg:mx-0"></div>
+              <div className="w-12 h-2 bg-orange-500 mt-4 rounded-xl"></div>
             </div>
           </div>
 
-          {/* Right Side Clickable Avatars (Rotating Circle) */}
-          <div className="absolute lg:relative w-full lg:w-1/3 xl:w-1/4 mt-12 lg:mt-0 flex justify-center items-center h-full">
-            <div className="relative w-[300px] h-[300px] flex justify-center items-center group">
+          {/* Right Side (Rotating Avatars) */}
+          <div className="w-1/3 xl:w-1/4 flex justify-center items-center">
+            <div className="relative w-[250px] h-[250px] flex justify-center items-center group">
               {/* Center Selected */}
-              <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-orange-400 shadow-lg z-20">
+              <div className="w-30 h-30 rounded-full overflow-hidden border-4 border-orange-400 shadow-lg z-20">
                 <img
                   src={currentMainTestimonial.avatar}
                   alt="Selected"
@@ -99,20 +145,20 @@ const Testimonial = () => {
                 />
               </div>
 
-              {/* Rotating container */}
+              {/* Rotating Avatars */}
               <div className="absolute inset-0 animate-spin-slow group-hover:paused flex justify-center items-center">
                 {testimonials
                   .filter((t) => t.id !== currentMainTestimonial.id)
                   .map((testimonial, index, filteredArray) => {
                     const angle = (index / filteredArray.length) * 2 * Math.PI;
-                    const radius = 120;
+                    const radius = 140;
                     const x = radius * Math.cos(angle);
                     const y = radius * Math.sin(angle);
 
                     return (
                       <div
                         key={testimonial.id}
-                        className="absolute w-20 h-20 rounded-full overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
+                        className="absolute w-18 h-18 rounded-full overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
                         style={{ transform: `translate(${x}px, ${y}px)` }}
                         onClick={() => setCurrentMainTestimonial(testimonial)}
                       >

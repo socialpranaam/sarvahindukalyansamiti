@@ -26,7 +26,6 @@ const slides = [
     text: "हर वर्ष भव्य धार्मिक उत्सवों का आयोजन किया जाएगा, जिससे समाज में भक्ति और संस्कृति का वातावरण बने।",
     button: "जुड़ें अभी",
   },
-
 ];
 
 const SocialWork = () => {
@@ -50,7 +49,6 @@ const SocialWork = () => {
 
   return (
     <div className="bg-[#ffeed8] py-12">
-      
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-5xl font-medium ">
           <span className="text-orange-400">सामाजिक </span>कार्य
@@ -64,10 +62,11 @@ const SocialWork = () => {
       </div>
 
       {/* Slider */}
-      <div className="relative max-w-5xl  mx-auto mt-20 px-6 ">
+      <div className="relative max-w-5xl mx-auto mt-20 px-6">
         <div className="bg-orange-500 rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center
-         transition-all duration-900 ease-in-out h-[300px] md:h-[350px]">
-          {/* Left Image */}
+         transition-all duration-900 ease-in-out h-[600px] md:h-[350px]">
+          
+          {/* Image Section */}
           <div className="w-full md:w-1/2 h-full p-4">
             <img
               src={slides[current].image}
@@ -76,12 +75,12 @@ const SocialWork = () => {
             />
           </div>
 
-          {/* Right Content */}
-          <div className="w-full md:w-1/2 text-white p-6 md:p-10">
+          {/* Content Section */}
+          <div className="w-full md:w-1/2 text-white p-6 md:p-10 mt-4 md:mt-0">
             <h3 className="text-xl md:text-4xl font-semibold leading-snug mb-4">
               {slides[current].title}
             </h3>
-            <p className="text-sm md:text-bold max-w-4xl mb-6">{slides[current].text}</p>
+            <p className="text-sm md:text-base max-w-4xl mb-6">{slides[current].text}</p>
             <button className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold cursor-pointer shadow-md hover:bg-gray-100 flex items-center gap-2
             transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg ">
               {slides[current].button}
@@ -90,16 +89,20 @@ const SocialWork = () => {
           </div>
         </div>
 
-        {/* Arrows */}
+        {/* Navigation Buttons */}
         <button
           onClick={prevSlide}
-          className="absolute -left-14 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
+          className="absolute top-1/2 -translate-y-1/2 
+             left-4 md:-left-14 
+             bg-white shadow p-3 rounded-full z-20"
         >
           <ChevronLeft className="w-10 h-10 text-black" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute -right-14 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
+          className="absolute top-1/2 -translate-y-1/2 
+             right-4 md:-right-14 
+             bg-white shadow p-3 rounded-full z-20"
         >
           <ChevronRight className="w-10 h-10 text-black" />
         </button>
