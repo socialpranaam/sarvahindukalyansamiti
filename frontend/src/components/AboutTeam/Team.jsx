@@ -1,76 +1,54 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React from "react";
 
 const Team = () => {
-  useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-  }, []);
-
-  const team = [
-    {
-      name: "आदित्य शर्मा",
-      role: "संस्थापक एवं अध्यक्ष",
-      img: "/images/boy1.jpg",
-    },
-    {
-      name: "मनोज सिंह",
-      role: "महासचिव",
-      img: "/images/boy2.jpg",
-    },
-    {
-      name: "प्रिया जायसवाल",
-      role: "धार्मिक कार्य प्रमुख",
-      img: "/images/girl1.jpeg",
-    },
-    {
-      name: "सोनी वर्मा",
-      role: "धार्मिक कार्य प्रमुख",
-      img: "/images/girl2.jpg",
-    },
-    {
-      name: "शाक्षी सिंह",
-      role: "महासचिव",
-      img: "/images/girl3.jpeg",
-    },
-  ];
-
   return (
-    <section className="bg-orange-50 py-12">
-      {/* Heading */}
-      <div className="text-center mb-10" data-aos="fade-down">
-        <h2 className="text-5xl font-medium">
-          हमारी <span className="text-orange-400">टीम</span> से मिलिए
-          <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
-        </h2>
-        <p className="text-[#222222] mt-6 max-w-lg text-xl mx-auto">
-          सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
-          जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को सशक्त बनाने के लिए कार्यरत है।
-        </p>
-      </div>
-
-      {/* Team Members */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 px-4 mt-20">
-        {team.map((member, index) => (
+    <section className="bg-[#fff6eb] py-16">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-stretch gap-8 relative">
+        
+        {/* Left Side - Image */}
+        <div className="w-full md:w-1/2 relative z-30">
           <div
-            key={index}
-            className="text-center"
-            data-aos="fade-up"
-            data-aos-delay={index * 100}
+            className="overflow-hidden shadow-md h-full"
+            style={{
+              clipPath: "polygon(0 0, 100% 12%, 100% 88%, 0 100%)",
+              borderRadius: "3rem",
+            }}
           >
-            <div className="relative w-full overflow-hidden rounded-t-xl">
-              <img
-                src={member.img}
-                alt={member.name}
-                className="w-full h-64 object-cover custom-shape rounded-t-xl transform transition duration-500 hover:scale-105 hover:-translate-y-2"
-              />
-            </div>
-            <h3 className="mt-4 text-xl text-gray-800 font-semibold">
-              {member.name}
-            </h3>
-            <p className="text-gray-500 text-sm font-md">{member.role}</p>
+            <img
+              src="/images/boy1.jpg"
+              alt="Team Member"
+              className="w-full h-full object-cover"
+            />
           </div>
-        ))}
+        </div>
+
+        {/* Right Side - Content Box (slanted shape) */}
+        <div
+          className="bg-orange-200 shadow-md p-10 flex flex-col justify-center w-full md:w-[65%] relative z-10 -ml-16 text-gray-900"
+          style={{
+            clipPath: "polygon(0 8%, 100% 0, 100% 100%, 0 92%)", 
+            borderRadius: "1.5rem",
+          }}
+        >
+          <h2 className="text-3xl md:text-4xl font-medium mb-6">
+            हमारे  <span className="text-orange-500">अध्यक्ष</span> के बारे में 
+          </h2>
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
+            जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
+            सहारा बनाने के लिए कार्यरत है।
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
+            जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
+            सहारा बनाने के लिए कार्यरत है।
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed">
+            सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
+            जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
+            सहारा बनाने के लिए कार्यरत है।
+          </p>
+        </div>
       </div>
     </section>
   );

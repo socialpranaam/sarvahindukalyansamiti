@@ -65,7 +65,7 @@ const Bhakti = () => {
             <div className="text-center">
               <h2 className="text-5xl font-medium">56+</h2>
               <p className="text-gray-500 text-lg mt-2">पारंपरिक वास्तुकला</p>
-              <img src="/images/mdi_om.png" alt="" className="h-30 w-30 mb-5 ml-5 " />
+              <img src="/images/mdi_om.png" alt="" className="h-30 w-30 mb-5 md:ml-5 " />
             </div>
 
             <img

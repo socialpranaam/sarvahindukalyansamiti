@@ -74,57 +74,61 @@ const Header = () => {
           </div>
         </div>
 
-        {/* -------- Mobile Header -------- */}
-        <div className="flex md:hidden justify-between items-center w-full text-white">
-          <div className="flex items-center gap-8">
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-2xl focus:outline-none"
-            >
-              <FaBars />
-            </button>
+       {/* -------- Mobile Header -------- */}
+<div className="flex md:hidden items-center justify-between w-full text-white">
+  {/* Left Section (Menu + Logo) */}
+  <div className="flex items-center gap-6">
+    {/* Mobile Menu Button */}
+    <button
+      onClick={() => setIsOpen(!isOpen)}
+      className="text-2xl focus:outline-none"
+    >
+      <FaBars />
+    </button>
 
-            {/* Logo */}
-            <div className="text-xl font-bold cursor-pointer">
-              <Link to="/">LOGO</Link>
-            </div>
+    {/* Logo */}
+    <div className="text-xl font-bold cursor-pointer">
+      <Link to="/">LOGO</Link>
+    </div>
+  </div>
 
-            {/* Cart */}
-            <Link
-              to="/cart"
-              className={`${getLinkClasses("/cart")} text-2xl flex items-center`}
-            >
-              <IoCartOutline />
-            </Link>
+  {/* Right Section (Cart + Contact + Donate Button) */}
+  <div className="flex items-center gap-4">
+    {/* Cart */}
+    <Link
+      to="/cart"
+      className={`${getLinkClasses("/cart")} text-2xl flex items-center`}
+    >
+      <IoCartOutline />
+    </Link>
 
-            {/* Divider */}
-            <div className="h-6 border-l border-gray-400"></div>
+    {/* Divider */}
+    <div className="h-6 border-l border-gray-400"></div>
 
-            {/* Phone Icon */}
-            <Link
-              to="/contact"
-              className={`${getLinkClasses(
-                "/contact"
-              )} flex items-center gap-2 text-lg`}
-            >
-              <IoMdCall />
-            </Link>
-          </div>
+    {/* Phone Icon */}
+    <Link
+      to="/contact"
+      className={`${getLinkClasses(
+        "/contact"
+      )} flex items-center gap-1 text-lg`}
+    >
+      <IoMdCall />
+    </Link>
 
-          {/* Donate Button */}
-          <div>
-            <Link
-              to="/donation"
-              className="px-3 py-2 rounded-lg bg-orange-400 text-white font-semibold
-                transform transition-all duration-300 ease-in-out
-                hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
-            >
-              दान करें
-            </Link>
-          </div>
-        </div>
-      </div>
+    {/* Donate Button */}
+    <Link
+      to="/donation"
+      className="px-3 py-2 rounded-lg bg-orange-400 text-white font-semibold
+        transform transition-all duration-300 ease-in-out
+        hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
+    >
+      दान करें
+    </Link>
+  </div>
+</div>
+</div>
+        
+    
 
       {/* Mobile Navigation */}
       {isOpen && (

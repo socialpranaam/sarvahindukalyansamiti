@@ -65,46 +65,68 @@ const Testimonial = () => {
           <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
         </h2>
 
-        {/* -------- Mobile Layout -------- */}
-        <div className="flex flex-col lg:hidden items-center text-center space-y-6">
-          {/* Main Image */}
-          <div className="w-60 h-60 rounded-full overflow-hidden shadow-xl border-4 border-orange-400">
+       {/* -------- Mobile Layout -------- */}
+      <div className="flex flex-col lg:hidden items-center  space-y-6">
+        {/* Main Image (Updated like desktop style) */}
+          <div className="relative w-60 h-60">
+       {/* Decorative dotted pattern (top-right) */}
+        <div
+        className="absolute -top-6 -right-6 w-16 h-16"
+        style={{
+        backgroundImage: 'radial-gradient(#d1d5db 2px, transparent 2px)',
+        backgroundSize: '0.75rem 0.75rem',
+        }}
+        ></div>
+
+        {/* Decorative orange circle outline (bottom-left) */}
+          <div className="absolute -bottom-2  w-16 h-16 border-2 border-orange-500 rounded-full z-0"></div>
+
+         {/* Main Image */}
+           <div
+            className="w-full h-full overflow-hidden shadow-xl relative z-10"
+            style={{
+             borderRadius: '50% 0 50% 50%',
+            }}
+              >
             <img
-              src={currentMainTestimonial.avatar}
-              alt={currentMainTestimonial.name}
+             src={currentMainTestimonial.avatar}
+             alt={currentMainTestimonial.name}
               className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Text */}
-          <div className="max-w-md">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">
-              {currentMainTestimonial.name}
-            </h3>
-            <p className="text-black leading-relaxed text-lg">
-              {currentMainTestimonial.text}
-            </p>
-          </div>
-
-          {/* Small Avatars Below */}
-          <div className="relative w-full flex justify-center items-center flex-wrap gap-4 mt-6">
-            {testimonials
-              .filter((t) => t.id !== currentMainTestimonial.id)
-              .map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className="w-16 h-16 rounded-full overflow-hidden border-2 border-orange-400 shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
-                  onClick={() => setCurrentMainTestimonial(testimonial)}
-                >
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-          </div>
+             />
         </div>
+        </div>
+
+        {/* Text */}
+        <div className="max-w-md">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">
+      {currentMainTestimonial.name}
+        </h3>
+          <p className="text-black leading-relaxed text-lg">
+        {currentMainTestimonial.text}
+         </p>
+         <div className="w-7 h-3 bg-orange-500 mt-4 rounded-xl"></div>
+        </div>
+
+        {/* Small Avatars Below */}
+        <div className="relative w-full flex justify-center items-center flex-wrap gap-4 mt-6">
+           {testimonials
+             .filter((t) => t.id !== currentMainTestimonial.id)
+              .map((testimonial) => (
+             <div
+          key={testimonial.id}
+          className="w-16 h-16 rounded-full overflow-hidden border-2 border-orange-400 shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
+          onClick={() => setCurrentMainTestimonial(testimonial)}
+        >
+          <img
+            src={testimonial.avatar}
+            alt={testimonial.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        ))}
+        </div>
+      </div>
+
 
         {/* -------- Desktop Layout -------- */}
         <div className="hidden lg:flex relative flex-row items-center justify-center p-8 max-w-7xl mx-auto min-h-[500px]">
@@ -153,7 +175,7 @@ const Testimonial = () => {
               <p className="text-black leading-relaxed text-lg">
                 {currentMainTestimonial.text}
               </p>
-              <div className="w-12 h-2 bg-orange-500 mt-4 rounded-xl"></div>
+              <div className="w-7 h-3 bg-orange-500 mt-4 rounded-xl"></div>
             </div>
           </div>
 
