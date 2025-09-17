@@ -18,7 +18,7 @@ const newsData = [
   },
 ];
 
-const NewsSection = () => {
+const NewsUpdates = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
@@ -122,4 +122,4 @@ const NewsSection = () => {
   );
 };
 
-export default NewsSection;
+export default NewsUpdates;

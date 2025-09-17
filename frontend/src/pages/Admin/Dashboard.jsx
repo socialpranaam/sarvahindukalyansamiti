@@ -34,7 +34,7 @@ const Dashboard = () => {
       {/* Header Row */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-sm text-gray-500">Admin User</p>
         </div>
 

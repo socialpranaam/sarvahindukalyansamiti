@@ -24,13 +24,13 @@ const Team = () => {
 
         {/* Right Side - Content Box (slanted shape) */}
         <div
-          className="bg-orange-200 shadow-md p-10 flex flex-col justify-center w-full md:w-[65%] relative z-10 -ml-16 text-gray-900"
+          className="bg-orange-100 shadow-md p-10 flex flex-col justify-center w-full md:w-[65%] relative z-10 -ml-16 text-gray-900"
           style={{
             clipPath: "polygon(0 8%, 100% 0, 100% 100%, 0 92%)", 
             borderRadius: "1.5rem",
           }}
         >
-          <h2 className="text-3xl md:text-4xl font-medium mb-6">
+          <h2 className="text-3xl md:text-4xl text-center font-medium mb-6">
             हमारे  <span className="text-orange-500">अध्यक्ष</span> के बारे में 
           </h2>
           <p className="text-gray-700 text-lg leading-relaxed mb-4">

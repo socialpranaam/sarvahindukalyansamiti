@@ -5,7 +5,7 @@ import Bhakti from '../components/Bhakti/Bhakti'
 import ServicesSlider from '../components/Service/ServicesSlider'
 import TestimonialSection from '../components/Testimonial/Testimonials'
 import Prachar from '../components/Prachar/Prachar'
-import NewsSection from '../components/News/NewsSection'
+import NewsUpdates from '../components/News&Updates/News&Updates'
 
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
       <ServicesSlider/>
       <TestimonialSection/>
       <Prachar/>
-      <NewsSection/>
+      <NewsUpdates/>
       
     </div>
   )

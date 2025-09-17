@@ -46,11 +46,11 @@ const statusColors = {
 
 const TempleProjects = () => {
   return (
-    <div className="p-6">
+    <div className="p-2">
       {/* Header */}
       <div className="flex items-center justify-between border-b pb-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Temple Projects</h1>
+          <h1 className="text-3xl font-semibold text-gray-800">Temple Projects</h1>
           <p className="text-sm text-gray-500">
             Admin Welcome back! Here's what's happening with your organization.
           </p>

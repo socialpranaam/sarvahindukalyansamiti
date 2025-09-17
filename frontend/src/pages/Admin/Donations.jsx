@@ -151,11 +151,11 @@ const Donations = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div className=" min-h-screen ">
       {/* Header */}
       <div className="flex justify-between items-center ">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Donations</h1>
+          <h1 className="text-3xl font-semibold text-gray-900">Donations</h1>
           <p className="text-gray-500">Welcome back, Admin</p>
         </div>
         <div className="flex items-center space-x-4">

@@ -16,6 +16,7 @@ import TempleProjects from "./pages/Admin/TempleProjects";
 import Events from "./pages/Admin/Events";
 import Members from "./pages/Admin/Members";
 import PujaBooking from "./pages/Admin/PujaBooking";
+import News from "./pages/News";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/ourworks" element={<OurWorks />} />
                 <Route path="/donation" element={<Donation />} />
+                <Route path="/news" element={<News/>}/>
                 <Route path="/contact" element={<ContactUs />} />
               </Routes>
               <Footer />
