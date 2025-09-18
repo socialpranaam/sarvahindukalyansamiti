@@ -41,7 +41,7 @@ const Header = () => {
         <div className="hidden md:flex justify-between items-center w-full text-white">
           {/* Logo */}
           <div className="text-2xl font-md cursor-pointer">
-            <Link to="/">LOGO</Link>
+            <Link to="/"><img src="/images/logo.png" className="w-13 h-12" /></Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -88,7 +88,7 @@ const Header = () => {
 
     {/* Logo */}
     <div className="text-xl font-bold cursor-pointer">
-      <Link to="/">LOGO</Link>
+      <Link to="/"><img src="/images/logo.png" className="w-13 h-12" /></Link>
     </div>
   </div>
 

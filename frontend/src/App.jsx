@@ -42,7 +42,7 @@ function App() {
         />
 
         {/* Admin Layout  */}
-        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="donations" element={<Donations />} />
           <Route path="projects" element={<TempleProjects />} />

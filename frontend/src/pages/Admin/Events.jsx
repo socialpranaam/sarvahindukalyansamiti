@@ -1,4 +1,8 @@
 import React from "react";
+import { Bell, Calendar, Clock } from "lucide-react";
+import { FiPlus, FiUser } from "react-icons/fi";
+import { IoLocateOutline, IoLocationOutline } from "react-icons/io5";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const events = [
   {
@@ -44,7 +48,7 @@ const EventCard = ({ event }) => {
     <div className="bg-white border rounded-lg shadow-sm p-5 flex flex-col">
       {/* Tag */}
       <span
-        className={`px-3 py-1 text-xs font-medium rounded-full self-start mb-3 ${event.tagColor}`}
+        className={`px-3 py-1 text-sm font-medium rounded-full self-start mb-3 ${event.tagColor}`}
       >
         {event.tag}
       </span>
@@ -56,18 +60,21 @@ const EventCard = ({ event }) => {
       <p className="text-gray-600 text-sm mb-4">{event.desc}</p>
 
       {/* Location */}
-      <div className="flex items-center text-sm text-gray-600 mb-2">
-        <span className="mr-2">📍</span> {event.location}
+      <div className="flex items-center  text-sm text-gray-600 mb-2">
+        <IoLocationOutline size={20} className="mr-2"/>
+        <span >{event.location}</span> 
       </div>
 
       {/* Date */}
       <div className="flex items-center text-sm text-gray-600 mb-2">
-        <span className="mr-2">📅</span> {event.date}
+        <Calendar size={20} className="mr-2"/>
+        <span>{event.date}</span> 
       </div>
 
       {/* Time */}
       <div className="flex items-center text-sm text-gray-600 mb-4">
-        <span className="mr-2">⏰</span> {event.time}
+        <Clock size={20} className="mr-2"/>
+        <span >{event.time}</span> 
       </div>
 
       {/* Registration */}
@@ -87,7 +94,8 @@ const EventCard = ({ event }) => {
 
       {/* PM */}
       <div className="flex items-center text-sm text-gray-700">
-        <span className="mr-2">👤</span> PM: {event.pm}
+        <FaRegUserCircle size={20} className="mr-2"/>
+        <span >{event.pm}</span> PM: 
       </div>
     </div>
   );
@@ -100,17 +108,19 @@ const EventsPage = () => {
       <div className="flex items-center bg-white justify-between mb-6">
         <div>
           <h1 className="text-3xl font-semibold text-gray-900">Events</h1>
-          <p className="text-sm text-gray-600">
+          <p className="text-lg text-gray-600">
             Welcome back! Here’s what’s happening with your organization.
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm">
+           <div className="flex items-center space-x-4">
+          <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
             ● System Online
-          </span>
+          </div>
+          </div>
           <button className="relative">
-            🔔
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            <Bell size={30} className="text-gray-600" />
+            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
               3
             </span>
           </button>
@@ -127,8 +137,9 @@ const EventsPage = () => {
             Manage upcoming festivals, ceremonies and community gatherings
           </p>
         </div>
-        <button className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">
-          + New Event
+        <button className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
+          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
+          <FiPlus size={20}/> New Event
         </button>
       </div>
 

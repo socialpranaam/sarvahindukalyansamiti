@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { HiArrowDownTray } from "react-icons/hi2";
+import { GoPlus } from "react-icons/go";
+import { Phone, MapPin, CalendarDays, BriefcaseBusiness, LayoutGrid, List, Users } from "lucide-react";
+import { FaRegStar } from "react-icons/fa";
+import { FiUserCheck, FiUserPlus } from "react-icons/fi";
 
 const initialMembers = [
   {
@@ -53,12 +58,29 @@ const MemberCard = ({ member }) => {
 
       {/* Info */}
       <div className="text-sm text-gray-700 space-y-2">
-        <div>📞 {member.phone}</div>
-        <div>📍 {member.address}</div>
-        <div>📅 Joined {member.joined}</div>
-        {member.role && <div>💼 {member.role}</div>}
-      </div>
+  <div className="flex items-center gap-2">
+    <Phone size={16}  /> 
+    {member.phone}
+  </div>
+
+  <div className="flex items-center gap-2">
+    <MapPin size={16}  /> 
+    {member.address}
+  </div>
+
+  <div className="flex items-center gap-2">
+    <CalendarDays size={16}  /> 
+    Joined {member.joined}
+  </div>
+
+  {member.role && (
+    <div className="flex items-center gap-2">
+      <BriefcaseBusiness size={16}  /> 
+      {member.role}
     </div>
+  )}
+</div>
+</div>
   );
 };
 
@@ -72,29 +94,29 @@ const Members = () => {
       label: "Total Members",
       value: members.length,
       color: "text-blue-600",
-      bg: "bg-blue-100",
-      icon: "👤",
+      bg: "bg-blue-200",
+      icon: <Users size={25} className="text-sm"/>
     },
     {
       label: "Lifetime Members",
       value: members.filter((m) => m.membership === "Lifetime").length,
       color: "text-yellow-600",
       bg: "bg-yellow-100",
-      icon: "⭐",
+      icon: <FaRegStar size={25} className="text-sm"/>
     },
     {
       label: "Active Volunteers",
       value: members.filter((m) => m.status === "Active").length,
       color: "text-green-600",
       bg: "bg-green-100",
-      icon: "🧑‍🤝‍🧑",
+      icon: <FiUserCheck size={25} className="text-sm" />
     },
     {
       label: "New This Month",
       value: 0,
       color: "text-purple-600",
       bg: "bg-purple-100",
-      icon: "🆕",
+      icon: <FiUserPlus size={25} className="text-sm"/>
     },
   ];
 
@@ -109,19 +131,19 @@ const Members = () => {
   });
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div>
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-semibold text-gray-900">Member Management</h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-lg text-gray-600">
           Manage community members and volunteers
         </p>
       </div>
 
       {/* Actions */}
       <div className="flex items-center gap-3 mb-6">
-        <button className="px-4 py-2 border rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">
-          ⬇ Export
+        <button className="px-6 py-3 border rounded-lg flex items-center gap-2  text-gray-700 hover:bg-gray-100">
+          <HiArrowDownTray size={20}/> Export
         </button>
         <button
           onClick={() =>
@@ -133,40 +155,40 @@ const Members = () => {
                 email: "new@example.com",
                 phone: "9876543222",
                 address: "789 Street, Lucknow",
-                joined: "Sep 17, 2025",
+                joined: "Sep 18, 2025",
                 membership: "General",
                 status: "Active",
                 role: "Volunteer",
               },
             ])
           }
-          className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600"
+          className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
+          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
         >
-          + Add Member
+          <GoPlus size={25}/> Add Member
         </button>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {stats.map((stat, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span
-                className={`w-8 h-8 flex items-center justify-center rounded-full ${stat.bg} ${stat.color}`}
-              >
-                {stat.icon}
-              </span>
-              <span className="text-lg font-bold text-gray-900">
-                {stat.value}
-              </span>
-            </div>
-            <p className="text-sm text-gray-600">{stat.label}</p>
-          </div>
-        ))}
+  {stats.map((stat, idx) => (
+    <div
+      key={idx}
+      className="bg-white rounded-lg shadow-sm p-4 flex justify-between items-start"
+    >
+      {/* Left side: label + value */}
+      <div>
+        <p className="text-lg  text-gray-600">{stat.label}</p>
+        <p className={`text-3xl font-semibold`}>{stat.value}</p>
       </div>
+
+      {/* Right side: icon */}
+      <div className={`w-10 h-10 flex items-center  justify-center rounded-full ${stat.bg}`}>
+        <span className={stat.color}>{stat.icon}</span>
+      </div>
+    </div>
+  ))}
+</div>
 
       {/* Search & Filters */}
       <div className="mb-6">
@@ -188,10 +210,11 @@ const Members = () => {
             <option>All Roles</option>
           </select>
           <div className="ml-auto flex items-center gap-2">
-            <button className="p-2 bg-orange-500 text-white rounded-lg">
-              ⬜⬜
+            <button className="p-2 bg-orange-500 text-white text-xs rounded-lg">
+              <LayoutGrid/>
+              
             </button>
-            <button className="p-2 border rounded-lg">☰</button>
+            <button className="p-2 border rounded-lg"><List/></button>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { MdOutlineTempleHindu } from "react-icons/md";
+import { Bell, Landmark } from "lucide-react";
+import { FiPlus } from "react-icons/fi";
 
 const projects = [
   {
@@ -51,17 +53,19 @@ const TempleProjects = () => {
       <div className="flex items-center justify-between border-b pb-4 mb-6">
         <div>
           <h1 className="text-3xl font-semibold text-gray-800">Temple Projects</h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-lg text-gray-500">
             Admin Welcome back! Here's what's happening with your organization.
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-            ● System Online
-          </span>
-          <button className="relative p-2 bg-gray-100 rounded-full">
-            🔔
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+          <div className="flex items-center space-x-4">
+            <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
+              ● System Online
+            </div>
+          </div>
+          <button className="relative">
+            <Bell size={30} className="text-gray-600" />
+            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
               3
             </span>
           </button>
@@ -73,8 +77,9 @@ const TempleProjects = () => {
         <p className="text-gray-600">
           Manage temple construction and development projects
         </p>
-        <button className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">
-          + New Project
+        <button className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
+          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
+          <FiPlus size={20}/> New Project
         </button>
       </div>
 
@@ -87,17 +92,18 @@ const TempleProjects = () => {
           >
             {/* Title & Icon */}
             <div className="flex justify-between items-start mb-2">
-              <h2 className="text-lg font-semibold text-gray-800 leading-snug">
-                {project.title}
-              </h2>
-              <span className="p-2 rounded-lg bg-orange-50 text-orange-500">
-                <MdOutlineTempleHindu size={24} />
-              </span>
+            <h2 className="text-lg font-semibold text-gray-800 leading-snug w-48 max-w-xs break-words">
+              {project.title}
+            </h2>
+            <span className="p-2 rounded-lg bg-orange-50 text-orange-500">
+               <Landmark size={30} />
+            </span>
             </div>
+
 
             {/* Status */}
             <span
-              className={`text-xs px-3 py-1 rounded-full font-medium inline-block mb-3 ${statusColors[project.status]}`}
+              className={`text-sm px-3 py-1 rounded-full font-medium w-fit mb-3 ${statusColors[project.status]}`}
             >
               {project.status}
             </span>
@@ -110,8 +116,8 @@ const TempleProjects = () => {
               <FaMapMarkerAlt className="text-gray-400" /> {project.location}
             </p>
 
-            {/* Progress Bar */}
-            <div className="mb-4">
+            {/* Progress Bar (Black) */}
+            <div className="mb-3">
               <p className="text-sm text-gray-600 mb-1">
                 Progress {project.progress}%
               </p>
@@ -119,6 +125,19 @@ const TempleProjects = () => {
                 <div
                   className="h-2 bg-gray-800 rounded-full"
                   style={{ width: `${project.progress}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Raised Bar (Green) */}
+            <div className="mb-4">
+              <p className="text-sm text-gray-600 mb-1">
+                Raised {((project.raised / project.budget) * 100).toFixed(0)}%
+              </p>
+              <div className="w-full h-2 bg-gray-200 rounded-full">
+                <div
+                  className="h-2 bg-green-500 rounded-full"
+                  style={{ width: `${(project.raised / project.budget) * 100}%` }}
                 ></div>
               </div>
             </div>

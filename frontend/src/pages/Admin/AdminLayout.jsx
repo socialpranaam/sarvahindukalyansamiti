@@ -1,4 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
+import { Calendar, Hand, HandCoins, HandHelping, Home, Landmark, User, User2, Users } from "lucide-react";
 
 const AdminLayout = () => {
   return (
@@ -12,15 +13,15 @@ const AdminLayout = () => {
               S
             </div>
             <div>
-              <h2 className="font-semibold">Sarv Hindu</h2>
-              <p className="text-sm text-gray-500">Kalyan Samiti</p>
+              <h2 className="font-bold text-xl">Sarv Hindu</h2>
+              <p className="text-md text-gray-500">Kalyan Samiti</p>
             </div>
           </div>
           <hr />
           <p className="mt-4 font-medium">Main Menu</p>
 
           {/* Menu */}
-          <nav className="flex flex-col mt-4 gap-2 text-gray-700">
+          <nav className="flex flex-col mt-4 text-lg gap-2 text-gray-700">
             <NavLink
               to="/admin/dashboard"
               className={({ isActive }) =>
@@ -31,7 +32,7 @@ const AdminLayout = () => {
                 }`
               }
             >
-              🏠 Dashboard
+              <Home size={24} /> Dashboard
             </NavLink>
 
             <NavLink
@@ -44,7 +45,7 @@ const AdminLayout = () => {
                 }`
               }
             >
-              💰 Donations
+              <HandCoins size={20}/> Donations
             </NavLink>
 
             <NavLink
@@ -57,7 +58,7 @@ const AdminLayout = () => {
                 }`
               }
             >
-              🏛 Temple Projects
+              <Landmark size={20}/> Temple Projects
             </NavLink>
 
             <NavLink
@@ -70,7 +71,7 @@ const AdminLayout = () => {
                 }`
               }
             >
-              📅 Events
+              <Calendar size={20}/> Events
             </NavLink>
 
             <NavLink
@@ -83,7 +84,7 @@ const AdminLayout = () => {
                 }`
               }
             >
-              👥 Members
+              <Users size={20}/> Members
             </NavLink>
 
             <NavLink
@@ -96,7 +97,7 @@ const AdminLayout = () => {
                 }`
               }
             >
-              🙏 Puja Booking
+              <HandHelping size={20}/> Puja Booking
             </NavLink>
           </nav>
         </div>

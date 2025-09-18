@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { FaBell } from "react-icons/fa";
+import { Bell } from "lucide-react";
+import { HiArrowDownTray } from "react-icons/hi2";
+import { GoPlus } from "react-icons/go";
+import { FaPlus } from "react-icons/fa";
+import { FiFileText, FiPlus } from "react-icons/fi";
+
 
 const initialDonations = [
   {
@@ -156,17 +161,19 @@ const Donations = () => {
       <div className="flex justify-between items-center ">
         <div>
           <h1 className="text-3xl font-semibold text-gray-900">Donations</h1>
-          <p className="text-gray-500">Welcome back, Admin</p>
+          <p className="text-gray-500 text-lg">Welcome back, Admin</p>
         </div>
         <div className="flex items-center space-x-4">
           <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
             ● System Online
           </div>
           <div className="relative">
-            <FaBell className="text-gray-600 text-xl" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+             <button>
+            <Bell size={30} className="text-gray-600" />
+            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
               3
             </span>
+          </button>
           </div>
         </div>
       </div>
@@ -183,15 +190,15 @@ const Donations = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={handleExportCSV}
-              className="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100"
+              className="px-5 py-3 border flex justify-between items-center gap-2 rounded-md text-gray-700 hover:bg-gray-100"
             >
-              Export CSV
+              <FiFileText size={20}/> Export CSV
             </button>
-            {/* Ab yeh sirf button hai, koi auto add nahi karega */}
             <button
-              className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+              className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
+          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
             >
-              + Add Donation
+              <FiPlus size={20}/> Add Donation
             </button>
           </div>
         </div>

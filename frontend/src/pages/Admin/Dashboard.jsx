@@ -1,15 +1,6 @@
-import { Search, Bell, Users, CalendarDays, Building, HandCoins, Handshake } from "lucide-react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar
-} from "recharts";
+import { Search, Bell, Users, CalendarDays, Building, HandCoins, Handshake, IndianRupee, Calendar, Landmark } from "lucide-react";
+import { FiUserPlus } from "react-icons/fi";
+import {LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,BarChart,Bar} from "recharts";
 
 const Dashboard = () => {
   // Dummy Data
@@ -34,8 +25,8 @@ const Dashboard = () => {
       {/* Header Row */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-sm text-gray-500">Admin User</p>
+          <h1 className="text-3xl font-semibold">Dashboard</h1>
+          <p className="text-lg text-gray-500">Admin User</p>
         </div>
 
         {/* Search + Status + Notifications */}
@@ -51,13 +42,15 @@ const Dashboard = () => {
           </div>
 
           {/* Online Status */}
-          <span className="text-sm bg-green-100 text-green-600 px-3 py-1 rounded-full">
+           <div className="flex items-center space-x-4">
+          <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
             ● System Online
-          </span>
+          </div>
+          </div>
 
           {/* Notification */}
           <button className="relative">
-            <Bell size={20} className="text-gray-600" />
+            <Bell size={30} className="text-gray-600" />
             <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
               3
             </span>
@@ -70,20 +63,20 @@ const Dashboard = () => {
         {/* Donations */}
         <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
           <div>
-            <h3 className="text-gray-500 text-sm">Total Donations</h3>
-            <p className="text-2xl font-bold mt-2">₹26,500</p>
+            <h3 className="text-gray-500 text-md">Total Donations</h3>
+            <p className="text-2xl font-semibold mt-2">₹26,500</p>
             <p className="text-green-500 text-sm mt-1">+12.5% vs last month</p>
           </div>
           <div className="p-3 bg-orange-100 rounded-lg">
-            <HandCoins className="text-orange-500" />
+            <IndianRupee className="text-orange-400"/>
           </div>
         </div>
 
         {/* Active Members */}
         <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
           <div>
-            <h3 className="text-gray-500 text-sm">Active Members</h3>
-            <p className="text-2xl font-bold mt-2">3</p>
+            <h3 className="text-gray-500 text-md">Active Members</h3>
+            <p className="text-2xl font-semibold mt-2">3</p>
             <p className="text-green-500 text-sm mt-1">+8.2% vs last month</p>
           </div>
           <div className="p-3 bg-blue-100 rounded-lg">
@@ -94,31 +87,31 @@ const Dashboard = () => {
         {/* Upcoming Events */}
         <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
           <div>
-            <h3 className="text-gray-500 text-sm">Upcoming Events</h3>
-            <p className="text-2xl font-bold mt-2">3</p>
+            <h3 className="text-gray-500 text-md">Upcoming Events</h3>
+            <p className="text-2xl font-semibold mt-2">3</p>
           </div>
           <div className="p-3 bg-purple-100 rounded-lg">
-            <CalendarDays className="text-purple-500" />
+            <Calendar className="text-purple-500"/>
           </div>
         </div>
 
         {/* Temple Projects */}
         <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
           <div>
-            <h3 className="text-gray-500 text-sm">Temple Projects</h3>
-            <p className="text-2xl font-bold mt-2">1</p>
+            <h3 className="text-gray-500 text-md">Temple Projects</h3>
+            <p className="text-2xl font-semibold mt-2">1</p>
             <p className="text-green-500 text-sm mt-1">+25% vs last month</p>
           </div>
           <div className="p-3 bg-red-100 rounded-lg">
-            <Building className="text-red-500" />
+            <Landmark className="text-red-500"/>
           </div>
         </div>
 
         {/* Active Volunteers */}
         <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
           <div>
-            <h3 className="text-gray-500 text-sm">Active Volunteers</h3>
-            <p className="text-2xl font-bold mt-2">3</p>
+            <h3 className="text-gray-500 text-md">Active Volunteers</h3>
+            <p className="text-2xl font-semibold mt-2">3</p>
             <p className="text-green-500 text-sm mt-1">+15% vs last month</p>
           </div>
           <div className="p-3 bg-green-100 rounded-lg">
@@ -129,8 +122,8 @@ const Dashboard = () => {
         {/* Puja Bookings */}
         <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
           <div>
-            <h3 className="text-gray-500 text-sm">Puja Bookings</h3>
-            <p className="text-2xl font-bold mt-2">1</p>
+            <h3 className="text-gray-500 text-md">Puja Bookings</h3>
+            <p className="text-2xl font-semibold mt-2">1</p>
           </div>
           <div className="p-3 bg-yellow-100 rounded-lg">
             <span className="text-yellow-500 text-xl">🕉️</span>
@@ -175,7 +168,7 @@ const Dashboard = () => {
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-orange-100 rounded-full">
-              <HandCoins className="text-orange-500" size={18} />
+              <HandCoins className="text-orange-500" size={22} />
             </div>
             <div>
               <p className="font-medium">New donation received</p>
@@ -188,7 +181,7 @@ const Dashboard = () => {
 
           <div className="flex items-start gap-3">
             <div className="p-2 bg-purple-100 rounded-full">
-              <CalendarDays className="text-purple-500" size={18} />
+              <CalendarDays className="text-purple-500" size={22} />
             </div>
             <div>
               <p className="font-medium">Event scheduled</p>
@@ -201,7 +194,7 @@ const Dashboard = () => {
 
           <div className="flex items-start gap-3">
             <div className="p-2 bg-blue-100 rounded-full">
-              <Users className="text-blue-500" size={18} />
+              <FiUserPlus className="text-blue-500" size={22} />
             </div>
             <div>
               <p className="font-medium">New member joined</p>
@@ -214,7 +207,7 @@ const Dashboard = () => {
 
           <div className="flex items-start gap-3">
             <div className="p-2 bg-red-100 rounded-full">
-              <Building className="text-red-500" size={18} />
+              <Landmark className="text-red-500" size={22} />
             </div>
             <div>
               <p className="font-medium">Project milestone</p>
@@ -242,12 +235,12 @@ const Dashboard = () => {
           </button>
 
           <button className="p-4 bg-blue-50 rounded-xl flex flex-col items-center justify-center hover:bg-blue-100 transition">
-            <Users className="text-blue-500 mb-2" />
+            <FiUserPlus className="text-blue-500 mb-2 text-2xl" />
             <span className="font-medium text-blue-600">Add Member</span>
           </button>
 
           <button className="p-4 bg-red-50 rounded-xl flex flex-col items-center justify-center hover:bg-red-100 transition">
-            <Building className="text-red-500 mb-2" />
+            <Landmark className="text-red-500 mb-2" />
             <span className="font-medium text-red-600">Temple Project</span>
           </button>
         </div>
