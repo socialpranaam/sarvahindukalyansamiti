@@ -5,7 +5,6 @@ import ContactForm from '../components/Contact/ContactForm'
 const ContactUs = () => {
   return (
     <div>
-      
       <ContactCard/>
       <ContactForm/>
     </div>

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Phone, HandHeart, Users, Info } from "lucide-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ContactCard = () => {
   const options = [
@@ -29,14 +31,20 @@ const ContactCard = () => {
     },
   ];
 
+  useEffect(() => {
+    AOS.init({
+      duration: 800, // animation duration
+      once: true,    // sirf ek baar animation
+      easing: "ease-in-out",
+    });
+  }, []);
+
   return (
     <section className="relative bg-[#fdf3e7] overflow-x-hidden">
       {/* Background Image with Overlay */}
       <div
         className="absolute top-0 left-0 w-full h-64 md:h-80 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/deep.jpg')",
-        }}
+        style={{ backgroundImage: "url('/images/deep.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
       </div>
@@ -73,6 +81,8 @@ const ContactCard = () => {
           <div
             key={index}
             className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-105 cursor-pointer transition p-6 flex flex-col items-center"
+            data-aos="fade-up"
+            data-aos-delay={index * 150} // staggered animation for each card
           >
             {/* Icon Box */}
             <div className={`${item.color} p-3 rounded-xl shadow-md mb-4`}>

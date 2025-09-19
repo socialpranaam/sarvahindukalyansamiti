@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const testimonials = [
   {
@@ -56,105 +58,105 @@ const Testimonial = () => {
     testimonials[0]
   );
 
+  useEffect(() => {
+    AOS.init({ duration: 1200, once: true });
+  }, []);
+
   return (
     <section className="bg-[#fff6eb] py-20">
       <div className="container mx-auto px-4">
         {/* Heading */}
-        <h2 className="text-center text-3xl md:text-5xl font-semibold mb-12">
+        <h2
+          className="text-center text-3xl md:text-5xl font-semibold mb-12"
+          data-aos="fade-up"
+        >
           लोग क्या <span className="text-orange-500">कहते हैं</span>
           <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
         </h2>
 
-       {/* -------- Mobile Layout -------- */}
-      <div className="flex flex-col lg:hidden items-center  space-y-6">
-        {/* Main Image (Updated like desktop style) */}
-          <div className="relative w-60 h-60">
-       {/* Decorative dotted pattern (top-right) */}
+        {/* -------- Mobile Layout -------- */}
         <div
-        className="absolute -top-6 -right-6 w-16 h-16"
-        style={{
-        backgroundImage: 'radial-gradient(#d1d5db 2px, transparent 2px)',
-        backgroundSize: '0.75rem 0.75rem',
-        }}
-        ></div>
-
-        {/* Decorative orange circle outline (bottom-left) */}
-          <div className="absolute -bottom-2  w-16 h-16 border-2 border-orange-500 rounded-full z-0"></div>
-
-         {/* Main Image */}
-           <div
-            className="w-full h-full overflow-hidden shadow-xl relative z-10"
-            style={{
-             borderRadius: '50% 0 50% 50%',
-            }}
-              >
-            <img
-             src={currentMainTestimonial.avatar}
-             alt={currentMainTestimonial.name}
-              className="w-full h-full object-cover"
-             />
-        </div>
-        </div>
-
-        {/* Text */}
-        <div className="max-w-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">
-      {currentMainTestimonial.name}
-        </h3>
-          <p className="text-black leading-relaxed text-lg">
-        {currentMainTestimonial.text}
-         </p>
-         <div className="w-7 h-3 bg-orange-500 mt-4 rounded-xl"></div>
-        </div>
-
-        {/* Small Avatars Below */}
-        <div className="relative w-full flex justify-center items-center flex-wrap gap-4 mt-6">
-           {testimonials
-             .filter((t) => t.id !== currentMainTestimonial.id)
-              .map((testimonial) => (
-             <div
-          key={testimonial.id}
-          className="w-16 h-16 rounded-full overflow-hidden border-2 border-orange-400 shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
-          onClick={() => setCurrentMainTestimonial(testimonial)}
+          className="flex flex-col lg:hidden items-center space-y-6"
+          data-aos="zoom-in"
         >
-          <img
-            src={testimonial.avatar}
-            alt={testimonial.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        ))}
-        </div>
-      </div>
+          {/* Main Image */}
+          <div className="relative w-60 h-60" data-aos="flip-left">
+            <div
+              className="absolute -top-6 -right-6 w-16 h-16"
+              style={{
+                backgroundImage: "radial-gradient(#d1d5db 2px, transparent 2px)",
+                backgroundSize: "0.75rem 0.75rem",
+              }}
+            ></div>
+            <div className="absolute -bottom-2  w-16 h-16 border-2 border-orange-500 rounded-full z-0"></div>
+            <div
+              className="w-full h-full overflow-hidden shadow-xl relative z-10"
+              style={{ borderRadius: "50% 0 50% 50%" }}
+            >
+              <img
+                src={currentMainTestimonial.avatar}
+                alt={currentMainTestimonial.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
 
+          {/* Text */}
+          <div className="max-w-md" data-aos="fade-up" data-aos-delay="200">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              {currentMainTestimonial.name}
+            </h3>
+            <p className="text-black leading-relaxed text-lg">
+              {currentMainTestimonial.text}
+            </p>
+            <div className="w-7 h-3 bg-orange-500 mt-4 rounded-xl"></div>
+          </div>
+
+          {/* Small Avatars Below */}
+          <div
+            className="relative w-full flex justify-center items-center flex-wrap gap-4 mt-6"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            {testimonials
+              .filter((t) => t.id !== currentMainTestimonial.id)
+              .map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="w-16 h-16 rounded-full overflow-hidden border-2 border-orange-400 shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
+                  onClick={() => setCurrentMainTestimonial(testimonial)}
+                >
+                  <img
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
 
         {/* -------- Desktop Layout -------- */}
         <div className="hidden lg:flex relative flex-row items-center justify-center p-8 max-w-7xl mx-auto min-h-[500px]">
-          
-          <div className="flex flex-row items-center text-left w-2/3 xl:w-3/4">
-            
+          <div
+            className="flex flex-row items-center text-left w-2/3 xl:w-3/4"
+            data-aos="fade-right"
+          >
             {/* Main Image */}
             <div className="flex-shrink-0">
-              {/* Relative container for positioning the decorative elements */}
-              <div className="relative w-80 h-80">
-                
-                {/* Decorative dotted pattern (top-right) */}
+              <div className="relative w-80 h-80" data-aos="zoom-in">
                 <div
                   className="absolute -top-12 -right-10 w-32 h-32"
                   style={{
-                    backgroundImage: 'radial-gradient(#d1d5db 2px, transparent 2px)',
-                    backgroundSize: '1rem 1rem',
+                    backgroundImage:
+                      "radial-gradient(#d1d5db 2px, transparent 2px)",
+                    backgroundSize: "1rem 1rem",
                   }}
                 ></div>
-
-                {/* Decorative orange circle outline (bottom-left) */}
                 <div className="absolute -bottom-5 -left-5 w-32 h-32 border-4 border-orange-500 rounded-full z-0"></div>
                 <div
                   className="w-full h-full overflow-hidden shadow-xl relative z-10"
-                  style={{
-                     
-                     borderRadius: '50% 0 50% 50%',
-                  }}
+                  style={{ borderRadius: "50% 0 50% 50%" }}
                 >
                   <img
                     src={currentMainTestimonial.avatar}
@@ -162,13 +164,11 @@ const Testimonial = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
               </div>
             </div>
 
-
             {/* Text */}
-            <div className="ml-10 max-w-md">
+            <div className="ml-10 max-w-md" data-aos="fade-up" data-aos-delay="300">
               <h3 className="text-3xl font-bold text-gray-800 mb-4">
                 {currentMainTestimonial.name}
               </h3>
@@ -180,9 +180,11 @@ const Testimonial = () => {
           </div>
 
           {/* Right Side (Rotating Avatars) */}
-          <div className="w-1/3 xl:w-1/4 flex justify-center items-center">
+          <div
+            className="w-1/3 xl:w-1/4 flex justify-center items-center"
+            data-aos="fade-left"
+          >
             <div className="relative w-[250px] h-[250px] flex justify-center items-center group">
-              {/* Center Selected */}
               <div className="w-30 h-30 rounded-full overflow-hidden border-4 border-orange-400 shadow-lg z-20">
                 <img
                   src={currentMainTestimonial.avatar}
@@ -207,6 +209,7 @@ const Testimonial = () => {
                         className="absolute w-18 h-18 rounded-full overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-110 transition-transform duration-300"
                         style={{ transform: `translate(${x}px, ${y}px)` }}
                         onClick={() => setCurrentMainTestimonial(testimonial)}
+                        data-aos="zoom-in"
                       >
                         <img
                           src={testimonial.avatar}

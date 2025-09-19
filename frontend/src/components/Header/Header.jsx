@@ -72,53 +72,50 @@ const Header = () => {
         </div>
 
        {/* -------- Mobile Header -------- */}
-<div className="flex md:hidden items-center justify-between w-full text-white">
-  {/* Left Section (Menu + Logo) */}
-  <div className="flex items-center gap-6">
-    {/* Mobile Menu Button */}
-    <button
-      onClick={() => setIsOpen(!isOpen)}
-      className="text-2xl focus:outline-none"
-    >
-      <FaBars />
-    </button>
+        <div className="flex md:hidden items-center justify-between w-full text-white">
+           {/* Left Section (Menu + Logo) */}
+            <div className="flex items-center gap-6">
+             {/* Mobile Menu Button */}
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="text-2xl focus:outline-none">
+                  <FaBars />
+                </button>
 
-    {/* Logo */}
-    <div className="text-xl font-bold cursor-pointer">
-      <Link to="/"><img src="/images/logo.png" className="w-13 h-12" /></Link>
-    </div>
-  </div>
+                {/* Logo */}
+                <div className="text-xl font-bold cursor-pointer">
+                <Link to="/"><img src="/images/logo.png" className="w-13 h-12" /></Link>
+            </div>
+        </div>
 
-  {/* Right Section (Cart + Contact + Donate Button) */}
-  <div className="flex items-center gap-4">
+          {/* Right Section (Cart + Contact + Donate Button) */}
+          <div className="flex items-center gap-4">
    
 
-    {/* Divider */}
-    {/* <div className="h-6 border-l border-gray-400"></div> */}
+            {/* Divider */}
+            {/* <div className="h-6 border-l border-gray-400"></div> */}
 
-    {/* Phone Icon */}
-    <Link
-      to="/contact"
-      className={`${getLinkClasses(
-        "/contact"
-      )} flex items-center gap-1 text-lg`}
-    >
-      <IoMdCall />
-      संपर्क करें
-    </Link>
+            {/* Phone Icon */}
+              <Link
+                to="/contact"
+                className={`${getLinkClasses(
+                "/contact"
+                )} flex items-center gap-1 text-lg`}>
+                <IoMdCall />
+                संपर्क करें
+              </Link>
 
-    {/* Donate Button */}
-    <Link
-      to="/donation"
-      className="px-3 py-2 rounded-lg bg-orange-400 text-white font-semibold
-        transform transition-all duration-300 ease-in-out
-        hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
-    >
-      दान करें
-    </Link>
-  </div>
-</div>
-</div>
+              {/* Donate Button */}
+              <Link
+                to="/donation"
+                className="px-3 py-2 rounded-lg bg-orange-400 text-white font-semibold
+                transform transition-all duration-300 ease-in-out
+                hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600">
+                दान करें
+               </Link>
+          </div>
+        </div>
+      </div>
         
     
 

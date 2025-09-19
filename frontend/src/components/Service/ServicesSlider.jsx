@@ -90,7 +90,7 @@ const ServicesSlider = () => {
           return (
             <motion.div
               key={i}
-              initial={{ y: -400, opacity: 0 }}
+              initial={{ y: -200, opacity: 0 }}
               animate={{
                 y: -position * 20,
                 scale: 1 - position * 0.05,

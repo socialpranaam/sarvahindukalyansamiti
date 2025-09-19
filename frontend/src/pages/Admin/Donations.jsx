@@ -85,7 +85,7 @@ const initialDonations = [
 ];
 
 const Donations = () => {
-  const [donations] = useState(initialDonations); // ab setDonations ki need nahi
+  const [donations] = useState(initialDonations); 
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All Types");
   const [methodFilter, setMethodFilter] = useState("All Methods");

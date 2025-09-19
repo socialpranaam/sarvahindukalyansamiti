@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const news = [
   {
@@ -40,16 +42,26 @@ const news = [
 ];
 
 const NewsCards = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800, // animation duration
+      once: true,    // sirf ek baar animation
+      easing: "ease-in-out",
+    });
+  }, []);
+
   return (
     <section className="bg-[#fff6eb] py-12">
       <div className="max-w-7xl mx-auto px-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {news.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition relative"
+            data-aos="fade-up"
+            data-aos-delay={idx * 150} // staggered effect
           >
-            {/* Date */}
-            <div className="absolute  bg-white/80 m-2 shadow-md rounded-sm px-3 py-2 text-center">
+            {/* Date Badge */}
+            <div className="absolute bg-white/80 m-2 shadow-md rounded-sm px-3 py-2 text-center z-10">
               <p className="text-sm font-bold">{item.date.split(" ")[0]}</p>
               <p className="text-xs">{item.date.split(" ")[1]}</p>
               <p className="text-xs">{item.date.split(" ")[2]}</p>
@@ -60,6 +72,8 @@ const NewsCards = () => {
               src={item.img}
               alt={item.title}
               className="w-full h-48 object-cover"
+              data-aos="zoom-in"
+              data-aos-delay={idx * 200} // image animation delay
             />
 
             {/* Content */}

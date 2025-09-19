@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const newsData = [
   {
@@ -21,6 +23,10 @@ const newsData = [
 const NewsUpdates = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? newsData.length - 1 : prev - 1));
   };
@@ -32,7 +38,7 @@ const NewsUpdates = () => {
   return (
     <div className="bg-[#fff4ec] py-16 px-6">
       {/* Heading */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-12" data-aos="fade-down">
         <h2 className="text-3xl md:text-5xl font-semibold text-gray-900">
           ताजा <span className="text-orange-500">समाचार</span> और{" "}
           <span className="text-orange-500">अपडेट</span>
@@ -50,6 +56,7 @@ const NewsUpdates = () => {
             <div
               key={item.id}
               className="min-w-full bg-white rounded-2xl shadow-md overflow-hidden flex flex-col p-6"
+              data-aos="zoom-in"
             >
               <img
                 src={item.img}
@@ -65,7 +72,10 @@ const NewsUpdates = () => {
                   <span className="text-orange-500 text-lg font-medium">
                     {item.date}
                   </span>
-                  <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                  <button
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+                    data-aos="fade-up"
+                  >
                     अधिक जानें
                   </button>
                 </div>
@@ -78,12 +88,14 @@ const NewsUpdates = () => {
         <button
           onClick={handlePrev}
           className="absolute top-1/2 left-2 -translate-y-1/2 bg-orange-500 text-white p-2 rounded-full shadow-md hover:bg-orange-600 transition"
+          data-aos="fade-right"
         >
           <FaArrowLeft />
         </button>
         <button
           onClick={handleNext}
           className="absolute top-1/2 right-2 -translate-y-1/2 bg-orange-500 text-white p-2 rounded-full shadow-md hover:bg-orange-600 transition"
+          data-aos="fade-left"
         >
           <FaArrowRight />
         </button>
@@ -91,10 +103,11 @@ const NewsUpdates = () => {
 
       {/* Large screen grid */}
       <div className="hidden md:grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
-        {newsData.map((item) => (
+        {newsData.map((item, index) => (
           <div
             key={item.id}
             className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col p-6"
+            data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
           >
             <img
               src={item.img}
@@ -110,7 +123,10 @@ const NewsUpdates = () => {
                 <span className="text-orange-500 text-lg font-medium">
                   {item.date}
                 </span>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <button
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+                  data-aos="zoom-in-up"
+                >
                   अधिक जानें
                 </button>
               </div>

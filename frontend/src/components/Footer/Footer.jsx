@@ -1,5 +1,5 @@
-import { Landmark } from "lucide-react";
 import React from "react";
+import { Landmark } from "lucide-react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdLocationOn } from "react-icons/md";
 
@@ -12,7 +12,7 @@ const Footer = () => {
           
           {/* About */}
           <div>
-            <p className="text-white flex items-center gap-2 font-medium mt-2">
+            <p className="text-white flex items-center gap-1 font-medium mt-2">
               <Landmark size={20}/> सर्व हिन्दू कल्याण समिति
             </p>
             <p className="text-white mt-4 text-sm leading-relaxed">
@@ -67,7 +67,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="text-center py-4 text-sm text-white border-t border-gray-200">
+      <div className="text-center py-4 text-sm text-white  bg-gray-900">
         © 2025 सर्व हिन्दू कल्याण समिति — सभी अधिकार सुरक्षित
       </div>
     </footer>

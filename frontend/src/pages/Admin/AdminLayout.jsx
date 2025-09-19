@@ -14,7 +14,7 @@ const AdminLayout = () => {
               S
             </div>
             <div>
-              <h2 className="font-bold text-xl">Sarv Hindu</h2>
+              <h2 className="font-semibold text-xl">Sarv Hindu</h2>
               <p className="text-md text-gray-500">Kalyan Samiti</p>
             </div>
           </div>
