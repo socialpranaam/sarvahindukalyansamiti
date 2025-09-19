@@ -5,6 +5,7 @@ import { Phone, MapPin, CalendarDays, BriefcaseBusiness, LayoutGrid, List, Users
 import { FaRegStar } from "react-icons/fa";
 import { FiUserCheck, FiUserPlus } from "react-icons/fi";
 
+
 const initialMembers = [
   {
     initials: "RK",
@@ -142,7 +143,7 @@ const Members = () => {
 
       {/* Actions */}
       <div className="flex items-center gap-3 mb-6">
-        <button className="px-6 py-3 border rounded-lg flex items-center gap-2  text-gray-700 hover:bg-gray-100">
+        <button className="px-5 py-3 flex justify-between border border-gray-300 cursor-pointer rounded-lg flex items-center gap-2  text-gray-700 hover:bg-gray-100">
           <HiArrowDownTray size={20}/> Export
         </button>
         <button
@@ -162,8 +163,7 @@ const Members = () => {
               },
             ])
           }
-          className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
-          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
+          className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
         >
           <GoPlus size={25}/> Add Member
         </button>

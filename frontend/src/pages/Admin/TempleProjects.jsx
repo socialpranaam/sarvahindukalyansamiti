@@ -1,6 +1,5 @@
 import React from "react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
-import { MdOutlineTempleHindu } from "react-icons/md";
 import { Bell, Landmark } from "lucide-react";
 import { FiPlus } from "react-icons/fi";
 
@@ -77,8 +76,7 @@ const TempleProjects = () => {
         <p className="text-gray-600">
           Manage temple construction and development projects
         </p>
-        <button className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
-          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
+        <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
           <FiPlus size={20}/> New Project
         </button>
       </div>

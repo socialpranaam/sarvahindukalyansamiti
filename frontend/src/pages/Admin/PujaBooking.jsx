@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Calendar, Clock, MapPin, Phone } from "lucide-react";
-import { Flame, Hourglass, CheckCircle2, IndianRupee } from "lucide-react";
+import { Flame, IndianRupee } from "lucide-react";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { LuPlus } from "react-icons/lu";
 import { FiCheckCircle } from "react-icons/fi";
@@ -35,7 +35,7 @@ const PujaBooking = () => {
       id: 3,
       puja: "Lakshmi Puja",
       client: "Priya Sharma",
-      date: new Date().toISOString().split("T")[0], 
+      date: new Date().toISOString().split("T")[0],
       time: "08:00",
       location: "Temple",
       phone: "9123456789",
@@ -96,17 +96,16 @@ const PujaBooking = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-        <h1 className="text-3xl font-semibold text-gray-800">Puja Bookings</h1>
-        <p className="text-lg text-gray-600">
-            Manage online puja requests and sheduling 
+          <h1 className="text-3xl font-semibold text-gray-800">Puja Bookings</h1>
+          <p className="text-lg text-gray-600">
+            Manage online puja requests and scheduling
           </p>
-          </div>
+        </div>
         <div className="flex gap-4">
-          <button className="px-6 py-2 flex items-center gap-4 border rounded-lg text-gray-600 hover:bg-gray-100">
-           <HiArrowDownTray size={20} /> Export
+          <button className="px-6 py-2 flex items-center gap-4 border cursor-pointer rounded-lg text-gray-600 hover:bg-gray-100">
+            <HiArrowDownTray size={20} /> Export
           </button>
-          <button className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
-          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600">
+          <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
             <LuPlus size={20}/> New Booking
           </button>
         </div>
@@ -201,77 +200,79 @@ const PujaBooking = () => {
       {filteredBookings.length === 0 ? (
         <p className="text-gray-500">No bookings found.</p>
       ) : (
-        filteredBookings.map((b) => (
-          <div
-            key={b.id}
-            className="bg-white p-5 mb-4 "
-          >
-            <h3 className="text-lg font-semibold">{b.puja}</h3>
-            <p className="text-gray-600 mb-3">{b.client}</p>
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+          {filteredBookings.map((b) => (
+            <div
+              key={b.id}
+              className="bg-white p-5 rounded-xl shadow-sm"
+            >
+              <h3 className="text-lg font-semibold">{b.puja}</h3>
+              <p className="text-gray-600 mb-3">{b.client}</p>
 
-            <div className="space-y-2 text-gray-600 text-sm mb-3">
-              <p className="flex items-center gap-2">
-                <Calendar size={16} />{" "}
-                {new Date(b.date).toLocaleDateString("en-GB", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </p>
-              <p className="flex items-center gap-2">
-                <Clock size={16} /> {b.time}
-              </p>
-              <p className="flex items-center gap-2">
-                <MapPin size={16} /> {b.location}
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone size={16} /> {b.phone}
-              </p>
-              <p className="font-semibold text-gray-800">₹{b.amount}</p>
-            </div>
+              <div className="space-y-2 text-gray-600 text-sm mb-3">
+                <p className="flex items-center gap-2">
+                  <Calendar size={16} />{" "}
+                  {new Date(b.date).toLocaleDateString("en-GB", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+                <p className="flex items-center gap-2">
+                  <Clock size={16} /> {b.time}
+                </p>
+                <p className="flex items-center gap-2">
+                  <MapPin size={16} /> {b.location}
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone size={16} /> {b.phone}
+                </p>
+                <p className="font-semibold text-gray-800">₹{b.amount}</p>
+              </div>
 
-            {/* Status */}
-            <div className="flex gap-2 mb-4">
-              <span
-                className={`px-3 py-1 text-xs rounded-lg ${
-                  b.status === "Confirmed"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-yellow-100 text-yellow-600"
-                }`}
-              >
-                {b.status}
-              </span>
-              <span
-                className={`px-3 py-1 text-xs rounded-lg ${
-                  b.payment === "Done"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-yellow-100 text-yellow-600"
-                }`}
-              >
-                Payment: {b.payment}
-              </span>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-4">
-              {b.status === "Pending" && (
-                <button
-                  onClick={() => confirmBooking(b.id)}
-                  className="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+              {/* Status */}
+              <div className="flex gap-2 mb-4">
+                <span
+                  className={`px-3 py-1 text-xs rounded-lg ${
+                    b.status === "Confirmed"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-yellow-100 text-yellow-600"
+                  }`}
                 >
-                  ✓ Confirm
+                  {b.status}
+                </span>
+                <span
+                  className={`px-3 py-1 text-xs rounded-lg ${
+                    b.payment === "Done"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-yellow-100 text-yellow-600"
+                  }`}
+                >
+                  Payment: {b.payment}
+                </span>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-4">
+                {b.status === "Pending" && (
+                  <button
+                    onClick={() => confirmBooking(b.id)}
+                    className="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+                  >
+                    ✓ Confirm
+                  </button>
+                )}
+                <button
+                  onClick={() => cancelBooking(b.id)}
+                  className="flex-1 border border-red-500 text-red-500 py-2 rounded-lg hover:bg-red-50"
+                >
+                  ✕ Cancel
                 </button>
-              )}
-              <button
-                onClick={() => cancelBooking(b.id)}
-                className="flex-1 border border-red-500 text-red-500 py-2 rounded-lg hover:bg-red-50"
-              >
-                ✕ Cancel
-              </button>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

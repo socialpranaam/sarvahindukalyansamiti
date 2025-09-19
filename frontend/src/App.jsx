@@ -48,7 +48,7 @@ function App() {
           <Route path="projects" element={<TempleProjects />} />
           <Route path="events" element={<Events />} />
           <Route path="members" element={<Members />} />
-          <Route path="puja" element={<PujaBooking />} /> 
+          <Route path="pujabooking" element={<PujaBooking />} /> 
         </Route>
       </Routes>
     </BrowserRouter>

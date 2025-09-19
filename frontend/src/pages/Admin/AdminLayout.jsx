@@ -1,9 +1,10 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { Calendar, Hand, HandCoins, HandHelping, Home, Landmark, User, User2, Users } from "lucide-react";
+import { Calendar, HandCoins, HandHelping, Home, Landmark, Users } from "lucide-react";
 
 const AdminLayout = () => {
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="admin-font">
+    <div className="flex h-screen bg-gray-100 ">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r p-6 flex flex-col justify-between fixed h-full">
         {/* Profile Section */}
@@ -88,7 +89,7 @@ const AdminLayout = () => {
             </NavLink>
 
             <NavLink
-              to="/admin/puja"
+              to="/admin/pujabooking"
               className={({ isActive }) =>
                 `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
                   isActive
@@ -116,12 +117,13 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 h-screen overflow-y-auto ">
+      <main className="flex-1 ml-64 h-screen overflow-y-auto">
         {/* Dynamic Nested Routes */}
-        <div className="bg-white p-6  shadow min-h-full">
+        <div className="bg-white p-6 shadow min-h-full">
           <Outlet />
         </div>
       </main>
+    </div>
     </div>
   );
 };

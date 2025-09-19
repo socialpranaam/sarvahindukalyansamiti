@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { Bell } from "lucide-react";
-import { HiArrowDownTray } from "react-icons/hi2";
-import { GoPlus } from "react-icons/go";
-import { FaPlus } from "react-icons/fa";
 import { FiFileText, FiPlus } from "react-icons/fi";
 
 
@@ -190,13 +187,12 @@ const Donations = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={handleExportCSV}
-              className="px-5 py-3 border flex justify-between items-center gap-2 rounded-md text-gray-700 hover:bg-gray-100"
+              className="px-5 py-3 border border-gray-300 flex justify-between items-center gap-2 cursor-pointer rounded-lg text-gray-700 hover:bg-gray-100"
             >
               <FiFileText size={20}/> Export CSV
             </button>
             <button
-              className="px-8 py-3 w-fit mx-auto md:mx-0 cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 
-          transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
+              className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
             >
               <FiPlus size={20}/> Add Donation
             </button>
