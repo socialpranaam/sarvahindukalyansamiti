@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone, HandHeart } from "lucide-react";
+import { Phone, HandHeart, Users, Info } from "lucide-react";
 
 const ContactCard = () => {
   const options = [
@@ -7,21 +7,25 @@ const ContactCard = () => {
       icon: <Phone className="w-8 h-8 text-white" />,
       title: "पूजा बुकिंग",
       desc: "तुरंत संपर्क",
+      color: "bg-orange-500",
     },
     {
       icon: <HandHeart className="w-8 h-8 text-white" />,
       title: "दान सहायता",
       desc: "मार्गदर्शन",
+      color: "bg-orange-500",
     },
     {
-      icon: <HandHeart className="w-8 h-8 text-white" />,
+      icon: <Users className="w-8 h-8 text-white" />,
       title: "स्वयंसेवक",
       desc: "पंजीकरण",
+      color: "bg-orange-500",
     },
     {
-      icon: <HandHeart className="w-8 h-8 text-white" />,
+      icon: <Info className="w-8 h-8 text-white" />,
       title: "सामान्य जानकारी",
       desc: "सभी सेवाएं",
+      color: "bg-orange-500",
     },
   ];
 
@@ -31,7 +35,7 @@ const ContactCard = () => {
       <div
         className="absolute top-0 left-0 w-full h-64 md:h-80 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/deep.jpg')", 
+          backgroundImage: "url('/images/deep.jpg')",
         }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
@@ -50,12 +54,11 @@ const ContactCard = () => {
           {/* Heading + Line */}
           <div className="relative mt-[-30px] md:mt-[-60px] flex flex-col items-center">
             <h2 className="text-3xl md:text-5xl font-medium text-gray-900 whitespace-nowrap">
-               <span className="text-orange-500">संपर्क</span> करें
+              <span className="text-orange-500">संपर्क</span> करें
             </h2>
             <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
           </div>
 
-         
           <div className="max-w-xl mx-auto text-center mt-6 px-6">
             <p className="text-lg text-gray-800 leading-relaxed">
               हमसे जुड़ें और अपने सवाल, सुझाव या सेवा संबंधी जानकारी के लिए संपर्क करें।
@@ -71,8 +74,8 @@ const ContactCard = () => {
             key={index}
             className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-105 cursor-pointer transition p-6 flex flex-col items-center"
           >
-           
-            <div className="bg-orange-500 p-3 rounded-xl shadow-md mb-4">
+            {/* Icon Box */}
+            <div className={`${item.color} p-3 rounded-xl shadow-md mb-4`}>
               {item.icon}
             </div>
             {/* Text */}

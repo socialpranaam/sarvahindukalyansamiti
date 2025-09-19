@@ -1,18 +1,19 @@
+import { Landmark } from "lucide-react";
 import React from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdLocationOn } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#f97316] border-t border-gray-200">
+    <footer className="bg-black border-t border-gray-200">
       {/* Middle Section */}
       <div className=" py-10 text-white">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10">
           
           {/* About */}
           <div>
-            <p className="text-white font-medium mt-2">
-              🏛 सर्व हिन्दू कल्याण समिति
+            <p className="text-white flex items-center gap-2 font-medium mt-2">
+              <Landmark size={20}/> सर्व हिन्दू कल्याण समिति
             </p>
             <p className="text-white mt-4 text-sm leading-relaxed">
               धर्म, सेवा और समाज कल्याण की दिशा में आपका विश्वसनीय साथी

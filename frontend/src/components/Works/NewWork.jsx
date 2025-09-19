@@ -1,9 +1,10 @@
 import React from "react";
-import { Landmark } from "lucide-react";
+import { Landmark, BookOpenCheck, Sun } from "lucide-react"; // extra icons import kiye
 
 const services = [
   {
     title: "पूजा–पाठ बुकिंग",
+    icon: <BookOpenCheck size={30} />, // icon add
     points: [
       "मंदिर या घर पर पूजन (गृह प्रवेश, हवन, सत्यनारायण कथा आदि)",
       "ऑनलाइन बुकिंग सुविधा",
@@ -12,10 +13,11 @@ const services = [
   },
   {
     title: "ज्योतिष एवं परामर्श",
+    icon: <Sun size={30} />, // icon add
     points: [
-      "मंदिर या घर पर पूजन (गृह प्रवेश, हवन, सत्यनारायण कथा आदि)",
-      "ऑनलाइन बुकिंग सुविधा",
-      "पंडितजी और सामग्री की संपूर्ण व्यवस्था",
+      "जन्म कुंडली और राशि विश्लेषण",
+      "ऑनलाइन/ऑफलाइन परामर्श",
+      "जीवन और करियर संबंधी मार्गदर्शन",
     ],
   },
 ];
@@ -44,7 +46,7 @@ const NewServices = () => {
           >
             {/* Icon */}
             <div className="w-12 h-12 bg-orange-400 text-white flex items-center justify-center rounded-lg">
-              <Landmark size={30} />
+              {service.icon}
             </div>
 
             {/* Title */}
@@ -52,15 +54,15 @@ const NewServices = () => {
               {service.title}
             </h3>
 
+            {/* Points */}
             <ul className="text-gray-700 space-y-2 text-md">
-            {service.points.map((point, i) => (
-           <li key={i} className="flex items-start gap-2">
-            <span className="mt-1">•</span>
-            <span>{point}</span>
-           </li>
-            ))}
-          </ul>
-
+              {service.points.map((point, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="mt-1">•</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

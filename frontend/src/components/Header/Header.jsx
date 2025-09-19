@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { IoCartOutline } from "react-icons/io5";
 import { IoMdCall } from "react-icons/io";
 import { FaBars, FaTimes } from "react-icons/fa";
 
@@ -33,7 +32,7 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
-        isScrolled ? "bg-black/60" : "bg-transparent"
+        isScrolled ? "bg-black/80" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -45,20 +44,18 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="flex space-x-8 font-sm gap-6">
+          <nav className="flex space-x-8 font-sm gap-4">
             <Link to="/" className={getLinkClasses("/")}>मुख्य पृष्ठ</Link>
             <Link to="/about" className={getLinkClasses("/about")}>हमारे बारे में</Link>
             <Link to="/ourworks" className={getLinkClasses("/ourworks")}>हमारे कार्य</Link>
             <Link to="/donation" className={getLinkClasses("/donation")}>दान करें</Link>
             <Link to="/news" className={getLinkClasses("/news")}>समाचार</Link>
-            <Link to="/cart" className={`${getLinkClasses("/cart")} text-2xl`}>
-              <IoCartOutline />
-            </Link>
             <div className="h-5 border-l border-gray-400"></div>
             <Link to="/contact" className={`${getLinkClasses("/contact")} flex items-center gap-2`}>
               <IoMdCall className="text-xl" />
               संपर्क करें
             </Link>
+            <Link to="/admin" className={getLinkClasses("/admin")}>डैशबोर्ड</Link>
           </nav>
 
           {/* Donate Button */}
@@ -94,16 +91,10 @@ const Header = () => {
 
   {/* Right Section (Cart + Contact + Donate Button) */}
   <div className="flex items-center gap-4">
-    {/* Cart */}
-    <Link
-      to="/cart"
-      className={`${getLinkClasses("/cart")} text-2xl flex items-center`}
-    >
-      <IoCartOutline />
-    </Link>
+   
 
     {/* Divider */}
-    <div className="h-6 border-l border-gray-400"></div>
+    {/* <div className="h-6 border-l border-gray-400"></div> */}
 
     {/* Phone Icon */}
     <Link
@@ -113,6 +104,7 @@ const Header = () => {
       )} flex items-center gap-1 text-lg`}
     >
       <IoMdCall />
+      संपर्क करें
     </Link>
 
     {/* Donate Button */}
