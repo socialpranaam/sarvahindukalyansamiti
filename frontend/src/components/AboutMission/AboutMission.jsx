@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const AboutMission = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1200, // animation ki duration
+      once: true,     // ek hi baar chale scroll par
+    });
+  }, []);
+
   return (
-    <div className="relative bg-[#fdf3e7] overflow-x-hidden"> 
+    <div className="relative bg-[#fdf3e7] overflow-x-hidden">
       {/* Background Image with Overlay */}
       <div
-        className="absolute top-0 left-0 w-full h-64 md:h-80 bg-cover bg-center" 
+        className="absolute top-0 left-0 w-full h-64 md:h-80 bg-cover bg-center"
         style={{
           backgroundImage: "url('/images/hero.jpg')",
         }}
@@ -16,15 +25,14 @@ const AboutMission = () => {
       {/* White Triangle Box Full Width */}
       <div className="relative z-10 text-center pt-48 md:pt-80 pb-12">
         <div className="bg-[#fdf3e7] relative inline-block w-full">
-          
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
             w-0 h-0 border-l-[150px] md:border-l-[250px] border-r-[150px] md:border-r-[250px] border-b-[100px] md:border-b-[180px] 
             border-l-transparent border-r-transparent border-b-[#fdf3e7]"
           ></div>
 
-          <div className="relative mt-[-30px] md:mt-[-60px] flex flex-col items-center"> 
-            <h2 className="text-3xl md:text-5xl font-medium text-gray-900 whitespace-nowrap"> 
+          <div className="relative mt-[-30px] md:mt-[-60px] flex flex-col items-center">
+            <h2 className="text-3xl md:text-5xl font-medium text-gray-900 whitespace-nowrap">
               हमारे <span className="text-orange-500">बारे</span> में
             </h2>
             <div className="w-32 h-1 mx-auto mt-4 bg-gradient-to-r from-transparent via-black to-transparent"></div>
@@ -42,7 +50,7 @@ const AboutMission = () => {
       </div>
 
       {/* Mission & Vision Section */}
-      <div className="pb-16 max-w-5xl mx-auto text-center mt-0 md:mt-12 px-6"> 
+      <div className="pb-16 max-w-5xl mx-auto text-center mt-0 md:mt-12 px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Mission Card */}
           <div
@@ -52,11 +60,12 @@ const AboutMission = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
+            data-aos="fade-down"
           >
             <div className="absolute inset-0 bg-black/50"></div>
             <div className="relative z-10 w-full">
-              <div className="bg-[#e5721b]/60 p-6 rounded-b-2xl mx-4 md:mx-9 inline-block"> 
-                <h3 className="text-4xl md:text-5xl font-semibold text-white text-center mt-6"> 
+              <div className="bg-[#e5721b]/60 p-6 rounded-b-2xl mx-4 md:mx-9 inline-block">
+                <h3 className="text-4xl md:text-5xl font-medium text-white text-center mt-6">
                   हमारा मिशन
                 </h3>
                 <p className="text-base leading-relaxed mt-4 text-white">
@@ -80,11 +89,13 @@ const AboutMission = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
+            data-aos="fade-up"
+            data-aos-delay="200"
           >
             <div className="absolute inset-0 bg-black/50"></div>
             <div className="relative z-12 w-full">
-              <div className="bg-orange-500/60 p-6 rounded-b-2xl mx-4 md:mx-9 inline-block"> 
-                <h3 className="text-4xl md:text-5xl font-semibold text-white text-center mt-6"> 
+              <div className="bg-orange-500/60 p-6 rounded-b-2xl mx-4 md:mx-9 inline-block">
+                <h3 className="text-4xl md:text-5xl font-medium text-white text-center mt-6">
                   हमारा विज़न
                 </h3>
                 <p className="leading-relaxed mt-4 text-white">

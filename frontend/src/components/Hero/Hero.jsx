@@ -25,7 +25,7 @@ const Hero = () => {
         className="relative z-10 max-w-5xl px-6 md:px-12 text-left text-white md:ml-22 flex flex-col justify-center h-full"
       >
         <h1
-          className="text-3xl md:text-5xl font-semibold leading-snug max-w-xl"
+          className="text-3xl md:text-5xl font-medium leading-snug max-w-xl"
           data-aos="fade-right"
         >
           आइए, मिलकर बनाएँ{" "}
@@ -38,7 +38,7 @@ const Hero = () => {
           data-aos="fade-left"
           data-aos-delay="300"
         >
-          धर्म, सेवा और समाज कल्याण की दिशा में – सर्व हिन्द कल्याण समिति धर्म,
+          धर्म, सेवा और समाज कल्याण की दिशा में – सर्व हिन्दू कल्याण समिति धर्म,
           सेवा और समाज कल्याण की दिशा में कल्याण समिति धर्म, सेवा और समाज
           कल्याण की दिशा में हिन्दू कल्याण समिति ।
         </p>

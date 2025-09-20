@@ -89,12 +89,7 @@ const Header = () => {
         </div>
 
           {/* Right Section (Cart + Contact + Donate Button) */}
-          <div className="flex items-center gap-4">
-   
-
-            {/* Divider */}
-            {/* <div className="h-6 border-l border-gray-400"></div> */}
-
+          <div className="flex items-center gap-4">          
             {/* Phone Icon */}
               <Link
                 to="/contact"
@@ -117,52 +112,44 @@ const Header = () => {
         </div>
       </div>
         
-    
-
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden bg-black bg-opacity-90 text-white font-medium flex  flex-col space-y-4 px-6 py-6 relative">
           {/* Close button top-right */}
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 text-2xl focus:outline-none"
-          >
+            className="absolute top-4 right-4 text-2xl focus:outline-none">
             <FaTimes />
           </button>
 
           <Link
             to="/"
             className={getLinkClasses("/")}
-            onClick={() => setIsOpen(false)}
-          >
+            onClick={() => setIsOpen(false)}>
             मुख्य पृष्ठ
           </Link>
           <Link
             to="/about"
             className={getLinkClasses("/about")}
-            onClick={() => setIsOpen(false)}
-          >
+            onClick={() => setIsOpen(false)}>
             हमारे बारे में
           </Link>
           <Link
             to="/ourworks"
             className={getLinkClasses("/ourworks")}
-            onClick={() => setIsOpen(false)}
-          >
+            onClick={() => setIsOpen(false)}>
             हमारे कार्य
           </Link>
           <Link
             to="/donation"
             className={getLinkClasses("/donation")}
-            onClick={() => setIsOpen(false)}
-          >
+            onClick={() => setIsOpen(false)}>
             दान करें
           </Link>
           <Link
             to="/news"
             className={getLinkClasses("/news")}
-            onClick={() => setIsOpen(false)}
-          >
+            onClick={() => setIsOpen(false)}>
             समाचार
           </Link>
         </div>
