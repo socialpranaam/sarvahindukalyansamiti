@@ -64,7 +64,7 @@ const SocialWork = () => {
       {/* Slider */}
       <div className="relative max-w-5xl mx-auto mt-20 px-6">
         <div className="bg-orange-500 rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center
-         transition-all duration-900 ease-in-out h-[600px] md:h-[350px]">
+         transition-all duration-200 ease-in-out h-[600px] md:h-[350px]">
           
           {/* Image Section */}
           <div className="w-full md:w-1/2 h-full p-4">

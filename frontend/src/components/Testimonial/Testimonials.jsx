@@ -58,6 +58,19 @@ const Testimonial = () => {
     testimonials[0]
   );
 
+  // ✅ Auto change functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMainTestimonial((prev) => {
+        const currentIndex = testimonials.findIndex((t) => t.id === prev.id);
+        const nextIndex = (currentIndex + 1) % testimonials.length;
+        return testimonials[nextIndex];
+      });
+    }, 4000); // 4 second me auto change hoga
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
@@ -82,7 +95,7 @@ const Testimonial = () => {
           {/* Main Image */}
           <div className="relative w-60 h-60" data-aos="flip-left">
             <div
-              className="absolute -top-6 -right-6 w-16 h-16"
+              className="absolute -top-6 -right-7 w-16 h-16"
               style={{
                 backgroundImage: "radial-gradient(#d1d5db 2px, transparent 2px)",
                 backgroundSize: "0.75rem 0.75rem",
@@ -146,7 +159,7 @@ const Testimonial = () => {
             <div className="flex-shrink-0">
               <div className="relative w-80 h-80" data-aos="zoom-in">
                 <div
-                  className="absolute -top-12 -right-10 w-32 h-32"
+                  className="absolute -top-8 -right-8 w-32 h-32"
                   style={{
                     backgroundImage:
                       "radial-gradient(#d1d5db 2px, transparent 2px)",
@@ -168,7 +181,11 @@ const Testimonial = () => {
             </div>
 
             {/* Text */}
-            <div className="ml-10 max-w-md" data-aos="fade-up" data-aos-delay="300">
+            <div
+              className="ml-10 max-w-md"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
               <h3 className="text-3xl font-bold text-gray-800 mb-4">
                 {currentMainTestimonial.name}
               </h3>
@@ -211,10 +228,12 @@ const Testimonial = () => {
                         onClick={() => setCurrentMainTestimonial(testimonial)}
                         data-aos="zoom-in"
                       >
+                        {/* 👇 yaha fix kiya - image seedhi रहेगी */}
                         <img
                           src={testimonial.avatar}
                           alt={testimonial.name}
                           className="w-full h-full object-cover"
+                          style={{ transform: "rotate(calc(-1 * var(--tw-rotate)))" }}
                         />
                       </div>
                     );

@@ -1,7 +1,15 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Prachar = () => {
+ 
+  const navigate= useNavigate();
+
+  const handleClick=()=>{
+    navigate("/donation");
+  }
+
   return (
     <div className="bg-[#fff4ec] flex justify-center py-10">
       <div
@@ -42,6 +50,7 @@ const Prachar = () => {
           <br />
 
           <button
+          onClick={handleClick}
             className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3
           transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
             data-aos="zoom-in-up"

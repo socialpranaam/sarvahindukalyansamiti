@@ -84,9 +84,9 @@ const NewsCards = () => {
               <p className="text-gray-600 text-sm mb-3">{item.desc}</p>
               <a
                 href="#"
-                className="text-orange-500 font-medium hover:underline"
+                className="text-orange-400 font-medium hover:text-orange-600"
               >
-                Read More
+                अधिक जानें....
               </a>
             </div>
           </div>

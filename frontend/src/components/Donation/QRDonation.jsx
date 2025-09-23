@@ -26,3 +26,6 @@ const QRDonation = () => {
 };
 
 export default QRDonation;
+
+
+
