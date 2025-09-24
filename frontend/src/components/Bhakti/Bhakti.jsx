@@ -10,7 +10,7 @@ const Bhakti = () => {
 
   return (
     <section className="bg-[#fdf6ef] py-12 md:py-20">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+      <div className="max-w-7xl mx-auto px-2 grid md:grid-cols-2 gap-10 items-center">
         
         {/* LEFT CONTENT */}
         <div

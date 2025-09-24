@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import {Link} from "react-router-dom"
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -44,8 +45,8 @@ const news = [
 const NewsCards = () => {
   useEffect(() => {
     AOS.init({
-      duration: 800, // animation duration
-      once: true,    // sirf ek baar animation
+      duration: 500, 
+      once: true,    
       easing: "ease-in-out",
     });
   }, []);
@@ -73,7 +74,7 @@ const NewsCards = () => {
               alt={item.title}
               className="w-full h-48 object-cover"
               data-aos="zoom-in"
-              data-aos-delay={idx * 200} // image animation delay
+              data-aos-delay={idx * 200} 
             />
 
             {/* Content */}
@@ -82,12 +83,12 @@ const NewsCards = () => {
                 {item.title}
               </h3>
               <p className="text-gray-600 text-sm mb-3">{item.desc}</p>
-              <a
-                href="#"
+              <Link
+                to="/news"
                 className="text-orange-400 font-medium hover:text-orange-600"
               >
                 अधिक जानें....
-              </a>
+              </Link>
             </div>
           </div>
         ))}

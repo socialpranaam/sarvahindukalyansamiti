@@ -11,7 +11,7 @@ const ContactForm = () => {
   return (
     <section className="bg-[#fdf3e7] py-16 px-4">
       <div
-        className="max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-8"
+        className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-8"
         data-aos="fade-up"
       >
         {/* Heading */}

@@ -46,7 +46,7 @@ const Footer = () => {
             <ul className="space-y-3 text-white text-sm">
               <li className="flex items-center gap-2">
                 <FaPhoneAlt className="text-white" />
-                <a href="tel:+919876543210" className="hover:underline">
+                <a href="tel:+919876543210">
                   +91-9876543210
                 </a>
               </li>
@@ -54,7 +54,7 @@ const Footer = () => {
                 <MdEmail className="text-white" />
                 <a  
                   href="mailto:info@sarvhindukalyan.org"
-                  className="hover:underline break-all"
+                  className=" break-all"
                 >
                   info@sarvhindukalyan.org
                 </a>

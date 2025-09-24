@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ReligiousWork = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
   const projects = [
     {
       title: "12 माह में 100 मंदिर निर्माण का संकल्प",
@@ -24,9 +30,7 @@ const ReligiousWork = () => {
       {/* Background Image with Overlay */}
       <div
         className="absolute top-0 left-0 w-full h-64 md:h-80 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/deep.jpg')",
-        }}
+        style={{ backgroundImage: "url('/images/deep.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
       </div>
@@ -35,10 +39,11 @@ const ReligiousWork = () => {
       <div className="relative z-10 text-center pt-48 md:pt-80 pb-12">
         <div className="bg-orange-50 relative inline-block w-full">
           {/* Triangle */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full 
             w-0 h-0 border-l-[150px] md:border-l-[250px] border-r-[150px] md:border-r-[250px] border-b-[100px] md:border-b-[180px] 
-            border-l-transparent border-r-transparent border-b-[#fdf3e7] ">
-          </div>
+            border-l-transparent border-r-transparent border-b-[#fdf3e7] "
+          ></div>
 
           {/* Heading + Line */}
           <div className="relative mt-[-30px] md:mt-[-60px] flex flex-col items-center">
@@ -59,12 +64,14 @@ const ReligiousWork = () => {
         </div>
       </div>
 
-      {/* Project Cards */}
+      {/* Project Cards with AOS */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 pb-16">
         {projects.map((item, index) => (
           <div
             key={index}
             className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition p-4"
+            data-aos="zoom-in-up"
+            data-aos-delay={index * 200} // har card delay ke sath
           >
             <img
               src={item.img}

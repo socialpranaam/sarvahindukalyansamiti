@@ -22,10 +22,10 @@ const Hero = () => {
 
       {/* Content */}
       <div
-        className="relative z-10 max-w-5xl px-6 md:px-12 text-left text-white md:ml-22 flex flex-col justify-center h-full"
+        className="relative z-10 max-w-5xl px-6 md:px-12 text-left text-white md:ml-22 lg:ml-22 flex flex-col justify-center h-full"
       >
         <h1
-          className="text-3xl md:text-5xl font-medium leading-snug max-w-xl"
+          className="text-3xl md:text-5xl  font-medium leading-snug max-w-xl"
           data-aos="fade-right"
         >
           आइए, मिलकर बनाएँ{" "}

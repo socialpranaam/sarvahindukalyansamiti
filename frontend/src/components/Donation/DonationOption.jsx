@@ -74,9 +74,9 @@ const DonationOption = () => {
             <div
               key={item.id}
               onClick={() => handleClick(item.id)}
-              className={`flex-shrink-0 md:flex-shrink bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer 
+              className={`flex-shrink-0 md:flex-shrink bg-white rounded-2xl overflow-hidden cursor-pointer 
                 transition p-6 text-center hover:shadow-lg hover:bg-orange-100 ${
-                  active === item.id ? "border-3 border-orange-300" : ""
+                  active === item.id ? "border-2 border-orange-300" : ""
                 } md:w-auto w-72`}
             >
               <div className="flex justify-center">{item.icon}</div>
@@ -89,7 +89,7 @@ const DonationOption = () => {
       </div>
 
       {/* Conditional Display with Scroll */}
-      <div ref={scrollRef} className="w-full mx-auto text-center pb-16">
+      <div ref={scrollRef} className="w-full mx-auto text-center">
         {active === "qr" && <QrDonation />}
         {active === "form" && <FormDonation />}
       </div>
