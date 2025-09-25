@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,11 +14,22 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === fixedEmail && password === fixedPassword) {
-      localStorage.setItem("authToken", "adminToken123"); 
-      alert("Login Successful!");
-      navigate("/admin/dashboard");
+      localStorage.setItem("authToken", "adminToken123");
+
+      Swal.fire({
+        icon: "success",
+        title: "Admin Login Successful!",
+        confirmButtonColor: "#f97316", 
+      }).then(() => {
+        navigate("/admin/dashboard");
+      });
+      
     } else {
-      alert("Invalid email or password!");
+      Swal.fire({
+        icon: "error",
+        title: "Invalid email or password!",
+        confirmButtonColor: "#f97316",
+      });
     }
   };
 

@@ -37,7 +37,7 @@ const Team = () => {
 
         {/* Right Side - Content */}
         <div
-          className="bg-orange-100 shadow-md px-8 md:pl-16 md:pr-12 py-10 flex flex-col justify-center w-full md:w-[65%] relative z-10 -mt-16 md:mt-0 md:-ml-16 text-gray-900"
+          className="bg-orange-100 shadow-md px-8 md:pl-20 md:pr-12 py-10 flex flex-col justify-center w-full md:w-[65%] relative z-10 -mt-16 md:mt-0 md:-ml-22 text-gray-900"
           data-aos="fade-left"
           data-aos-easing="ease-in-out"
           data-aos-delay="200"

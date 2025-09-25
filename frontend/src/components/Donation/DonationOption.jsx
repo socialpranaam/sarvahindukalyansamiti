@@ -75,7 +75,7 @@ const DonationOption = () => {
               key={item.id}
               onClick={() => handleClick(item.id)}
               className={`flex-shrink-0 md:flex-shrink bg-white rounded-2xl overflow-hidden cursor-pointer 
-                transition p-6 text-center hover:shadow-lg hover:bg-orange-100 ${
+                transition p-6 text-center  hover:bg-orange-100 hover:border-2 border-orange-400 ${
                   active === item.id ? "border-2 border-orange-300" : ""
                 } md:w-auto w-72`}
             >

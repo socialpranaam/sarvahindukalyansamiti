@@ -74,7 +74,16 @@ const PujaBooking = () => {
       (sum, b) => sum + (b.payment === "Pending" ? b.amount : 0),
       0
     );
-    return { total, pending, confirmed, revenue, pendingRevenue };
+
+    // 🔥 This Month Bookings
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const thisMonth = bookings.filter((b) => {
+      const d = new Date(b.date);
+      return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+    }).length;
+
+    return { total, pending, confirmed, revenue, pendingRevenue, thisMonth };
   }, [bookings]);
 
   // ---- Filter ----
@@ -122,7 +131,7 @@ const PujaBooking = () => {
             <p className="text-gray-500">Total Bookings</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.total}</h2>
-          <p className="text-sm text-gray-400">+0 this month</p>
+          <p className="text-sm text-gray-400">+{stats.thisMonth} this month</p>
         </div>
 
         {/* Pending */}

@@ -1,97 +1,146 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Swal from "sweetalert2"; // SweetAlert import
+import "sweetalert2/dist/sweetalert2.min.css"; // optional styling
 
 const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, phone, subject, message } = formData;
+
+    if (!name || !email || !phone || !subject || !message) {
+      Swal.fire({
+        icon: "error",
+        title: "सभी फील्ड भरें",
+        confirmButtonColor: "#f97316",
+      });
+      return;
+    }
+
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      Swal.fire({
+        icon: "error",
+        title: "फोन नंबर 10 अंकों का होना चाहिए और 6/7/8/9 से शुरू होना चाहिए",
+        confirmButtonColor: "#f97316",
+      });
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      Swal.fire({
+        icon: "error",
+        title: "सही ईमेल डालें",
+        confirmButtonColor: "#f97316",
+      });
+      return;
+    }
+
+    Swal.fire({
+      icon: "success",
+      title: 'आपका फॉर्म सफलतापूर्वक भेज दिया गया है।',
+      confirmButtonColor: "#f97316",
+    });
+
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+  };
+
   return (
     <section className="bg-[#fdf3e7] py-16 px-4">
-      <div
-        className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-8"
-        data-aos="fade-up"
-      >
-        {/* Heading */}
-        <h2
-          className="text-5xl font-medium text-center mb-8"
-          data-aos="zoom-in"
-        >
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-8" data-aos="fade-up">
+        <h2 className="text-5xl font-medium text-center mb-8" data-aos="zoom-in">
           संपर्क <span className="text-orange-500">फ़ॉर्म</span>
         </h2>
 
-        {/* Form */}
-        <form className="space-y-6">
-          {/* Name & Email */}
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16" data-aos="fade-up" data-aos-delay="100">
             <div>
               <label className="block text-md font-bold mb-1">नाम</label>
               <input
                 type="text"
-                className="w-full border border-gray-200  rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 placeholder="अपना नाम लिखें"
+                required
               />
             </div>
             <div>
               <label className="block text-md font-bold mb-1">ईमेल</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 placeholder="अपना ईमेल लिखें"
+                required
               />
             </div>
           </div>
 
-          {/* Phone & Subject */}
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6" data-aos="fade-up" data-aos-delay="200">
             <div>
               <label className="block text-md font-bold mb-1">फोन नंबर</label>
               <input
                 type="text"
-                className="w-full border border-gray-200  rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 placeholder="फोन नंबर डालें"
+                required
               />
             </div>
             <div>
               <label className="block text-md font-bold mb-1">विषय</label>
               <input
                 type="text"
-                className="w-full border border-gray-200  rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 placeholder="विषय लिखें"
+                required
               />
             </div>
           </div>
 
-          {/* Message */}
           <div data-aos="fade-up" data-aos-delay="300">
             <label className="block text-md font-bold mb-1">संदेश</label>
             <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               rows="6"
-              className="w-full border border-gray-200  rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="अपना संदेश लिखें"
+              required
             ></textarea>
           </div>
 
-          {/* Submit Button */}
-          <div
-            className="flex justify-center"
-            data-aos="zoom-in"
-            data-aos-delay="400"
-          >
+          <div className="flex justify-center" data-aos="zoom-in" data-aos-delay="400">
             <button
               type="submit"
-              className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3
-              transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
+              className="px-8 py-3 w-fit cursor-pointer rounded-lg bg-orange-500 text-white text-lg font-md flex items-center gap-3 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-orange-600"
             >
               संपर्क करें अभी <FaArrowRight />
             </button>

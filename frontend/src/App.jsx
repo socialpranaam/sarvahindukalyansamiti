@@ -17,6 +17,7 @@ import Events from "./pages/Admin/Events";
 import Members from "./pages/Admin/Members";
 import PujaBooking from "./pages/Admin/PujaBooking";
 import Login from "./pages/Admin/Login";
+import NewsDetails from "./components/News/NewsDetails";
 
 // Protected Admin wrapper
 const ProtectedAdmin = () => {
@@ -37,12 +38,13 @@ function App() {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/ourworks" element={<OurWorks />} />
               <Route path="/donation" element={<Donation />} />
-              <Route path="/news" element={<News />} />
+              <Route path="/news" element={<News />} />   
               <Route path="/contact" element={<ContactUs />} />
             </Routes>
             <Footer />
           </>
         } />
+        <Route path="/news/:id" element={<NewsDetails/>}/>
 
         {/* Admin Pages */}
         <Route path="/admin">
