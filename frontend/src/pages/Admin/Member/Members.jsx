@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import { Phone, MapPin, CalendarDays, BriefcaseBusiness, LayoutGrid, List, Users } from "lucide-react";
@@ -86,6 +87,8 @@ const MemberCard = ({ member }) => {
 };
 
 const Members = () => {
+
+  const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState("");
   const [members, setMembers] = useState(initialMembers);
 
@@ -147,22 +150,7 @@ const Members = () => {
           <HiArrowDownTray size={20}/> Export
         </button>
         <button
-          onClick={() =>
-            setMembers([
-              ...members,
-              {
-                initials: "NK",
-                name: "New Member",
-                email: "new@example.com",
-                phone: "9876543222",
-                address: "789 Street, Lucknow",
-                joined: "Sep 18, 2025",
-                membership: "General",
-                status: "Active",
-                role: "Volunteer",
-              },
-            ])
-          }
+          onClick={() => navigate ("add-member")}
           className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
         >
           <GoPlus size={25}/> Add Member

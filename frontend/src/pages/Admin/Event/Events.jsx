@@ -3,6 +3,7 @@ import { Bell, Calendar, Clock } from "lucide-react";
 import { FiPlus} from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const events = [
   {
@@ -43,7 +44,10 @@ const events = [
   },
 ];
 
+
+
 const EventCard = ({ event }) => {
+  
   return (
     <div className="bg-white border rounded-lg shadow-sm p-5 flex flex-col">
       {/* Tag */}
@@ -102,6 +106,7 @@ const EventCard = ({ event }) => {
 };
 
 const EventsPage = () => {
+  const navigate = useNavigate()
   return (
     <div className="bg-gray-50 min-h-screen ">
       {/* Header */}
@@ -137,7 +142,9 @@ const EventsPage = () => {
             Manage upcoming festivals, ceremonies and community gatherings
           </p>
         </div>
-        <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+        <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
+        onClick={()=>navigate("add-event")}
+        >
           <FiPlus size={20}/> New Event
         </button>
       </div>

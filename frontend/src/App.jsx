@@ -10,16 +10,19 @@ import News from './pages/News';
 
 // Admin Pages
 import AdminLayout from "./pages/Admin/AdminLayout";
-import Dashboard from "./pages/Admin/Dashboard";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 import Donations from "./pages/Admin/Donation/Donations";
 import TempleProjects from "./pages/Admin/Temple/TempleProjects";
-import Events from "./pages/Admin/Events";
-import Members from "./pages/Admin/Members";
-import PujaBooking from "./pages/Admin/PujaBooking";
-import Login from "./pages/Admin/Login";
+import Events from "./pages/Admin/Event/Events";
+import Members from "./pages/Admin/Member/Members";
+import PujaBooking from "./pages/Admin/PujaBooking/PujaBooking";
+import Login from "./pages/Admin/Login/Login";
 import NewsDetails from "./components/News/NewsDetails";
 import AddDonation from "./pages/Admin/Donation/AddDonation";
 import AddTempleProject from "./pages/Admin/Temple/AddTempleProject";
+import AddEvent from "./pages/Admin/Event/AddEvent";
+import AddMember from "./pages/Admin/Member/AddMember";
+import AddPujaBooking from "./pages/Admin/PujaBooking/AddPujaBooking";
 
 // Protected Admin wrapper
 const ProtectedAdmin = () => {
@@ -62,8 +65,11 @@ function App() {
               <Route path="projects" element={<TempleProjects />} />
               <Route path="projects/add-templeproject" element={<AddTempleProject/>}/>
               <Route path="events" element={<Events />} />
+              <Route path="events/add-event" element={<AddEvent/>}/>
               <Route path="members" element={<Members />} />
+              <Route path="members/add-member" element={<AddMember/>}/>
               <Route path="pujabooking" element={<PujaBooking />} />
+              <Route path="pujabooking/add-pujabooking" element={<AddPujaBooking/>}/>
             </Route>
           </Route>
         </Route>

@@ -4,6 +4,8 @@ import { Flame, IndianRupee } from "lucide-react";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { LuPlus } from "react-icons/lu";
 import { FiCheckCircle } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import AddPujaBooking from "./AddPujaBooking";
 
 const PujaBooking = () => {
   const [bookings, setBookings] = useState([
@@ -100,6 +102,8 @@ const PujaBooking = () => {
     return searchMatch;
   });
 
+  const navigate=useNavigate()
+
   return (
     <div className="h-full w-full">
       {/* Header */}
@@ -114,7 +118,9 @@ const PujaBooking = () => {
           <button className="px-6 py-2 flex items-center gap-4 border cursor-pointer rounded-lg text-gray-600 hover:bg-gray-100">
             <HiArrowDownTray size={20} /> Export
           </button>
-          <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+          <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
+          onClick={()=> navigate("add-pujabooking")}
+          >
             <LuPlus size={20}/> New Booking
           </button>
         </div>
