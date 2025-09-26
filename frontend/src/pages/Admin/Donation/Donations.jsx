@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Bell } from "lucide-react";
 import { FiFileText, FiPlus } from "react-icons/fi";
-
+import { useNavigate } from "react-router-dom";
 
 const initialDonations = [
   {
@@ -30,65 +30,15 @@ const initialDonations = [
     payment: "UPI",
     status: "Completed",
   },
-  {
-    date: "10 Jun 2023",
-    name: "Amit Verma",
-    id: "SHKS-1003",
-    email: "amit@example.com",
-    phone: "+91 76543 21098",
-    amount: "₹2,500",
-    amountValue: 2500,
-    type: "Health Services",
-    typeColor: "bg-blue-100 text-blue-700",
-    payment: "Cash",
-    status: "Completed",
-  },
-  {
-    date: "08 Jun 2023",
-    name: "Sunita Gupta",
-    id: "SHKS-1004",
-    email: "sunita@example.com",
-    phone: "+91 65432 10987",
-    amount: "₹7,500",
-    amountValue: 7500,
-    type: "Education",
-    typeColor: "bg-purple-100 text-purple-700",
-    payment: "Netbanking",
-    status: "Completed",
-  },
-  {
-    date: "05 Jun 2023",
-    name: "Rajesh Kumar",
-    id: "SHKS-1005",
-    email: "rajesh@example.com",
-    phone: "+91 54321 09876",
-    amount: "₹2,500",
-    amountValue: 2500,
-    type: "Temple Construction",
-    typeColor: "bg-orange-100 text-orange-700",
-    payment: "Cash",
-    status: "Completed",
-  },
-  {
-    date: "05 Jun 2023",
-    name: "Mahesh Kumar",
-    id: "SHKS-1008",
-    email: "rajesh@example.com",
-    phone: "+91 54321 09876",
-    amount: "₹2,000",
-    amountValue: 2000,
-    type: "Temple Construction",
-    typeColor: "bg-orange-100 text-orange-700",
-    payment: "UPI",
-    status: "Completed",
-  },
 ];
 
 const Donations = () => {
-  const [donations] = useState(initialDonations); 
+  const [donations] = useState(initialDonations);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All Types");
   const [methodFilter, setMethodFilter] = useState("All Methods");
+
+  const navigate = useNavigate();
 
   // Filter logic
   const filteredDonations = donations.filter((d) => {
@@ -113,49 +63,10 @@ const Donations = () => {
   );
   const totalDonations = filteredDonations.length;
 
-  // Export CSV
-  const handleExportCSV = () => {
-    const headers = [
-      "Date",
-      "Donor Name",
-      "Donor ID",
-      "Email",
-      "Phone",
-      "Amount",
-      "Type",
-      "Payment Method",
-      "Status",
-    ];
-
-    const rows = filteredDonations.map((d) => [
-      d.date,
-      d.name,
-      d.id,
-      d.email,
-      d.phone,
-      d.amount,
-      d.type,
-      d.payment,
-      d.status,
-    ]);
-
-    let csvContent =
-      "data:text/csv;charset=utf-8," +
-      [headers, ...rows].map((e) => e.join(",")).join("\n");
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "donations.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
-    <div className=" min-h-screen ">
+    <div className="min-h-screen">
       {/* Header */}
-      <div className="flex justify-between items-center ">
+      <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-semibold text-gray-900">Donations</h1>
           <p className="text-gray-500 text-lg">Welcome back, Admin</p>
@@ -165,12 +76,12 @@ const Donations = () => {
             ● System Online
           </div>
           <div className="relative">
-             <button>
-            <Bell size={30} className="text-gray-600" />
-            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-              3
-            </span>
-          </button>
+            <button>
+              <Bell size={30} className="text-gray-600" />
+              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                3
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -186,15 +97,15 @@ const Donations = () => {
           </h2>
           <div className="flex items-center gap-3">
             <button
-              onClick={handleExportCSV}
-              className="px-5 py-3 border border-gray-300 flex justify-between items-center gap-2 cursor-pointer rounded-lg text-gray-700 hover:bg-gray-100"
+              className="px-5 py-3 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100"
             >
-              <FiFileText size={20}/> Export CSV
+              <FiFileText size={20} /> Export CSV
             </button>
             <button
-              className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
+              onClick={() => navigate("add-donation")}
+              className="px-5 py-3 flex gap-2 items-center rounded-lg bg-orange-500 text-white hover:bg-orange-600"
             >
-              <FiPlus size={20}/> Add Donation
+              <FiPlus size={20} /> Add Donation
             </button>
           </div>
         </div>
@@ -246,44 +157,29 @@ const Donations = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {filteredDonations.length > 0 ? (
-              filteredDonations.map((d, index) => (
-                <tr key={index} className="text-sm">
-                  <td className="p-4 text-gray-700">{d.date}</td>
-                  <td className="p-4">
-                    <div className="font-medium text-gray-900">{d.name}</div>
-                    <div className="text-gray-500 text-xs">{d.id}</div>
-                    <div className="text-gray-500 text-xs">{d.email}</div>
-                    <div className="text-gray-500 text-xs">{d.phone}</div>
-                  </td>
-                  <td className="p-4 font-semibold text-green-600">
-                    {d.amount}
-                  </td>
-                  <td className="p-4">
-                    <span
-                      className={`px-3 py-1 text-xs font-medium rounded-full ${d.typeColor}`}
-                    >
-                      {d.type}
-                    </span>
-                  </td>
-                  <td className="p-4 text-gray-700">{d.payment}</td>
-                  <td className="p-4">
-                    <span className="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
-                      {d.status}
-                    </span>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan="6"
-                  className="p-6 text-center text-gray-500 text-sm"
-                >
-                  No donations found.
+            {filteredDonations.map((d, i) => (
+              <tr key={i} className="text-sm">
+                <td className="p-4 text-gray-700">{d.date}</td>
+                <td className="p-4">
+                  <div className="font-medium text-gray-900">{d.name}</div>
+                  <div className="text-gray-500 text-xs">{d.id}</div>
+                  <div className="text-gray-500 text-xs">{d.email}</div>
+                  <div className="text-gray-500 text-xs">{d.phone}</div>
+                </td>
+                <td className="p-4 font-semibold text-green-600">{d.amount}</td>
+                <td className="p-4">
+                  <span className={`px-3 py-1 text-xs font-medium rounded-full ${d.typeColor}`}>
+                    {d.type}
+                  </span>
+                </td>
+                <td className="p-4 text-gray-700">{d.payment}</td>
+                <td className="p-4">
+                  <span className="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                    {d.status}
+                  </span>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
       </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { Bell, Landmark } from "lucide-react";
 import { FiPlus } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const projects = [
   {
@@ -45,7 +46,10 @@ const statusColors = {
   planning: "bg-blue-100 text-blue-600",
 };
 
+
+
 const TempleProjects = () => {
+  const navigate = useNavigate()
   return (
     <div className="p-2">
       {/* Header */}
@@ -76,7 +80,9 @@ const TempleProjects = () => {
         <p className="text-gray-600">
           Manage temple construction and development projects
         </p>
-        <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+        <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
+        onClick={()=> navigate("add-templeproject")}
+        >
           <FiPlus size={20}/> New Project
         </button>
       </div>

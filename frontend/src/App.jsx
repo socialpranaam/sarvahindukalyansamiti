@@ -11,13 +11,15 @@ import News from './pages/News';
 // Admin Pages
 import AdminLayout from "./pages/Admin/AdminLayout";
 import Dashboard from "./pages/Admin/Dashboard";
-import Donations from "./pages/Admin/Donations";
-import TempleProjects from "./pages/Admin/TempleProjects";
+import Donations from "./pages/Admin/Donation/Donations";
+import TempleProjects from "./pages/Admin/Temple/TempleProjects";
 import Events from "./pages/Admin/Events";
 import Members from "./pages/Admin/Members";
 import PujaBooking from "./pages/Admin/PujaBooking";
 import Login from "./pages/Admin/Login";
 import NewsDetails from "./components/News/NewsDetails";
+import AddDonation from "./pages/Admin/Donation/AddDonation";
+import AddTempleProject from "./pages/Admin/Temple/AddTempleProject";
 
 // Protected Admin wrapper
 const ProtectedAdmin = () => {
@@ -56,7 +58,9 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="donations" element={<Donations />} />
+              <Route path="donations/add-donation" element={<AddDonation/>}/>
               <Route path="projects" element={<TempleProjects />} />
+              <Route path="projects/add-templeproject" element={<AddTempleProject/>}/>
               <Route path="events" element={<Events />} />
               <Route path="members" element={<Members />} />
               <Route path="pujabooking" element={<PujaBooking />} />
