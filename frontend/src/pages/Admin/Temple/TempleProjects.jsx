@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { Bell, Landmark } from "lucide-react";
 import { FiPlus } from "react-icons/fi";
@@ -46,10 +46,14 @@ const statusColors = {
   planning: "bg-blue-100 text-blue-600",
 };
 
-
-
 const TempleProjects = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // Dynamic notification state
+  const [notifications, setNotifications] = useState(3);
+
+
+
   return (
     <div className="p-2">
       {/* Header */}
@@ -61,16 +65,16 @@ const TempleProjects = () => {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center space-x-4">
-            <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
-              ● System Online
-            </div>
+          <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
+            ● System Online
           </div>
           <button className="relative">
             <Bell size={30} className="text-gray-600" />
-            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-              3
-            </span>
+            {notifications > 0 && (
+              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                {notifications}
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -80,10 +84,11 @@ const TempleProjects = () => {
         <p className="text-gray-600">
           Manage temple construction and development projects
         </p>
-        <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
-        onClick={()=> navigate("add-templeproject")}
+        <button
+          className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
+          onClick={() => navigate("add-templeproject")}
         >
-          <FiPlus size={20}/> New Project
+          <FiPlus size={20} /> New Project
         </button>
       </div>
 
@@ -94,33 +99,27 @@ const TempleProjects = () => {
             key={idx}
             className="bg-white rounded-xl shadow p-6 flex flex-col border border-gray-200 hover:shadow-md transition"
           >
-            {/* Title & Icon */}
             <div className="flex justify-between items-start mb-2">
-            <h2 className="text-lg font-semibold text-gray-800 leading-snug w-48 max-w-xs break-words">
-              {project.title}
-            </h2>
-            <span className="p-2 rounded-lg bg-orange-50 text-orange-500">
-               <Landmark size={30} />
-            </span>
+              <h2 className="text-lg font-semibold text-gray-800 leading-snug w-48 max-w-xs break-words">
+                {project.title}
+              </h2>
+              <span className="p-2 rounded-lg bg-orange-50 text-orange-500">
+                <Landmark size={30} />
+              </span>
             </div>
 
-
-            {/* Status */}
             <span
               className={`text-sm px-3 py-1 rounded-full font-medium w-fit mb-3 ${statusColors[project.status]}`}
             >
               {project.status}
             </span>
 
-            {/* Description */}
             <p className="text-gray-600 text-sm mb-3">{project.desc}</p>
 
-            {/* Location */}
             <p className="flex items-center gap-2 text-sm text-gray-500 mb-3">
               <FaMapMarkerAlt className="text-gray-400" /> {project.location}
             </p>
 
-            {/* Progress Bar (Black) */}
             <div className="mb-3">
               <p className="text-sm text-gray-600 mb-1">
                 Progress {project.progress}%
@@ -133,7 +132,6 @@ const TempleProjects = () => {
               </div>
             </div>
 
-            {/* Raised Bar (Green) */}
             <div className="mb-4">
               <p className="text-sm text-gray-600 mb-1">
                 Raised {((project.raised / project.budget) * 100).toFixed(0)}%
@@ -146,25 +144,19 @@ const TempleProjects = () => {
               </div>
             </div>
 
-            {/* Budget & Raised */}
             <div className="text-sm mb-4">
               <p>
-                <span className="font-medium">Budget:</span>{" "}
-                ₹{project.budget.toLocaleString()}
+                <span className="font-medium">Budget:</span> ₹{project.budget.toLocaleString()}
               </p>
               <p>
                 <span className="font-medium">Raised:</span>{" "}
-                <span className="text-green-600">
-                  ₹{project.raised.toLocaleString()}
-                </span>
+                <span className="text-green-600">₹{project.raised.toLocaleString()}</span>
               </p>
             </div>
 
-            {/* Footer */}
             <div className="mt-auto text-sm text-gray-600 border-t pt-3">
               <p>
-                <span className="font-medium">Expected:</span>{" "}
-                {project.expected}
+                <span className="font-medium">Expected:</span> {project.expected}
               </p>
               <p className="flex items-center gap-2 mt-1">
                 <FaUser className="text-gray-400" /> PM: {project.pm}

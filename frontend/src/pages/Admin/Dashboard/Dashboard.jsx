@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Search, Bell, Users, CalendarDays, HandCoins, Handshake, IndianRupee, Calendar, Landmark } from "lucide-react";
 import { FiUserPlus } from "react-icons/fi";
 import {LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,BarChart,Bar} from "recharts";
@@ -20,8 +21,12 @@ const Dashboard = () => {
     { category: "Marriage", amount: 2000 },
   ];
 
+  // Static notification state
+  const [notifications] = useState(3);
+
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-semibold">Dashboard</h1>
@@ -41,18 +46,20 @@ const Dashboard = () => {
           </div>
 
           {/* Online Status */}
-           <div className="flex items-center space-x-4">
-          <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
-            ● System Online
-          </div>
+          <div className="flex items-center space-x-4">
+            <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
+              ● System Online
+            </div>
           </div>
 
           {/* Notification */}
           <button className="relative">
             <Bell size={30} className="text-gray-600" />
-            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-              3
-            </span>
+            {notifications > 0 && (
+              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                {notifications}
+              </span>
+            )}
           </button>
         </div>
       </div>

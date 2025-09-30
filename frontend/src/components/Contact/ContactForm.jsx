@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Swal from "sweetalert2"; // SweetAlert import
-import "sweetalert2/dist/sweetalert2.min.css"; // optional styling
+import Swal from "sweetalert2"; 
+import "sweetalert2/dist/sweetalert2.min.css"; 
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({

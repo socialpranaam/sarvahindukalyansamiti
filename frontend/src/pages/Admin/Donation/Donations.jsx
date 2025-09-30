@@ -38,6 +38,13 @@ const Donations = () => {
   const [typeFilter, setTypeFilter] = useState("All Types");
   const [methodFilter, setMethodFilter] = useState("All Methods");
 
+  // 🔔 Notifications state
+  const [notifications, setNotifications] = useState([
+    { id: 1, message: "New donation from Ramesh" },
+    { id: 2, message: "Priya Patel updated her donation" },
+    { id: 3, message: "System backup completed" },
+  ]);
+
   const navigate = useNavigate();
 
   // Filter logic
@@ -75,12 +82,16 @@ const Donations = () => {
           <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
             ● System Online
           </div>
+
+          {/* 🔔 Notification Icon */}
           <div className="relative">
-            <button>
+            <button onClick={() => setNotifications([])}>
               <Bell size={30} className="text-gray-600" />
-              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-                3
-              </span>
+              {notifications.length > 0 && (
+                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                  {notifications.length}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -96,9 +107,7 @@ const Donations = () => {
             </span>
           </h2>
           <div className="flex items-center gap-3">
-            <button
-              className="px-5 py-3 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100"
-            >
+            <button className="px-5 py-3 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100">
               <FiFileText size={20} /> Export CSV
             </button>
             <button
@@ -168,7 +177,9 @@ const Donations = () => {
                 </td>
                 <td className="p-4 font-semibold text-green-600">{d.amount}</td>
                 <td className="p-4">
-                  <span className={`px-3 py-1 text-xs font-medium rounded-full ${d.typeColor}`}>
+                  <span
+                    className={`px-3 py-1 text-xs font-medium rounded-full ${d.typeColor}`}
+                  >
                     {d.type}
                   </span>
                 </td>

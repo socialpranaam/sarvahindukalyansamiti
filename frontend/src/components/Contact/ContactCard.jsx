@@ -33,8 +33,8 @@ const ContactCard = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 800, // animation duration
-      once: true,    // sirf ek baar animation
+      duration: 800, 
+      once: true,    
       easing: "ease-in-out",
     });
   }, []);
@@ -82,7 +82,7 @@ const ContactCard = () => {
             key={index}
             className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-105 cursor-pointer transition p-6 flex flex-col items-center"
             data-aos="fade-up"
-            data-aos-delay={index * 150} // staggered animation for each card
+            data-aos-delay={index * 150} 
           >
             {/* Icon Box */}
             <div className={`${item.color} p-3 rounded-xl shadow-md mb-4`}>

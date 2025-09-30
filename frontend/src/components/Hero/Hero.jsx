@@ -5,8 +5,8 @@ import "aos/dist/aos.css";
 const Hero = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1200, // animation speed
-      once: true, // ek hi baar chale
+      duration: 1200, 
+      once: true, 
     });
   }, []);
 

@@ -5,8 +5,7 @@ import FormDonation from "./FormDonation";
 
 const DonationOption = () => {
   const [active, setActive] = useState(null);
-  const scrollRef = useRef(null); // Ref for scrolling
-
+  const scrollRef = useRef(null); 
   const options = [
     {
       id: "qr",
@@ -26,7 +25,6 @@ const DonationOption = () => {
 
   const handleClick = (id) => {
     setActive(id);
-    // Scroll into view
     setTimeout(() => {
       scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 100);

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const AddPujaBooking = ({ onAddBooking }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [pujaData, setPujaData] = useState({
     puja: "",
     client: "",
     date: "",
@@ -17,7 +17,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setPujaData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -26,7 +26,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validation
-    if (!formData.puja || !formData.client || !formData.date || !formData.phone || !formData.amount) {
+    if (!pujaData.puja || !pujaData.client || !pujaData.date || !pujaData.phone || !pujaData.amount) {
       Swal.fire({
         icon: 'warning',
         title: 'Oops...',
@@ -37,8 +37,8 @@ const AddPujaBooking = ({ onAddBooking }) => {
 
     const newBooking = {
       id: Date.now(),
-      ...formData,
-      amount: Number(formData.amount),
+      ...pujaData,
+      amount: Number(pujaData.amount),
       status: "Pending",
       payment: "Pending",
     };
@@ -55,8 +55,6 @@ const AddPujaBooking = ({ onAddBooking }) => {
       navigate(-1);
     });
 
-    // If you want to pass back to parent:
-    // onAddBooking(newBooking);
   };
 
   return (
@@ -90,7 +88,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="text"
                   name="puja"
                   id="puja"
-                  value={formData.puja}
+                  value={pujaData.puja}
                   onChange={handleChange}
                   placeholder="e.g., Satyanarayan Puja"
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
@@ -110,7 +108,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="text"
                   name="client"
                   id="client"
-                  value={formData.client}
+                  value={pujaData.client}
                   onChange={handleChange}
                   placeholder="e.g., Ramesh Yadav"
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
@@ -130,7 +128,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="tel"
                   name="phone"
                   id="phone"
-                  value={formData.phone}
+                  value={pujaData.phone}
                   onChange={handleChange}
                   placeholder="e.g., 9988776655"
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
@@ -150,7 +148,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="date"
                   name="date"
                   id="date"
-                  value={formData.date}
+                  value={pujaData.date}
                   onChange={handleChange}
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
                   required
@@ -169,7 +167,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="time"
                   name="time"
                   id="time"
-                  value={formData.time}
+                  value={pujaData.time}
                   onChange={handleChange}
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
                 />
@@ -187,7 +185,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="text"
                   name="location"
                   id="location"
-                  value={formData.location}
+                  value={pujaData.location}
                   onChange={handleChange}
                   placeholder="e.g., Home, Office Premises"
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
@@ -206,7 +204,7 @@ const AddPujaBooking = ({ onAddBooking }) => {
                   type="number"
                   name="amount"
                   id="amount"
-                  value={formData.amount}
+                  value={pujaData.amount}
                   onChange={handleChange}
                   placeholder="e.g., 2000"
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
