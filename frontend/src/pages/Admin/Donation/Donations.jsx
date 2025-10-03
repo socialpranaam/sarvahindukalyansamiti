@@ -38,7 +38,6 @@ const Donations = () => {
   const [typeFilter, setTypeFilter] = useState("All Types");
   const [methodFilter, setMethodFilter] = useState("All Methods");
 
-  // 🔔 Notifications state
   const [notifications, setNotifications] = useState([
     { id: 1, message: "New donation from Ramesh" },
     { id: 2, message: "Priya Patel updated her donation" },
@@ -47,7 +46,6 @@ const Donations = () => {
 
   const navigate = useNavigate();
 
-  // Filter logic
   const filteredDonations = donations.filter((d) => {
     const searchMatch =
       d.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -63,7 +61,6 @@ const Donations = () => {
     return searchMatch && typeMatch && methodMatch;
   });
 
-  // Total calculation
   const totalAmount = filteredDonations.reduce(
     (sum, d) => sum + d.amountValue,
     0
@@ -71,9 +68,9 @@ const Donations = () => {
   const totalDonations = filteredDonations.length;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen p-4 md:p-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0 mb-6">
         <div>
           <h1 className="text-3xl font-semibold text-gray-900">Donations</h1>
           <p className="text-gray-500 text-lg">Welcome back, Admin</p>
@@ -82,8 +79,6 @@ const Donations = () => {
           <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
             ● System Online
           </div>
-
-          {/* 🔔 Notification Icon */}
           <div className="relative">
             <button onClick={() => setNotifications([])}>
               <Bell size={30} className="text-gray-600" />
@@ -98,21 +93,21 @@ const Donations = () => {
       </div>
 
       {/* Controls */}
-      <div className="bg-white p-6 rounded-lg shadow mb-6">
+      <div className="bg-white p-4 md:p-6 rounded-lg shadow mb-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-lg font-semibold flex-1">
             Donation Management
             <span className="ml-2 text-gray-500 text-sm">
               Total: ₹{totalAmount.toLocaleString()} – {totalDonations} donations
             </span>
           </h2>
-          <div className="flex items-center gap-3">
-            <button className="px-5 py-3 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100">
+          <div className="flex flex-wrap items-center gap-3">
+            <button className="px-4 py-2 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100">
               <FiFileText size={20} /> Export CSV
             </button>
             <button
               onClick={() => navigate("add-donation")}
-              className="px-5 py-3 flex gap-2 items-center rounded-lg bg-orange-500 text-white hover:bg-orange-600"
+              className="px-4 py-2 flex gap-2 items-center rounded-lg bg-orange-500 text-white hover:bg-orange-600"
             >
               <FiPlus size={20} /> Add Donation
             </button>
@@ -120,7 +115,7 @@ const Donations = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row gap-3 mt-4">
+        <div className="flex flex-col sm:flex-row gap-3 mt-4">
           <input
             type="text"
             placeholder="Search donors..."
@@ -153,8 +148,8 @@ const Donations = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
+        <table className="w-full min-w-[600px]">
           <thead className="bg-orange-50">
             <tr className="text-left text-gray-600 text-sm">
               <th className="p-4">Date</th>

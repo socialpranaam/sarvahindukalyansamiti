@@ -1,4 +1,3 @@
-// EventsFormPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -29,7 +28,7 @@ const AddEvent = () => {
     console.log("New Event:", eventData);
 
     Swal.fire("Success", "Event added successfully!", "success").then(() => {
-      navigate("/admin/events"); 
+      navigate("/admin/events");
     });
   };
 
@@ -38,6 +37,7 @@ const AddEvent = () => {
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
         <h1 className="text-2xl font-semibold mb-6">Add New Event</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Event Type */}
           <div>
             <label className="block text-sm font-medium mb-1">Event Type</label>
             <select
@@ -52,6 +52,7 @@ const AddEvent = () => {
             </select>
           </div>
 
+          {/* Title */}
           <div>
             <label className="block text-sm font-medium mb-1">Title</label>
             <input
@@ -65,6 +66,7 @@ const AddEvent = () => {
             />
           </div>
 
+          {/* Description */}
           <div>
             <label className="block text-sm font-medium mb-1">Description</label>
             <textarea
@@ -77,6 +79,7 @@ const AddEvent = () => {
             />
           </div>
 
+          {/* Location */}
           <div>
             <label className="block text-sm font-medium mb-1">Location</label>
             <input
@@ -90,6 +93,7 @@ const AddEvent = () => {
             />
           </div>
 
+          {/* Date & Time */}
           <div className="flex gap-2">
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Date</label>
@@ -105,7 +109,7 @@ const AddEvent = () => {
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Time</label>
               <input
-                type="text"
+                type="time"
                 name="time"
                 value={eventData.time}
                 onChange={handleChange}
@@ -116,6 +120,23 @@ const AddEvent = () => {
             </div>
           </div>
 
+          {/* Progress */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Progress (%)</label>
+            <input
+              type="number"
+              name="progress"
+              value={eventData.progress}
+              onChange={handleChange}
+              placeholder="Enter progress (0-100)"
+              min="0"
+              max="100"
+              className="w-full border rounded-md p-2"
+              required
+            />
+          </div>
+
+          {/* PM Name */}
           <div>
             <label className="block text-sm font-medium mb-1">PM Name</label>
             <input
@@ -129,6 +150,7 @@ const AddEvent = () => {
             />
           </div>
 
+          {/* Submit Button */}
           <div className="flex justify-end">
             <button
               type="submit"

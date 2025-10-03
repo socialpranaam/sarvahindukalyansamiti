@@ -1,10 +1,10 @@
-// AddMemberPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddMember = ({ addMember }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [memberData, setMemberData] = useState({
     name: "",
     email: "",
     phone: "",
@@ -15,24 +15,40 @@ const AddMember = ({ addMember }) => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setMemberData({ ...memberData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create initials from name
-    const initials = formData.name
+    const initials = memberData.name
+      .trim()
       .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
+      .map((n) => n[0]?.toUpperCase())
+      .join("");
 
-    // Add new member
-    addMember({ ...formData, initials, joined: new Date().toLocaleDateString() });
+    const newMember = {
+      ...memberData,
+      initials,
+      joined: new Date().toLocaleDateString(),
+    };
 
-    // Redirect to Members page
-    navigate("/admin/members");
+    console.log("New Member Added:", newMember);
+
+    if (addMember) {
+      addMember(newMember);
+    }
+
+    // SweetAlert Success
+    Swal.fire({
+      title: "Success!",
+      text: `${memberData.name} has been added successfully.`,
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#f97316", 
+    }).then(() => {
+      navigate("/admin/members");
+    });
   };
 
   return (
@@ -43,7 +59,7 @@ const AddMember = ({ addMember }) => {
           type="text"
           name="name"
           placeholder="Full Name"
-          value={formData.name}
+          value={memberData.name}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
           required
@@ -52,7 +68,7 @@ const AddMember = ({ addMember }) => {
           type="email"
           name="email"
           placeholder="Email"
-          value={formData.email}
+          value={memberData.email}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
           required
@@ -61,7 +77,7 @@ const AddMember = ({ addMember }) => {
           type="tel"
           name="phone"
           placeholder="Phone"
-          value={formData.phone}
+          value={memberData.phone}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
           required
@@ -70,13 +86,13 @@ const AddMember = ({ addMember }) => {
           type="text"
           name="address"
           placeholder="Address"
-          value={formData.address}
+          value={memberData.address}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
         />
         <select
           name="membership"
-          value={formData.membership}
+          value={memberData.membership}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
         >
@@ -85,7 +101,7 @@ const AddMember = ({ addMember }) => {
         </select>
         <select
           name="status"
-          value={formData.status}
+          value={memberData.status}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
         >
@@ -96,7 +112,7 @@ const AddMember = ({ addMember }) => {
           type="text"
           name="role"
           placeholder="Role (optional)"
-          value={formData.role}
+          value={memberData.role}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded-lg"
         />

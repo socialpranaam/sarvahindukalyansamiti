@@ -38,7 +38,6 @@ const Login = () => {
       className="flex items-center justify-center min-h-screen bg-cover bg-center relative"
       style={{ backgroundImage: "url('/images/hero.jpg')" }}
     >
-      {/* Black Overlay */}
       <div className="absolute inset-0 bg-black/70"></div>
 
       {/* Animated Login Form */}
@@ -82,7 +81,6 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
         <motion.button
           whileHover={{
             scale: 1.05,

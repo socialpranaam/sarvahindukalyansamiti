@@ -5,7 +5,6 @@ import { HiArrowDownTray } from "react-icons/hi2";
 import { LuPlus } from "react-icons/lu";
 import { FiCheckCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import AddPujaBooking from "./AddPujaBooking";
 
 const PujaBooking = () => {
   const [bookings, setBookings] = useState([
@@ -49,6 +48,7 @@ const PujaBooking = () => {
 
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("All");
+  const navigate = useNavigate();
 
   // ---- Functions ----
   const confirmBooking = (id) => {
@@ -77,7 +77,6 @@ const PujaBooking = () => {
       0
     );
 
-    // 🔥 This Month Bookings
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     const thisMonth = bookings.filter((b) => {
@@ -102,26 +101,27 @@ const PujaBooking = () => {
     return searchMatch;
   });
 
-  const navigate=useNavigate()
-
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full p-4 sm:p-6 lg:p-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 md:gap-0">
         <div>
-          <h1 className="text-3xl font-semibold text-gray-800">Puja Bookings</h1>
-          <p className="text-lg text-gray-600">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
+            Puja Bookings
+          </h1>
+          <p className="text-sm sm:text-lg text-gray-600 mt-1">
             Manage online puja requests and scheduling
           </p>
         </div>
-        <div className="flex gap-4">
-          <button className="px-6 py-2 flex items-center gap-4 border cursor-pointer rounded-lg text-gray-600 hover:bg-gray-100">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
+          <button className="w-full sm:w-auto px-4 sm:px-6 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-600 hover:bg-gray-100">
             <HiArrowDownTray size={20} /> Export
           </button>
-          <button className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
-          onClick={()=> navigate("add-pujabooking")}
+          <button
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 flex justify-center sm:justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
+            onClick={() => navigate("add-pujabooking")}
           >
-            <LuPlus size={20}/> New Booking
+            <LuPlus size={20} /> New Booking
           </button>
         </div>
       </div>
@@ -132,31 +132,35 @@ const PujaBooking = () => {
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
             <span className="p-2 bg-orange-100 rounded-lg flex items-center justify-center">
-               <Flame className="text-orange-500" size={25} />
+              <Flame className="text-orange-500" size={25} />
             </span>
-            <p className="text-gray-500">Total Bookings</p>
+            <p className="text-gray-500 text-sm sm:text-base">Total Bookings</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.total}</h2>
-          <p className="text-sm text-gray-400">+{stats.thisMonth} this month</p>
+          <p className="text-xs sm:text-sm text-gray-400">
+            +{stats.thisMonth} this month
+          </p>
         </div>
 
         {/* Pending */}
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
             <span className="p-2 bg-yellow-100 rounded-lg flex items-center justify-center">
-            <Clock className="text-yellow-500" size={25} /></span>
-            <p className="text-gray-500">Pending Approval</p>
+              <Clock className="text-yellow-500" size={25} />
+            </span>
+            <p className="text-gray-500 text-sm sm:text-base">Pending Approval</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.pending}</h2>
-          <p className="text-sm text-yellow-600">Requires attention</p>
+          <p className="text-xs sm:text-sm text-yellow-600">Requires attention</p>
         </div>
 
         {/* Confirmed */}
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
             <span className="p-2 bg-blue-100 rounded-lg flex items-center justify-center">
-            <FiCheckCircle className="text-blue-500" size={25} /></span>
-            <p className="text-gray-500">Confirmed</p>
+              <FiCheckCircle className="text-blue-500" size={25} />
+            </span>
+            <p className="text-gray-500 text-sm sm:text-base">Confirmed</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.confirmed}</h2>
         </div>
@@ -165,13 +169,14 @@ const PujaBooking = () => {
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
             <span className="p-2 bg-green-100 rounded-lg flex items-center justify-center">
-            <IndianRupee className="text-green-600" size={25} /></span>
-            <p className="text-gray-500">Revenue</p>
+              <IndianRupee className="text-green-600" size={25} />
+            </span>
+            <p className="text-gray-500 text-sm sm:text-base">Revenue</p>
           </div>
-          <h2 className="text-2xl font-semibold flex items-center ">
-            <IndianRupee/>{stats.revenue}
+          <h2 className="text-2xl font-semibold flex items-center">
+            <IndianRupee /> {stats.revenue}
           </h2>
-          <p className="text-sm text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-400">
             ₹{stats.pendingRevenue} pending
           </p>
         </div>
@@ -189,7 +194,7 @@ const PujaBooking = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-6 border-b border-gray-300 mb-4">
+      <div className="flex flex-wrap gap-4 border-b border-gray-300 mb-4">
         {["All Bookings", "Pending", "Today"].map((tab) => (
           <button
             key={tab}
@@ -215,16 +220,16 @@ const PujaBooking = () => {
       {filteredBookings.length === 0 ? (
         <p className="text-gray-500">No bookings found.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredBookings.map((b) => (
             <div
               key={b.id}
-              className="bg-white p-5 rounded-xl shadow-sm"
+              className="bg-white p-4 sm:p-5 rounded-xl shadow-sm flex flex-col"
             >
               <h3 className="text-lg font-semibold">{b.puja}</h3>
               <p className="text-gray-600 mb-3">{b.client}</p>
 
-              <div className="space-y-2 text-gray-600 text-sm mb-3">
+              <div className="space-y-2 text-gray-600 text-xs sm:text-sm mb-3">
                 <p className="flex items-center gap-2">
                   <Calendar size={16} />{" "}
                   {new Date(b.date).toLocaleDateString("en-GB", {
@@ -247,7 +252,7 @@ const PujaBooking = () => {
               </div>
 
               {/* Status */}
-              <div className="flex gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-4">
                 <span
                   className={`px-3 py-1 text-xs rounded-lg ${
                     b.status === "Confirmed"
@@ -269,7 +274,7 @@ const PujaBooking = () => {
               </div>
 
               {/* Actions */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 {b.status === "Pending" && (
                   <button
                     onClick={() => confirmBooking(b.id)}
