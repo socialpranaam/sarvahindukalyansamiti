@@ -18,22 +18,51 @@ const AddDonation = () => {
     setDonationData({ ...donationData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Donation Added:", donationData);
+    console.log("Submitting donation:", donationData);
 
-    Swal.fire({
-      icon: "success",
-      title: "Donation Submitted!",
-      text: "Your donation has been added successfully.",
-      confirmButtonColor: "#f97316",
-    }).then(() => {
-      navigate("/admin/donations");
-    });
+    try {
+      const response = await fetch("http://localhost:8000/donations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...donationData,
+          amount: parseInt(donationData.amount), // ensure number type
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to submit donation");
+      }
+
+      const result = await response.json();
+      console.log("Server response:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "Donation Submitted!",
+        text: "Your donation has been added successfully.",
+        confirmButtonColor: "#f97316",
+      }).then(() => {
+        navigate("/admin/donations");
+      });
+    } catch (error) {
+      console.error("Error submitting donation:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text: error.message || "There was an error submitting your donation. Please try again.",
+        confirmButtonColor: "#f97316",
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="bg-gray-100 p-8 rounded-lg shadow w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-6">Add Donation</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"  // agar MySQL use karna ho, change to "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model News {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  date        DateTime?  
+  createdAt   DateTime @default(now())
+}
+
+
+model Donation {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String
+  amount    Float
+  type      String
+  payment   String
+  status    String   @default("Completed")  // <- Ye line honi chahiye
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  status      String
+  description String?
+  location    String?
+  progress    Int?
+  budget      Float?
+  raised      Float?
+  expected    DateTime?
+  pm          String?   // project manager
+  createdAt   DateTime  @default(now())
+}
