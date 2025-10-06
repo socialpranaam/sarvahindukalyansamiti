@@ -118,6 +118,18 @@ const AdminLayout = () => {
               >
                 <HandHelping size={20}/> Puja Booking
               </NavLink>
+              <NavLink
+                to="/admin/news"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                    isActive
+                      ? "bg-orange-400 text-white font-semibold"
+                      : "hover:bg-orange-100 hover:text-orange-600"
+                  }`
+                }
+              >
+                <HandHelping size={20}/> News
+              </NavLink>
             </nav>
           </div>
 

@@ -1,44 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { Bell, Landmark } from "lucide-react";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-
-const projects = [
-  {
-    title: "Vrindavan Temple Construction",
-    status: "construction",
-    desc: "Traditional temple complex with modern amenities and community spaces",
-    location: "Vrindavan, Uttar Pradesh",
-    progress: 75,
-    budget: 5000000,
-    raised: 3750000,
-    expected: "Jun 2025",
-    pm: "Shri Govind Das",
-  },
-  {
-    title: "Goshala Expansion",
-    status: "fundraising",
-    desc: "Expanding cow shelter facility to accommodate 200 more cows",
-    location: "Temple Premises",
-    progress: 40,
-    budget: 1500000,
-    raised: 900000,
-    expected: "Dec 2024",
-    pm: "Gau Seva Committee",
-  },
-  {
-    title: "Educational Complex",
-    status: "planning",
-    desc: "Vedic education center with modern facilities",
-    location: "Mathura Road",
-    progress: 10,
-    budget: 3000000,
-    raised: 600000,
-    expected: "Oct 2026",
-    pm: "Education Board",
-  },
-];
+import axios from "axios";
 
 const statusColors = {
   construction: "bg-orange-100 text-orange-600",
@@ -49,6 +14,28 @@ const statusColors = {
 const TempleProjects = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState(3);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch projects from backend
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/projects"); // backend URL
+        setProjects(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching projects:", err.response || err);
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center mt-10 text-gray-600">Loading projects...</p>;
+  }
 
   return (
     <div className="p-4 md:p-6 lg:p-8">
@@ -107,12 +94,14 @@ const TempleProjects = () => {
             </div>
 
             <span
-              className={`text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full font-medium w-fit mb-3 ${statusColors[project.status]}`}
+              className={`text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full font-medium w-fit mb-3 ${
+                statusColors[project.status]
+              }`}
             >
               {project.status}
             </span>
 
-            <p className="text-gray-600 text-xs sm:text-sm mb-3">{project.desc}</p>
+            <p className="text-gray-600 text-xs sm:text-sm mb-3">{project.description}</p>
 
             <p className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-3 break-words">
               <FaMapMarkerAlt className="text-gray-400" /> {project.location}
@@ -145,19 +134,23 @@ const TempleProjects = () => {
             <div className="text-xs sm:text-sm mb-4">
               <p>
                 <span className="font-medium">Budget:</span>{" "}
-                ₹{project.budget.toLocaleString()}
+                ₹{Number(project.budget).toLocaleString()}
               </p>
               <p>
                 <span className="font-medium">Raised:</span>{" "}
                 <span className="text-green-600">
-                  ₹{project.raised.toLocaleString()}
+                  ₹{Number(project.raised).toLocaleString()}
                 </span>
               </p>
             </div>
 
             <div className="mt-auto text-xs sm:text-sm text-gray-600 border-t pt-2 sm:pt-3">
               <p>
-                <span className="font-medium">Expected:</span> {project.expected}
+                <span className="font-medium">Expected:</span>{" "}
+                {new Date(project.expected).toLocaleDateString("en-GB", {
+                  month: "short",
+                  year: "numeric",
+                })}
               </p>
               <p className="flex items-center gap-2 mt-1">
                 <FaUser className="text-gray-400" /> PM: {project.pm}

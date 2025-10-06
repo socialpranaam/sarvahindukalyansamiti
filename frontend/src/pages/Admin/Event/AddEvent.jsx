@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from "axios"; // ✅ import axios
 
 const AddEvent = () => {
   const navigate = useNavigate();
@@ -8,12 +9,12 @@ const AddEvent = () => {
   const [eventData, setEventData] = useState({
     tag: "festival",
     title: "",
-    desc: "",
+    description: "", // backend me description ka field name same rakho
     location: "",
     date: "",
     time: "",
     progress: 0,
-    attendees: "",
+    attendees: 0,
     pm: "",
   });
 
@@ -21,15 +22,22 @@ const AddEvent = () => {
     setEventData({ ...eventData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Backend call or state update logic here
-    console.log("New Event:", eventData);
+    try {
+      // Backend POST request
+      const response = await axios.post("http://localhost:8000/events", eventData);
 
-    Swal.fire("Success", "Event added successfully!", "success").then(() => {
-      navigate("/admin/events");
-    });
+      if (response.status === 201) {
+        Swal.fire("Success", "Event added successfully!", "success").then(() => {
+          navigate("/admin/events");
+        });
+      }
+    } catch (error) {
+      console.error("Error adding event:", error.response?.data || error.message);
+      Swal.fire("Error", error.response?.data?.error || "Failed to add event", "error");
+    }
   };
 
   return (
@@ -70,8 +78,8 @@ const AddEvent = () => {
           <div>
             <label className="block text-sm font-medium mb-1">Description</label>
             <textarea
-              name="desc"
-              value={eventData.desc}
+              name="description" 
+              value={eventData.description}
               onChange={handleChange}
               placeholder="Enter event description"
               className="w-full border rounded-md p-2"
@@ -113,7 +121,6 @@ const AddEvent = () => {
                 name="time"
                 value={eventData.time}
                 onChange={handleChange}
-                placeholder="Enter event time"
                 className="w-full border rounded-md p-2"
                 required
               />
@@ -132,7 +139,6 @@ const AddEvent = () => {
               min="0"
               max="100"
               className="w-full border rounded-md p-2"
-              required
             />
           </div>
 
@@ -166,3 +172,207 @@ const AddEvent = () => {
 };
 
 export default AddEvent;
+
+
+
+
+
+// import React, { useState } from "react";
+// import axios from "axios";
+// import Swal from "sweetalert2";
+
+// const AddEvent = () => {
+//   const [formData, setFormData] = useState({
+//     type: "",
+//     title: "",
+//     description: "",
+//     venue: "",
+//     date: "",
+//     startTime: "",
+//     endTime: "",
+//     registeredAttendees: "",
+//     totalAttendees: "",
+//     organizer: "",
+//   });
+
+//   const [loading, setLoading] = useState(false);
+
+//   // handle input
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   // handle submit
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!formData.title || !formData.description) {
+//       Swal.fire({
+//         icon: "warning",
+//         title: "Missing Fields",
+//         text: "Title and description are required!",
+//       });
+//       return;
+//     }
+
+//     try {
+//       setLoading(true);
+//       await axios.post("http://localhost:8000/events", formData);
+
+//       Swal.fire({
+//         icon: "success",
+//         title: "Event Added!",
+//         text: "Your event has been created successfully.",
+//         timer: 2000,
+//         showConfirmButton: false,
+//       });
+
+//       setFormData({
+//         type: "",
+//         title: "",
+//         description: "",
+//         venue: "",
+//         date: "",
+//         startTime: "",
+//         endTime: "",
+//         registeredAttendees: "",
+//         totalAttendees: "",
+//         organizer: "",
+//       });
+//     } catch (err) {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Error",
+//         text: err.response?.data?.error || err.message,
+//       });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="max-w-lg mx-auto mt-10 bg-white p-6 shadow-lg rounded-2xl">
+//       <h2 className="text-2xl font-bold text-center mb-5 text-gray-700">
+//         🎉 Add Event
+//       </h2>
+
+//       <form onSubmit={handleSubmit} className="space-y-4">
+//         {/* Event Type */}
+//         <input
+//           type="text"
+//           name="type"
+//           placeholder="Event Type (e.g., Festival)"
+//           value={formData.type}
+//           onChange={handleChange}
+//           className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//         />
+
+//         {/* Event Title */}
+//         <input
+//           type="text"
+//           name="title"
+//           placeholder="Event Title"
+//           value={formData.title}
+//           onChange={handleChange}
+//           required
+//           className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//         />
+
+//         {/* Description */}
+//         <textarea
+//           name="description"
+//           placeholder="Event Description"
+//           value={formData.description}
+//           onChange={handleChange}
+//           required
+//           className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400 min-h-[100px]"
+//         />
+
+//         {/* Venue */}
+//         <input
+//           type="text"
+//           name="venue"
+//           placeholder="Venue (e.g., Main Temple Hall)"
+//           value={formData.venue}
+//           onChange={handleChange}
+//           className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//         />
+
+//         {/* Date */}
+//         <input
+//           type="date"
+//           name="date"
+//           value={formData.date}
+//           onChange={handleChange}
+//           className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//         />
+
+//         {/* Start & End Time */}
+//         <div className="flex gap-2">
+//           <input
+//             type="time"
+//             name="startTime"
+//             value={formData.startTime}
+//             onChange={handleChange}
+//             placeholder="Start Time"
+//             className="w-1/2 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//           />
+//           <input
+//             type="time"
+//             name="endTime"
+//             value={formData.endTime}
+//             onChange={handleChange}
+//             placeholder="End Time"
+//             className="w-1/2 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//           />
+//         </div>
+
+//         {/* Registration Progress */}
+//         <div className="flex gap-2">
+//           <input
+//             type="number"
+//             name="registeredAttendees"
+//             placeholder="Registered Attendees"
+//             value={formData.registeredAttendees}
+//             onChange={handleChange}
+//             className="w-1/2 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//           />
+//           <input
+//             type="number"
+//             name="totalAttendees"
+//             placeholder="Total Attendees"
+//             value={formData.totalAttendees}
+//             onChange={handleChange}
+//             className="w-1/2 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//           />
+//         </div>
+
+//         {/* Organizer */}
+//         <input
+//           type="text"
+//           name="organizer"
+//           placeholder="Organizer / Pandit Name"
+//           value={formData.organizer}
+//           onChange={handleChange}
+//           className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400"
+//         />
+
+//         {/* Submit */}
+//         <button
+//           type="submit"
+//           disabled={loading}
+//           className={`w-full py-3 rounded-lg text-white font-semibold ${
+//             loading
+//               ? "bg-orange-400 cursor-not-allowed"
+//               : "bg-orange-500 hover:bg-orange-600 transition"
+//           }`}
+//         >
+//           {loading ? "Adding..." : "Add Event"}
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default AddEvent;
