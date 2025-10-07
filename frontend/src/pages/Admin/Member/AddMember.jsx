@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from "axios";
 
-const AddMember = ({ addMember }) => {
+const AddMember = () => {
   const navigate = useNavigate();
   const [memberData, setMemberData] = useState({
     name: "",
@@ -18,37 +19,30 @@ const AddMember = ({ addMember }) => {
     setMemberData({ ...memberData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const initials = memberData.name
-      .trim()
-      .split(" ")
-      .map((n) => n[0]?.toUpperCase())
-      .join("");
+    try {
+      const response = await axios.post("http://localhost:8000/members", memberData);
 
-    const newMember = {
-      ...memberData,
-      initials,
-      joined: new Date().toLocaleDateString(),
-    };
-
-    console.log("New Member Added:", newMember);
-
-    if (addMember) {
-      addMember(newMember);
+      Swal.fire({
+        title: "Success!",
+        text: `${memberData.name} has been added successfully.`,
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#f97316",
+      }).then(() => {
+        navigate("/admin/members");
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error.response?.data?.message || "Something went wrong",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#f97316",
+      });
     }
-
-    // SweetAlert Success
-    Swal.fire({
-      title: "Success!",
-      text: `${memberData.name} has been added successfully.`,
-      icon: "success",
-      confirmButtonText: "OK",
-      confirmButtonColor: "#f97316", 
-    }).then(() => {
-      navigate("/admin/members");
-    });
   };
 
   return (

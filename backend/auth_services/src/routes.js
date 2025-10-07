@@ -141,6 +141,8 @@ router.get("/donations", async (req, res) => {
 
 
 // ====================== CREATE PROJECT ======================
+
+
 router.post("/projects", async (req, res) => {
   const { title, status, description, location, progress, budget, raised, expected, pm } = req.body;
 
@@ -249,7 +251,152 @@ router.get("/events", async (req, res) => {
 });
 
 
+// #########################  Add a new member ###############################
 
+
+router.post("/members", async (req, res) => {
+  try {
+    const { name, email, phone, address, membership, status, role } = req.body;
+
+    const newMember = await prisma.member.create({
+      data: { name, email, phone, address, membership, status, role },
+    });
+
+    res.status(201).json({ message: "Member added successfully", newMember });
+  } catch (error) {
+    console.error("Error creating member:", error);
+    res.status(500).json({ error: "Failed to create member" });
+  }
+});
+
+// 📋 Get all members
+router.get("/members", async (req, res) => {
+  try {
+    const members = await prisma.member.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    res.json(members);
+  } catch (error) {
+    console.error("Error fetching members:", error);
+    res.status(500).json({ error: "Failed to fetch members" });
+  }
+});
+
+//  Get a single member by ID
+router.get("/members:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const member = await prisma.member.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!member) return res.status(404).json({ error: "Member not found" });
+
+    res.json(member);
+  } catch (error) {
+    console.error("Error fetching member:", error);
+    res.status(500).json({ error: "Failed to fetch member" });
+  }
+});
+
+//  Update member by ID
+router.put("/members/update/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, phone, address, membership, status, role } = req.body;
+
+    const updatedMember = await prisma.member.update({
+      where: { id: Number(id) },
+      data: { name, email, phone, address, membership, status, role },
+    });
+
+    res.json({ message: "Member updated successfully", updatedMember });
+  } catch (error) {
+    console.error("Error updating member:", error);
+    res.status(500).json({ error: "Failed to update member" });
+  }
+});
+
+//  Delete member by ID
+router.delete("/members/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await prisma.member.delete({
+      where: { id: Number(id) },
+    });
+
+    res.json({ message: "Member deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting member:", error);
+    res.status(500).json({ error: "Failed to delete member" });
+  }
+});
+
+  // ################  CREATE: New Puja Booking   #########################
+
+router.post("/pujabookings", async (req, res) => {
+  try {
+    const { puja, client, date, time, location, phone, amount, status } = req.body;
+    const newBooking = await prisma.pujaBooking.create({
+      data: {
+        puja,
+        client,
+        date: new Date(date),
+        time,
+        location,
+        phone,
+        amount: parseFloat(amount),
+        status: status || "pending",
+      },
+    });
+    res.status(201).json(newBooking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error creating Puja Booking" });
+  }
+});
+
+// READ: Get all bookings
+router.get("/pujabookings", async (req, res) => {
+  try {
+    const bookings = await prisma.pujaBooking.findMany();
+    res.json(bookings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error fetching Puja Bookings" });
+  }
+});
+
+// READ: Get a booking by ID
+router.get("/pujabookings/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await prisma.pujaBooking.findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!booking) return res.status(404).json({ error: "Booking not found" });
+    res.json(booking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error fetching Puja Booking" });
+  }
+});
+
+
+// DELETE: Delete a booking
+router.delete("/pujabookings/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.pujaBooking.delete({
+      where: { id: parseInt(id) },
+    });
+    res.json({ message: "Booking deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error deleting Puja Booking" });
+  }
+});
 
 
 

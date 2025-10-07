@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, IndianRupee, User, Phone, Calendar, Clock, MapPin, Flame } from "lucide-react";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const AddPujaBooking = ({ onAddBooking }) => {
   const navigate = useNavigate();
@@ -23,8 +24,9 @@ const AddPujaBooking = ({ onAddBooking }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     // Validation
     if (!pujaData.puja || !pujaData.client || !pujaData.date || !pujaData.phone || !pujaData.amount) {
       Swal.fire({
@@ -35,26 +37,32 @@ const AddPujaBooking = ({ onAddBooking }) => {
       return;
     }
 
-    const newBooking = {
-      id: Date.now(),
-      ...pujaData,
-      amount: Number(pujaData.amount),
-      status: "Pending",
-      payment: "Pending",
-    };
+    try {
+      const response = await axios.post("http://localhost:8000/pujabookings", {
+        ...pujaData,
+        amount: Number(pujaData.amount),
+        status: "Pending",
+      });
 
-    // Simulate saving booking
-    console.log("New Booking Data:", newBooking);
-    Swal.fire({
-      icon: 'success',
-      title: 'Booking Added!',
-      text: 'Your Puja booking has been successfully added.',
-      timer: 2000,
-      showConfirmButton: true,
-    }).then(() => {
-      navigate(-1);
-    });
+      Swal.fire({
+        icon: 'success',
+        title: 'Booking Added!',
+        text: 'Your Puja booking has been successfully added.',
+        timer: 2000,
+        showConfirmButton: true,
+      }).then(() => {
+        navigate(-1);
+        if (onAddBooking) onAddBooking(response.data); // optional callback
+      });
 
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to save booking. Please try again.',
+      });
+    }
   };
 
   return (

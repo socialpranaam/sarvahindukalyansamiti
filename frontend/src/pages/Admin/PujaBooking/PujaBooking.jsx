@@ -1,66 +1,123 @@
-import React, { useState, useMemo } from "react";
-import { Calendar, Clock, MapPin, Phone } from "lucide-react";
-import { Flame, IndianRupee } from "lucide-react";
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Phone,
+  Flame,
+  IndianRupee,
+} from "lucide-react";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { LuPlus } from "react-icons/lu";
 import { FiCheckCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"; // ✅ Correct import
 
 const PujaBooking = () => {
-  const [bookings, setBookings] = useState([
-    {
-      id: 1,
-      puja: "Ganesh Puja",
-      client: "Meera Gupta",
-      date: "2025-01-25",
-      time: "11:00",
-      location: "Office Premises",
-      phone: "9876543221",
-      amount: 1500,
-      status: "Pending",
-      payment: "Pending",
-    },
-    {
-      id: 2,
-      puja: "Satyanarayan Puja",
-      client: "Ramesh Yadav",
-      date: "2025-01-20",
-      time: "10:00",
-      location: "Home",
-      phone: "9988776655",
-      amount: 2000,
-      status: "Confirmed",
-      payment: "Done",
-    },
-    {
-      id: 3,
-      puja: "Lakshmi Puja",
-      client: "Priya Sharma",
-      date: new Date().toISOString().split("T")[0],
-      time: "08:00",
-      location: "Temple",
-      phone: "9123456789",
-      amount: 1700,
-      status: "Pending",
-      payment: "Pending",
-    },
-  ]);
-
+  const [bookings, setBookings] = useState([]);
   const [search, setSearch] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState("All Bookings");
   const navigate = useNavigate();
 
-  // ---- Functions ----
-  const confirmBooking = (id) => {
-    setBookings((prev) =>
-      prev.map((b) =>
-        b.id === id ? { ...b, status: "Confirmed", payment: "Done" } : b
-      )
-    );
+  // ---- Fetch Bookings ----
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/pujabookings");
+        setBookings(res.data);
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to fetch bookings",
+        });
+      }
+    };
+    fetchBookings();
+  }, []);
+
+  // ---- Confirm Booking ----
+  const confirmBooking = async (id) => {
+    const booking = bookings.find((b) => b.id === id);
+    const updatedBooking = { ...booking, status: "Confirmed", payment: "Done" };
+
+    try {
+      await axios.put(`http://localhost:8000/pujabookings/${id}`, updatedBooking);
+      setBookings((prev) => prev.map((b) => (b.id === id ? updatedBooking : b)));
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Error", text: "Failed to confirm booking" });
+    }
   };
 
-  const cancelBooking = (id) => {
-    setBookings((prev) => prev.filter((b) => b.id !== id));
+  // ---- Cancel Booking ----
+  const cancelBooking = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/pujabookings/${id}`);
+      setBookings((prev) => prev.filter((b) => b.id !== id));
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Error", text: "Failed to cancel booking" });
+    }
+  };
+
+  // ---- Export PDF ----
+  const exportPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Sarv Hindu Kalyan Samiti", 14, 15);
+    doc.setFontSize(12);
+    doc.text("Puja Booking Report", 14, 22);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+
+    const tableColumn = [
+      "ID",
+      "Puja Name",
+      "Client",
+      "Phone",
+      "Date",
+      "Time",
+      "Location",
+      "Amount (₹)",
+      "Status",
+      "Payment",
+    ];
+    const tableRows = [];
+
+    bookings.forEach((b) => {
+      const rowData = [
+        b.id,
+        b.puja,
+        b.client,
+        b.phone,
+        new Date(b.date).toLocaleDateString("en-GB"),
+        b.time,
+        b.location,
+        b.amount,
+        b.status,
+        b.payment,
+      ];
+      tableRows.push(rowData);
+    });
+
+    autoTable(doc, {
+      startY: 35,
+      head: [tableColumn],
+      body: tableRows,
+      theme: "grid",
+      styles: { fontSize: 9 },
+    });
+
+    const totalAmount = bookings.reduce(
+      (sum, b) => sum + (Number(b.amount) || 0),
+      0
+    );
+    doc.text(`Total Revenue: ₹${totalAmount}`, 14, doc.lastAutoTable.finalY + 10);
+    doc.save("Puja_Bookings_Report.pdf");
   };
 
   // ---- Stats ----
@@ -68,15 +125,15 @@ const PujaBooking = () => {
     const total = bookings.length;
     const pending = bookings.filter((b) => b.status === "Pending").length;
     const confirmed = bookings.filter((b) => b.status === "Confirmed").length;
-    const revenue = bookings.reduce(
-      (sum, b) => sum + (b.payment === "Done" ? b.amount : 0),
+    const totalRevenue = bookings.reduce((sum, b) => sum + (Number(b.amount) || 0), 0);
+    const receivedRevenue = bookings.reduce(
+      (sum, b) => sum + (b.payment === "Done" ? Number(b.amount) : 0),
       0
     );
     const pendingRevenue = bookings.reduce(
-      (sum, b) => sum + (b.payment === "Pending" ? b.amount : 0),
+      (sum, b) => sum + (b.payment === "Pending" ? Number(b.amount) : 0),
       0
     );
-
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     const thisMonth = bookings.filter((b) => {
@@ -84,15 +141,21 @@ const PujaBooking = () => {
       return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
     }).length;
 
-    return { total, pending, confirmed, revenue, pendingRevenue, thisMonth };
+    return {
+      total,
+      pending,
+      confirmed,
+      totalRevenue,
+      receivedRevenue,
+      pendingRevenue,
+      thisMonth,
+    };
   }, [bookings]);
 
-  // ---- Filter ----
+  // ---- Filtered Data ----
   const filteredBookings = bookings.filter((b) => {
     const searchMatch =
-      b.client.toLowerCase().includes(search.toLowerCase()) ||
-      b.phone.includes(search);
-
+      b.client.toLowerCase().includes(search.toLowerCase()) || b.phone.includes(search);
     if (activeTab === "Pending") return b.status === "Pending" && searchMatch;
     if (activeTab === "Today") {
       const today = new Date().toISOString().split("T")[0];
@@ -113,10 +176,15 @@ const PujaBooking = () => {
             Manage online puja requests and scheduling
           </p>
         </div>
+
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-          <button className="w-full sm:w-auto px-4 sm:px-6 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+          <button
+            onClick={exportPDF}
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-600 hover:bg-gray-100"
+          >
             <HiArrowDownTray size={20} /> Export
           </button>
+
           <button
             className="w-full sm:w-auto px-4 sm:px-6 py-2 flex justify-center sm:justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
             onClick={() => navigate("add-pujabooking")}
@@ -128,57 +196,40 @@ const PujaBooking = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {/* Total Bookings */}
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
-            <span className="p-2 bg-orange-100 rounded-lg flex items-center justify-center">
-              <Flame className="text-orange-500" size={25} />
-            </span>
+            <Flame className="text-orange-500" size={25} />
             <p className="text-gray-500 text-sm sm:text-base">Total Bookings</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.total}</h2>
-          <p className="text-xs sm:text-sm text-gray-400">
-            +{stats.thisMonth} this month
-          </p>
+          <p className="text-xs sm:text-sm text-gray-400">+{stats.thisMonth} this month</p>
         </div>
 
-        {/* Pending */}
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
-            <span className="p-2 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <Clock className="text-yellow-500" size={25} />
-            </span>
+            <Clock className="text-yellow-500" size={25} />
             <p className="text-gray-500 text-sm sm:text-base">Pending Approval</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.pending}</h2>
-          <p className="text-xs sm:text-sm text-yellow-600">Requires attention</p>
         </div>
 
-        {/* Confirmed */}
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
-            <span className="p-2 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FiCheckCircle className="text-blue-500" size={25} />
-            </span>
+            <FiCheckCircle className="text-blue-500" size={25} />
             <p className="text-gray-500 text-sm sm:text-base">Confirmed</p>
           </div>
           <h2 className="text-2xl font-bold">{stats.confirmed}</h2>
         </div>
 
-        {/* Revenue */}
         <div className="bg-white p-4 rounded-xl shadow-sm flex flex-col">
           <div className="flex items-center gap-2 mb-2">
-            <span className="p-2 bg-green-100 rounded-lg flex items-center justify-center">
-              <IndianRupee className="text-green-600" size={25} />
-            </span>
-            <p className="text-gray-500 text-sm sm:text-base">Revenue</p>
+            <IndianRupee className="text-green-600" size={25} />
+            <p className="text-gray-500 text-sm sm:text-base">Total Revenue</p>
           </div>
-          <h2 className="text-2xl font-semibold flex items-center">
-            <IndianRupee /> {stats.revenue}
+          <h2 className="text-2xl font-bold text-green-700">
+            ₹{stats.totalRevenue}
           </h2>
-          <p className="text-xs sm:text-sm text-gray-400">
-            ₹{stats.pendingRevenue} pending
-          </p>
+          <p className="text-xs sm:text-sm text-gray-500">All bookings payment</p>
         </div>
       </div>
 
@@ -191,29 +242,6 @@ const PujaBooking = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-orange-400 outline-none"
         />
-      </div>
-
-      {/* Tabs */}
-      <div className="flex flex-wrap gap-4 border-b border-gray-300 mb-4">
-        {["All Bookings", "Pending", "Today"].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`pb-2 cursor-pointer ${
-              activeTab === tab
-                ? "border-b-2 border-orange-500 text-orange-600 font-medium"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            {tab}{" "}
-            {tab === "All Bookings" && `(${stats.total})`}
-            {tab === "Pending" && `(${stats.pending})`}
-            {tab === "Today" &&
-              `(${bookings.filter(
-                (b) => b.date === new Date().toISOString().split("T")[0]
-              ).length})`}
-          </button>
-        ))}
       </div>
 
       {/* Booking Cards */}
@@ -229,15 +257,10 @@ const PujaBooking = () => {
               <h3 className="text-lg font-semibold">{b.puja}</h3>
               <p className="text-gray-600 mb-3">{b.client}</p>
 
-              <div className="space-y-2 text-gray-600 text-xs sm:text-sm mb-3">
+              <div className="space-y-2 text-gray-600 text-sm mb-3">
                 <p className="flex items-center gap-2">
                   <Calendar size={16} />{" "}
-                  {new Date(b.date).toLocaleDateString("en-GB", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
+                  {new Date(b.date).toLocaleDateString("en-GB")}
                 </p>
                 <p className="flex items-center gap-2">
                   <Clock size={16} /> {b.time}
@@ -251,7 +274,6 @@ const PujaBooking = () => {
                 <p className="font-semibold text-gray-800">₹{b.amount}</p>
               </div>
 
-              {/* Status */}
               <div className="flex flex-wrap gap-2 mb-4">
                 <span
                   className={`px-3 py-1 text-xs rounded-lg ${
@@ -273,7 +295,6 @@ const PujaBooking = () => {
                 </span>
               </div>
 
-              {/* Actions */}
               <div className="flex flex-col sm:flex-row gap-3">
                 {b.status === "Pending" && (
                   <button
