@@ -26,6 +26,8 @@ import PujaBooking from "./pages/Admin/PujaBooking/PujaBooking";
 import AddPujaBooking from "./pages/Admin/PujaBooking/AddPujaBooking";
 import AddNews from "./pages/Admin/News/AddNews";
 import Login from "./pages/Admin/Login/Login";
+import ContactList from "./pages/Admin/Contact/ContactList";
+import NewsList from "./pages/Admin/News/NewsList";
 
 // Public Layout
 const PublicLayout = () => (
@@ -76,7 +78,9 @@ function App() {
               <Route path="members/add-member" element={<AddMember />} />
               <Route path="pujabooking" element={<PujaBooking />} />
               <Route path="pujabooking/add-pujabooking" element={<AddPujaBooking />} />
-              <Route path="news" element={<AddNews />} />
+              <Route path="newslist" element={<NewsList/>}/>
+              <Route path="newslist/add-news" element={<AddNews />} />
+              <Route path="contactlist" element={<ContactList/>}/>
             </Route>
           </Route>
         </Route>

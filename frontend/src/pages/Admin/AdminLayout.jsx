@@ -2,6 +2,8 @@ import { Outlet, NavLink } from "react-router-dom";
 import { Calendar, HandCoins, HandHelping, Home, Landmark, Users } from "lucide-react";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { MdOutlineContactPhone } from "react-icons/md";
+import { IoNewspaperOutline } from "react-icons/io5";
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -119,7 +121,7 @@ const AdminLayout = () => {
                 <HandHelping size={20}/> Puja Booking
               </NavLink>
               <NavLink
-                to="/admin/news"
+                to="/admin/newslist"
                 className={({ isActive }) =>
                   `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
                     isActive
@@ -128,7 +130,20 @@ const AdminLayout = () => {
                   }`
                 }
               >
-                <HandHelping size={20}/> News
+                <IoNewspaperOutline   size={20}/> News
+              </NavLink>
+
+              <NavLink
+                to="/admin/contactlist"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                    isActive
+                      ? "bg-orange-400 text-white font-semibold"
+                      : "hover:bg-orange-100 hover:text-orange-600"
+                  }`
+                }
+              >
+                <MdOutlineContactPhone   size={20}/> ContactList
               </NavLink>
             </nav>
           </div>

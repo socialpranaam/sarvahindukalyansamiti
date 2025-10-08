@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import multer from "multer";
 import express from "express"
 import path from 'path';
+import fs from "fs";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -99,6 +100,68 @@ router.post("/news", upload.single("image"), async (req, res) => {
   } catch (err) {
     console.error("❌ Error creating news:", err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.put("/news/:id", upload.single("image"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, date } = req.body;
+
+    // Fetch existing news
+    const existingNews = await prisma.news.findUnique({ where: { id: parseInt(id) } });
+    if (!existingNews) return res.status(404).json({ error: "News not found" });
+
+    // Handle image update
+    let imageUrl = existingNews.image;
+    if (req.file) {
+      // Delete old image if exists
+      if (existingNews.image) {
+        const oldImagePath = path.join(__dirname, "..", existingNews.image);
+        if (fs.existsSync(oldImagePath)) fs.unlinkSync(oldImagePath);
+      }
+      imageUrl = `/uploads/${req.file.filename}`;
+    }
+
+    let newsDate = existingNews.date;
+    if (date) {
+      const parsedDate = new Date(date);
+      if (!isNaN(parsedDate.getTime())) newsDate = parsedDate;
+    }
+
+    const updatedNews = await prisma.news.update({
+      where: { id: parseInt(id) },
+      data: { title, description, date: newsDate, image: imageUrl },
+    });
+
+    res.status(200).json(updatedNews);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------- DELETE NEWS --------------------
+router.delete("/news/:id", async (req, res) => {
+  try {
+    const newsId = parseInt(req.params.id);
+    if (isNaN(newsId)) return res.status(400).json({ error: "Invalid news ID" });
+
+    const existingNews = await prisma.news.findUnique({ where: { id: newsId } });
+    if (!existingNews) return res.status(404).json({ error: "News not found" });
+
+    // Delete image if exists
+    if (existingNews.image) {
+      const imagePath = path.join(process.cwd(), "uploads", path.basename(existingNews.image));
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+    }
+
+    await prisma.news.delete({ where: { id: newsId } });
+
+    res.status(200).json({ message: "News deleted successfully" });
+  } catch (err) {
+    console.error("DELETE news error:", err);
+    res.status(500).json({ error: err.message, stack: err.stack });
   }
 });
 
@@ -395,6 +458,71 @@ router.delete("/pujabookings/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error deleting Puja Booking" });
+  }
+});
+
+
+// 🟢 Create Contact (POST)
+router.post("/contacts", async (req, res) => {
+  try {
+    const { name, email, phone, subject, message } = req.body;
+
+    if (!name || !email || !phone || !subject || !message) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const newContact = await prisma.contact.create({
+      data: { name, email, phone, subject, message },
+    });
+
+    res.status(201).json(newContact);
+  } catch (error) {
+    console.error("Error creating contact:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 🔵 Get All Contacts (GET)
+router.get("/contacts", async (req, res) => {
+  try {
+    const contacts = await prisma.contact.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    res.status(200).json(contacts);
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 🟣 Get Single Contact by ID (GET)
+router.get("/contacts/:id", async (req, res) => {
+  try {
+    const contact = await prisma.contact.findUnique({
+      where: { id: parseInt(req.params.id) },
+    });
+
+    if (!contact) {
+      return res.status(404).json({ error: "Contact not found" });
+    }
+
+    res.status(200).json(contact);
+  } catch (error) {
+    console.error("Error fetching contact:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 🟠 Delete Contact (DELETE)
+router.delete("/contacts/:id", async (req, res) => {
+  try {
+    await prisma.contact.delete({
+      where: { id: parseInt(req.params.id) },
+    });
+    res.status(200).json({ message: "Contact deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting contact:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

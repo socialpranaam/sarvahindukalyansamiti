@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Swal from "sweetalert2"; 
-import "sweetalert2/dist/sweetalert2.min.css"; 
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +22,8 @@ const ContactForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  // ✅ Backend connection added here
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, phone, subject, message } = formData;
 
@@ -53,13 +54,37 @@ const ContactForm = () => {
       return;
     }
 
-    Swal.fire({
-      icon: "success",
-      title: 'आपका फॉर्म सफलतापूर्वक भेज दिया गया है।',
-      confirmButtonColor: "#f97316",
-    });
+    try {
+      const res = await fetch("http://localhost:8000/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      const data = await res.json();
+
+      if (res.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "आपका फॉर्म सफलतापूर्वक भेज दिया गया है।",
+          confirmButtonColor: "#f97316",
+        });
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: data.error || "कुछ गलती हुई है।",
+          confirmButtonColor: "#f97316",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      Swal.fire({
+        icon: "error",
+        title: "सर्वर से कनेक्शन नहीं हो सका!",
+        confirmButtonColor: "#f97316",
+      });
+    }
   };
 
   return (

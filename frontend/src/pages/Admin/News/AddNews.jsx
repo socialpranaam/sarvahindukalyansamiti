@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddNews = () => {
   const [title, setTitle] = useState("");
@@ -9,6 +10,7 @@ const AddNews = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // ✅ useNavigate hook
 
   // Image change handler with preview
   const handleImageChange = (e) => {
@@ -45,7 +47,7 @@ const AddNews = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:8000/news", formData, {
+      await axios.post("http://localhost:8000/news", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -63,6 +65,9 @@ const AddNews = () => {
       setDate("");
       setImage(null);
       setPreview(null);
+
+      // ✅ Redirect to NewsList
+      navigate("/admin/newslist"); 
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -78,7 +83,6 @@ const AddNews = () => {
     <div className="max-w-lg mx-auto mt-10 bg-white p-6 shadow-lg rounded-2xl">
       <h2 className="text-2xl font-bold text-center mb-5 text-gray-700">📰 Add News</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
         <input
           type="text"
           placeholder="News Title"
@@ -87,8 +91,6 @@ const AddNews = () => {
           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           required
         />
-
-        {/* Description */}
         <textarea
           placeholder="News Description"
           value={description}
@@ -96,16 +98,12 @@ const AddNews = () => {
           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 min-h-[120px]"
           required
         />
-
-        {/* Date */}
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
-
-        {/* Image Upload */}
         <div>
           <input
             type="file"
@@ -123,8 +121,6 @@ const AddNews = () => {
             </div>
           )}
         </div>
-
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
