@@ -28,6 +28,8 @@ import AddNews from "./pages/Admin/News/AddNews";
 import Login from "./pages/Admin/Login/Login";
 import ContactList from "./pages/Admin/Contact/ContactList";
 import NewsList from "./pages/Admin/News/NewsList";
+import FeedBack from "./pages/Admin/FeedBack/FeedBack";
+import AddFeedBack from "./pages/Admin/FeedBack/AddFeedBack";
 
 // Public Layout
 const PublicLayout = () => (
@@ -81,6 +83,8 @@ function App() {
               <Route path="newslist" element={<NewsList/>}/>
               <Route path="newslist/add-news" element={<AddNews />} />
               <Route path="contactlist" element={<ContactList/>}/>
+              <Route path="feedbacks" element={<FeedBack/>}/>
+              <Route path="feedbacks/add-feedback" element={<AddFeedBack/>}/>
             </Route>
           </Route>
         </Route>

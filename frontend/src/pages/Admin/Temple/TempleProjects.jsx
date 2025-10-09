@@ -54,7 +54,7 @@ const TempleProjects = () => {
             ● System Online
           </div>
           <button className="relative">
-            <Bell size={24} className="text-gray-600 sm:text-gray-700" />
+            <Bell size={30} className="text-gray-600 sm:text-gray-700" />
             {notifications > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
                 {notifications}

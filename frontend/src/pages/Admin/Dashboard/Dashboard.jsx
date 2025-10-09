@@ -85,8 +85,13 @@ const Dashboard = () => {
         // -------------------- Members --------------------
         const memberRes = await axios.get("http://localhost:8000/members");
         const members = memberRes.data;
+
+        // Total Members
         setActiveMembers(members.length);
-        setActiveVolunteers(members.length);
+
+        // Active Volunteers (status = "Active")
+        const activeCount = members.filter((m) => m.status === "Active").length;
+        setActiveVolunteers(activeCount);
 
         // 🔹 Latest Member
         const latestMember = members.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
@@ -129,7 +134,7 @@ const Dashboard = () => {
           time: new Date(latestPuja.date || latestPuja.createdAt),
         };
 
-        // ✅ Combine all latest activities
+        //  Combine all latest activities
         const finalActivity = [donationItem, memberItem, eventItem, pujaItem].filter(Boolean);
         setRecentActivity(finalActivity);
 
@@ -172,13 +177,14 @@ const Dashboard = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <StatCard
+        <StatCard
           title="Total Donations"
           value={`₹ ${totalDonations}`}
           valueColor="text-green-500"
           icon={<IndianRupee className="text-orange-400"/>}
-          color="bg-orange-100"/>
-        <StatCard title="Active Members" value={activeMembers} icon={<Users className="text-blue-500"/>} color="bg-blue-100"/>
+          color="bg-orange-100"
+        />
+        <StatCard title="Total Members" value={activeMembers} icon={<Users className="text-blue-500"/>} color="bg-blue-100"/>
         <StatCard title="Upcoming Events" value={upcomingEvents} icon={<Calendar className="text-purple-500"/>} color="bg-purple-100"/>
         <StatCard title="Temple Projects" value={templeProjects} icon={<Landmark className="text-red-500"/>} color="bg-red-100"/>
         <StatCard title="Active Volunteers" value={activeVolunteers} icon={<Handshake className="text-green-500"/>} color="bg-green-100"/>

@@ -332,7 +332,7 @@ router.post("/members", async (req, res) => {
   }
 });
 
-// 📋 Get all members
+//  Get all members
 router.get("/members", async (req, res) => {
   try {
     const members = await prisma.member.findMany({
@@ -362,39 +362,7 @@ router.get("/members:id", async (req, res) => {
   }
 });
 
-//  Update member by ID
-router.put("/members/update/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, email, phone, address, membership, status, role } = req.body;
 
-    const updatedMember = await prisma.member.update({
-      where: { id: Number(id) },
-      data: { name, email, phone, address, membership, status, role },
-    });
-
-    res.json({ message: "Member updated successfully", updatedMember });
-  } catch (error) {
-    console.error("Error updating member:", error);
-    res.status(500).json({ error: "Failed to update member" });
-  }
-});
-
-//  Delete member by ID
-router.delete("/members/delete/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    await prisma.member.delete({
-      where: { id: Number(id) },
-    });
-
-    res.json({ message: "Member deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting member:", error);
-    res.status(500).json({ error: "Failed to delete member" });
-  }
-});
 
   // ################  CREATE: New Puja Booking   #########################
 
@@ -431,6 +399,31 @@ router.get("/pujabookings", async (req, res) => {
   }
 });
 
+router.put("/pujabookings/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, payment } = req.body;
+
+    const existingBooking = await prisma.pujaBooking.findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!existingBooking) return res.status(404).json({ error: "Booking not found" });
+
+    const updatedBooking = await prisma.pujaBooking.update({
+      where: { id: parseInt(id) },
+      data: {
+        status: status || existingBooking.status,
+        payment: payment || existingBooking.payment,
+      },
+    });
+
+    res.status(200).json(updatedBooking);
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    res.status(500).json({ error: "Failed to update Puja Booking" });
+  }
+});
+
 // READ: Get a booking by ID
 router.get("/pujabookings/:id", async (req, res) => {
   try {
@@ -462,7 +455,7 @@ router.delete("/pujabookings/:id", async (req, res) => {
 });
 
 
-// 🟢 Create Contact (POST)
+//  Create Contact 
 router.post("/contacts", async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
@@ -482,7 +475,7 @@ router.post("/contacts", async (req, res) => {
   }
 });
 
-// 🔵 Get All Contacts (GET)
+//  Get All Contacts 
 router.get("/contacts", async (req, res) => {
   try {
     const contacts = await prisma.contact.findMany({
@@ -495,7 +488,7 @@ router.get("/contacts", async (req, res) => {
   }
 });
 
-// 🟣 Get Single Contact by ID (GET)
+//  Get Single Contact by ID 
 router.get("/contacts/:id", async (req, res) => {
   try {
     const contact = await prisma.contact.findUnique({
@@ -513,18 +506,147 @@ router.get("/contacts/:id", async (req, res) => {
   }
 });
 
-// 🟠 Delete Contact (DELETE)
-router.delete("/contacts/:id", async (req, res) => {
+
+
+
+// ================== Routes ================== //
+
+// 1️⃣ Get all feedbacks
+router.get("/feedbacks", async (req, res) => {
   try {
-    await prisma.contact.delete({
-      where: { id: parseInt(req.params.id) },
+    const feedbacks = await prisma.feedBack.findMany({
+      orderBy: { createdAt: "desc" },
     });
-    res.status(200).json({ message: "Contact deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting contact:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+
+    // Add full image URL
+    const formattedFeedbacks = feedbacks.map((f) => ({
+      ...f,
+      image: f.image ? `${req.protocol}://${req.get("host")}${f.image}` : null,
+    }));
+
+    res.json(formattedFeedbacks);
+  } catch (err) {
+    console.error("Error fetching feedbacks:", err);
+    res.status(500).json({ error: err.message });
   }
 });
+
+// 2️⃣ Get single feedback by ID
+router.get("/feedbacks/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const feedback = await prisma.feedBack.findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!feedback)
+      return res.status(404).json({ error: "Feedback not found" });
+
+    const formattedFeedback = {
+      ...feedback,
+      image: feedback.image
+        ? `${req.protocol}://${req.get("host")}${feedback.image}`
+        : null,
+    };
+
+    res.json(formattedFeedback);
+  } catch (err) {
+    console.error("Error fetching feedback:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3️⃣ Create new feedback
+router.post("/feedbacks", upload.single("image"), async (req, res) => {
+  const { name, message } = req.body;
+  const image = req.file ? `/uploads/${req.file.filename}` : null;
+
+  try {
+    const newFeedback = await prisma.feedBack.create({
+      data: { name, message, image },
+    });
+
+    res.status(201).json({
+      ...newFeedback,
+      image: image ? `${req.protocol}://${req.get("host")}${image}` : null,
+    });
+  } catch (err) {
+    console.error("Error creating feedback:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 4️⃣ Update feedback
+router.put("/feedbacks/:id", upload.single("image"), async (req, res) => {
+  const { id } = req.params;
+  const { name, message } = req.body;
+
+  try {
+    const existingFeedback = await prisma.feedBack.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingFeedback)
+      return res.status(404).json({ error: "Feedback not found" });
+
+    let image = existingFeedback.image;
+
+    // If new image uploaded
+    if (req.file) {
+      // delete old image
+      if (existingFeedback.image) {
+        const oldPath = path.join(
+          process.cwd(),
+          existingFeedback.image.replace("/uploads/", "uploads/")
+        );
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+      image = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedFeedback = await prisma.feedBack.update({
+      where: { id: parseInt(id) },
+      data: { name, message, image },
+    });
+
+    res.json({
+      ...updatedFeedback,
+      image: image ? `${req.protocol}://${req.get("host")}${image}` : null,
+    });
+  } catch (err) {
+    console.error("Error updating feedback:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 5️⃣ Delete feedback
+router.delete("/feedbacks/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const existingFeedback = await prisma.feedBack.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingFeedback)
+      return res.status(404).json({ error: "Feedback not found" });
+
+    // Delete image file if exists
+    if (existingFeedback.image) {
+      const imagePath = path.join(
+        process.cwd(),
+        existingFeedback.image.replace("/uploads/", "uploads/")
+      );
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+    }
+
+    await prisma.feedBack.delete({ where: { id: parseInt(id) } });
+    res.json({ message: "Feedback deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting feedback:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 
 

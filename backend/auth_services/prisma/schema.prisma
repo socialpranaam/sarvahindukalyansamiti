@@ -17,6 +17,13 @@ model News {
   createdAt   DateTime @default(now())
 }
 
+model FeedBack {
+  id        Int      @id @default(autoincrement())
+  name      String
+  message   String
+  image     String?   // <- optional banaya
+  createdAt DateTime @default(now())
+}
 
 
 model Donation {
@@ -27,7 +34,7 @@ model Donation {
   amount    Float
   type      String
   payment   String
-  status    String   @default("Completed")  // <- Ye line honi chahiye
+  status    String   @default("Completed")  
   createdAt DateTime @default(now())
 }
 
@@ -52,7 +59,7 @@ model Event {
   description String
   location    String
   date        DateTime
-  time        String     // changed from Time to String
+  time        String    
   progress    Int
   attendees   Int
   pm          String
@@ -65,9 +72,9 @@ model Member {
   email       String   @unique
   phone       String
   address     String
-  membership  String   // e.g., "Premium", "Basic", "Lifetime"
-  status      String   @default("Active")  // e.g., Active / Inactive
-  role        String   @default("Member")  // e.g., Admin / Member / Volunteer
+  membership  String  
+  status      String   @default("Active")  
+  role        String   @default("Member")  
   createdAt   DateTime @default(now())
 }
 
@@ -80,7 +87,7 @@ model PujaBooking {
   location  String
   phone     String
   amount    Float
-  status    String   @default("pending") // optional default value
+  status    String   @default("pending") 
   createdAt DateTime @default(now())
 }
 

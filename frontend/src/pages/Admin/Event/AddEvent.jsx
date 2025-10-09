@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios"; // ✅ import axios
+import axios from "axios";
 
 const AddEvent = () => {
   const navigate = useNavigate();
@@ -9,10 +9,11 @@ const AddEvent = () => {
   const [eventData, setEventData] = useState({
     tag: "festival",
     title: "",
-    description: "", // backend me description ka field name same rakho
+    description: "",
     location: "",
     date: "",
     time: "",
+    period: "AM", // ✅ Added AM/PM field
     progress: 0,
     attendees: 0,
     pm: "",
@@ -26,8 +27,13 @@ const AddEvent = () => {
     e.preventDefault();
 
     try {
-      // Backend POST request
-      const response = await axios.post("http://localhost:8000/events", eventData);
+      // ✅ Combine time with AM/PM before sending
+      const eventToSend = {
+        ...eventData,
+        time: `${eventData.time} ${eventData.period}`,
+      };
+
+      const response = await axios.post("http://localhost:8000/events", eventToSend);
 
       if (response.status === 201) {
         Swal.fire("Success", "Event added successfully!", "success").then(() => {
@@ -41,7 +47,7 @@ const AddEvent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center items-center p-6">
+    <div className="min-h-screen flex justify-center items-center p-6">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
         <h1 className="text-2xl font-semibold mb-6">Add New Event</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -78,7 +84,7 @@ const AddEvent = () => {
           <div>
             <label className="block text-sm font-medium mb-1">Description</label>
             <textarea
-              name="description" 
+              name="description"
               value={eventData.description}
               onChange={handleChange}
               placeholder="Enter event description"
@@ -116,14 +122,25 @@ const AddEvent = () => {
             </div>
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Time</label>
-              <input
-                type="time"
-                name="time"
-                value={eventData.time}
-                onChange={handleChange}
-                className="w-full border rounded-md p-2"
-                required
-              />
+              <div className="flex gap-2">
+                <input
+                  type="time"
+                  name="time"
+                  value={eventData.time}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                  required
+                />
+                <select
+                  name="period"
+                  value={eventData.period}
+                  onChange={handleChange}
+                  className="border rounded-md p-2"
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -172,6 +189,7 @@ const AddEvent = () => {
 };
 
 export default AddEvent;
+
 
 
 

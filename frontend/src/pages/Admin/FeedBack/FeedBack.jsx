@@ -1,59 +1,51 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { HiArrowDownTray, HiOutlineDocumentArrowDown } from "react-icons/hi2";
-import { FiSearch } from "react-icons/fi";
-import { LuPlus } from "react-icons/lu";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
+import { HiArrowDownTray } from "react-icons/hi2";
+import { GoPlus } from "react-icons/go";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Swal from "sweetalert2";
-import { GoPlus } from "react-icons/go";
 
-const NewsList = () => {
-  const [news, setNews] = useState([]);
+const FeedbackListPage = () => {
+  const [feedbacks, setFeedbacks] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  // Fetch news data
-  const fetchNews = async () => {
+  // Fetch feedbacks
+  const fetchFeedbacks = async () => {
     try {
-      const res = await fetch("http://localhost:8000/news");
-      if (!res.ok) throw new Error("Failed to fetch news");
+      const res = await fetch("http://localhost:8000/feedbacks");
+      if (!res.ok) throw new Error("Failed to fetch feedbacks");
       const data = await res.json();
-      setNews(data);
+      setFeedbacks(data);
     } catch (error) {
-      console.error("Error fetching news:", error);
-      Swal.fire("Error", "Failed to load news data.", "error");
+      console.error("Error fetching feedbacks:", error);
+      Swal.fire("Error", "Failed to load feedback data.", "error");
     }
   };
 
   useEffect(() => {
-    fetchNews();
+    fetchFeedbacks();
   }, []);
 
-  // Filtered news
-  const filteredNews = useMemo(() => {
-    return news.filter(
-      (n) =>
-        n.title.toLowerCase().includes(search.toLowerCase()) ||
-        n.description.toLowerCase().includes(search.toLowerCase())
+  // Filter feedbacks
+  const filteredFeedbacks = useMemo(() => {
+    return feedbacks.filter(
+      (f) =>
+        f.name.toLowerCase().includes(search.toLowerCase()) ||
+        f.message.toLowerCase().includes(search.toLowerCase())
     );
-  }, [news, search]);
+  }, [feedbacks, search]);
 
-  // PDF Export
+  // Export PDF
   const exportPDF = () => {
     const doc = new jsPDF();
-    const tableColumn = ["#", "Date", "Title", "Description"];
+    const tableColumn = ["#", "Name", "Message", "Avatar"];
     const tableRows = [];
 
-    filteredNews.forEach((item, index) => {
-      const row = [
-        index + 1,
-        new Date(item.date || item.createdAt).toLocaleDateString("en-IN"),
-        item.title,
-        item.description,
-      ];
-      tableRows.push(row);
+    filteredFeedbacks.forEach((item, index) => {
+      tableRows.push([index + 1, item.name, item.message, item.avatar ? "Yes" : "No"]);
     });
 
     autoTable(doc, {
@@ -65,11 +57,11 @@ const NewsList = () => {
       headStyles: { fillColor: [253, 230, 138] },
     });
 
-    doc.text("News List", 14, 15);
-    doc.save("news.pdf");
+    doc.text("Feedback List", 14, 15);
+    doc.save("feedbacks.pdf");
   };
 
-  // Delete news
+  // Delete feedback
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -83,30 +75,32 @@ const NewsList = () => {
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:8000/news/${id}`, { method: "DELETE" });
-        if (!res.ok) throw new Error("Failed to delete news");
-        Swal.fire("Deleted!", "News has been deleted.", "success");
-        fetchNews(); // refresh list
+        const res = await fetch(`http://localhost:8000/feedbacks/${id}`, {
+          method: "DELETE",
+        });
+        if (!res.ok) throw new Error("Failed to delete feedback");
+        Swal.fire("Deleted!", "Feedback has been deleted.", "success");
+        fetchFeedbacks();
       } catch (err) {
         console.error(err);
-        Swal.fire("Error!", err.message || "Failed to delete news.", "error");
+        Swal.fire("Error!", err.message || "Failed to delete feedback.", "error");
       }
     }
   };
 
   return (
-    <section className=" min-h-screen ">
+    <section className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-8">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-2">News</h1>
+        <h1 className="text-3xl font-semibold text-gray-800 mb-2">Feedback List</h1>
         <p className="text-gray-500 mb-6">Welcome back, Admin</p>
 
-        {/* Header Bar */}
+        {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 w-full md:w-1/2">
             <FiSearch className="text-gray-400" />
             <input
               type="text"
-              placeholder="Search news..."
+              placeholder="Search feedback..."
               className="w-full bg-transparent outline-none text-sm"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -116,16 +110,16 @@ const NewsList = () => {
           <div className="flex gap-3">
             <button
               onClick={exportPDF}
-          className="px-5 py-3 flex justify-between border border-gray-300 rounded-lg gap-2 text-gray-700 hover:bg-gray-100"
+              className="px-5 py-3 flex justify-between border border-gray-300 rounded-lg gap-2 text-gray-700 hover:bg-gray-100"
             >
               <HiArrowDownTray className="text-lg" /> Export PDF
             </button>
 
             <button
-              onClick={() => navigate("/admin/newslist/add-news")}
-          className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600"
+              onClick={() => navigate("/admin/feedbacks/add-feedback")}
+              className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600"
             >
-              <GoPlus /> Add News
+              <GoPlus /> Add Feedback
             </button>
           </div>
         </div>
@@ -136,37 +130,37 @@ const NewsList = () => {
             <thead className="bg-orange-100 text-gray-700 uppercase text-xs font-semibold">
               <tr>
                 <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">Date</th>
-                <th className="px-4 py-3">Title</th>
-                <th className="px-4 py-3">Description</th>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Message</th>
+                <th className="px-4 py-3">Avatar</th>
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredNews.length > 0 ? (
-                filteredNews.map((n, index) => (
+              {filteredFeedbacks.length > 0 ? (
+                filteredFeedbacks.map((f, index) => (
                   <tr
-                    key={n.id}
+                    key={f.id}
                     className="border-t border-gray-200 hover:bg-orange-50 transition"
                   >
                     <td className="px-4 py-3 text-gray-600">{index + 1}</td>
+                    <td className="px-4 py-3 font-medium text-gray-800">{f.name}</td>
+                    <td className="px-4 py-3 text-gray-600">{f.message}</td>
                     <td className="px-4 py-3 text-gray-600">
-                      {new Date(n.date || n.createdAt).toLocaleDateString("en-IN")}
+                      {f.avatar && (
+                        <img
+                          src={f.avatar}
+                          alt={f.name}
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      )}
                     </td>
-                    <td className="px-4 py-3 font-medium text-gray-800">{n.title}</td>
-                    <td className="px-4 py-3 text-gray-600">{n.description}</td>
                     <td className="px-4 py-3 flex gap-2">
                       <button
-                        onClick={() => navigate(`/news/edit-news/${n.id}`)}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        <FiEdit />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(n.id)}
+                        onClick={() => handleDelete(f.id)}
                         className="text-red-500 hover:text-red-700"
                       >
-                        <FiTrash2 />
+                        Delete
                       </button>
                     </td>
                   </tr>
@@ -174,7 +168,7 @@ const NewsList = () => {
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center py-6 text-gray-500 italic">
-                    No news found.
+                    No feedback found.
                   </td>
                 </tr>
               )}
@@ -186,4 +180,4 @@ const NewsList = () => {
   );
 };
 
-export default NewsList;
+export default FeedbackListPage;

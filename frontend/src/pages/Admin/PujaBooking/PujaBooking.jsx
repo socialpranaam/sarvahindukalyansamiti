@@ -41,13 +41,14 @@ const PujaBooking = () => {
   }, []);
 
   // ---- Confirm Booking ----
-  const confirmBooking = async (id) => {
-    const booking = bookings.find((b) => b.id === id);
-    const updatedBooking = { ...booking, status: "Confirmed", payment: "Done" };
-
+   const confirmBooking = async (id) => {
     try {
+      const booking = bookings.find((b) => b.id === id);
+      const updatedBooking = { ...booking, status: "Confirmed", payment: "Done" };
+
       await axios.put(`http://localhost:8000/pujabookings/${id}`, updatedBooking);
       setBookings((prev) => prev.map((b) => (b.id === id ? updatedBooking : b)));
+      Swal.fire({ icon: "success", title: "Confirmed!" });
     } catch (err) {
       console.error(err);
       Swal.fire({ icon: "error", title: "Error", text: "Failed to confirm booking" });

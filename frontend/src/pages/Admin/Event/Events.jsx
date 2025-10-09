@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Bell, Calendar, Clock } from "lucide-react";
 import { FiPlus } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
-import { FaRegUserCircle } from "react-icons/fa";
+import {  FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const EventCard = ({ event }) => {
@@ -48,10 +48,10 @@ const EventCard = ({ event }) => {
         <p className="text-xs text-gray-600 mt-1">{event.attendees}</p>
       </div>
 
-      <div className="flex items-center text-sm text-gray-700">
-        <FaRegUserCircle size={20} className="mr-2" />
-        <span>{event.pm}</span> PM:
-      </div>
+      <p className="flex items-center text-sm gap-2 text-gray-500">
+        <FaUser />PM: {event.pm}
+          
+      </p>
     </div>
   );
 };
@@ -78,7 +78,7 @@ const Events = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className=" min-h-screen">
       <div className="flex items-center bg-white justify-between mb-6 p-4">
         <div>
           <h1 className="text-3xl font-semibold text-gray-900">Events</h1>
@@ -90,10 +90,19 @@ const Events = () => {
           <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
             ● System Online
           </div>
+          <button className="relative">
+            <Bell size={30} className="text-gray-600"/>
+            {/* {notifications > 0 && (
+              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                {notifications}
+              </span> */}
+            
+          </button>
         </div>
+        
       </div>
 
-      <div className="flex bg-gray-50 items-center justify-between mt-8">
+      <div className="flex items-center justify-between mt-8">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">Temple Events</h2>
           <p className="text-sm text-gray-600">
