@@ -101,4 +101,12 @@ model Contact {
   message   String
   createdAt DateTime @default(now())
 }
+  
 
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String?  // nullable
+  createdAt   DateTime @default(now())
+}

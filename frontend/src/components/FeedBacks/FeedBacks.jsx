@@ -1,39 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const FeedBacks = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [currentMainfeedback, setCurrentMainfeedback] = useState(null);
+  const indexRef = useRef(0); // Auto rotation ke liye stable index
 
-  //  Backend se data fetch karna
+  // Backend se data fetch karna
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const res = await fetch("http://localhost:8000/feedbacks"); // 
+        const res = await fetch("http://localhost:8000/feedbacks");
         const data = await res.json();
-        setFeedbacks(data);
-        if (data.length > 0) setCurrentMainfeedback(data[0]);
+
+        // Sirf 8 feedbacks hi frontend me dikhane hain
+        const limitedData = data.slice(0, 8);
+
+        setFeedbacks(limitedData);
+        if (limitedData.length > 0) setCurrentMainfeedback(limitedData[0]);
       } catch (error) {
         console.error("Error fetching feedbacks:", error);
       }
     };
+
     fetchFeedbacks();
   }, []);
 
-  //  Auto change functionality
+  // Auto change functionality (infinite loop fix)
   useEffect(() => {
     if (feedbacks.length === 0) return;
+
     const interval = setInterval(() => {
-      setCurrentMainfeedback((prev) => {
-        const currentIndex = feedbacks.findIndex((t) => t.id === prev.id);
-        const nextIndex = (currentIndex + 1) % feedbacks.length;
-        return feedbacks[nextIndex];
-      });
+      indexRef.current = (indexRef.current + 1) % feedbacks.length;
+      setCurrentMainfeedback(feedbacks[indexRef.current]);
     }, 4000);
+
     return () => clearInterval(interval);
   }, [feedbacks]);
 
+  // AOS initialization
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
@@ -70,7 +76,7 @@ const FeedBacks = () => {
                 backgroundSize: "0.75rem 0.75rem",
               }}
             ></div>
-            <div className="absolute -bottom-2  w-16 h-16 border-2 border-orange-500 rounded-full z-0"></div>
+            <div className="absolute -bottom-2 w-16 h-16 border-2 border-orange-500 rounded-full z-0"></div>
             <div
               className="w-full h-full overflow-hidden shadow-xl relative z-10"
               style={{ borderRadius: "50% 0 50% 50%" }}
@@ -195,7 +201,9 @@ const FeedBacks = () => {
                           src={feedback.image}
                           alt={feedback.name}
                           className="w-full h-full object-cover"
-                          style={{ transform: "rotate(calc(-1 * var(--tw-rotate)))" }}
+                          style={{
+                            transform: "rotate(calc(-1 * var(--tw-rotate)))",
+                          }}
                         />
                       </div>
                     );

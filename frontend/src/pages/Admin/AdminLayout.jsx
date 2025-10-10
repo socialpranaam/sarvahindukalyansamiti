@@ -4,6 +4,8 @@ import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { MdOutlineContactPhone } from "react-icons/md";
 import { IoNewspaperOutline } from "react-icons/io5";
+import { GrServices } from "react-icons/gr";
+import { VscFeedback } from "react-icons/vsc";
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,7 +31,7 @@ const AdminLayout = () => {
         >
           <div>
             {/* Profile Section */}
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-4">
               <div className="h-12 w-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-lg">
                 S
               </div>
@@ -39,10 +41,10 @@ const AdminLayout = () => {
               </div>
             </div>
             <hr />
-            <p className="mt-4 font-medium">Main Menu</p>
+            <p className="mt-2 font-medium">Main Menu</p>
 
             {/* Menu */}
-            <nav className="flex flex-col mt-4 text-lg gap-2 text-gray-700">
+            <nav className="flex flex-col mt-2 text-md gap-2 text-gray-700">
               <NavLink
                 to="/admin/dashboard"
                 className={({ isActive }) =>
@@ -155,7 +157,20 @@ const AdminLayout = () => {
                   }`
                 }
               >
-                <MdOutlineContactPhone   size={20}/> FeedBacks
+                <VscFeedback    size={20}/> FeedBacks
+              </NavLink>
+
+               <NavLink
+                to="/admin/services"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                    isActive
+                      ? "bg-orange-400 text-white font-semibold"
+                      : "hover:bg-orange-100 hover:text-orange-600"
+                  }`
+                }
+              >
+                <GrServices  size={20}/> Services
               </NavLink>
             </nav>
           </div>

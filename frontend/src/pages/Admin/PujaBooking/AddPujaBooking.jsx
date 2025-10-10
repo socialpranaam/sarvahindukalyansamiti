@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, IndianRupee, User, Phone, Calendar, Clock, MapPin, Flame } from "lucide-react";
+import {
+  ChevronLeft,
+  IndianRupee,
+  User,
+  Phone,
+  Calendar,
+  Clock,
+  MapPin,
+  Flame,
+} from "lucide-react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -11,10 +20,13 @@ const AddPujaBooking = ({ onAddBooking }) => {
     client: "",
     date: "",
     time: "",
+    ampm: "AM", 
     location: "",
     phone: "",
     amount: "",
   });
+
+  const today = new Date().toISOString().split("T")[0];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,40 +39,49 @@ const AddPujaBooking = ({ onAddBooking }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!pujaData.puja || !pujaData.client || !pujaData.date || !pujaData.phone || !pujaData.amount) {
+    if (
+      !pujaData.puja ||
+      !pujaData.client ||
+      !pujaData.date ||
+      !pujaData.phone ||
+      !pujaData.amount ||
+      !pujaData.time
+    ) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Oops...',
-        text: 'Please fill all required fields!',
+        icon: "warning",
+        title: "Oops...",
+        text: "Please fill all required fields!",
       });
       return;
     }
 
+    // ✅ Combine time and AM/PM
+    const finalTime = `${pujaData.time} ${pujaData.ampm}`;
+
     try {
       const response = await axios.post("http://localhost:8000/pujabookings", {
         ...pujaData,
+        time: finalTime, 
         amount: Number(pujaData.amount),
         status: "Pending",
       });
 
       Swal.fire({
-        icon: 'success',
-        title: 'Booking Added!',
-        text: 'Your Puja booking has been successfully added.',
+        icon: "success",
+        title: "Booking Added!",
+        text: "Your Puja booking has been successfully added.",
         timer: 2000,
         showConfirmButton: true,
       }).then(() => {
         navigate(-1);
-        if (onAddBooking) onAddBooking(response.data); // optional callback
+        if (onAddBooking) onAddBooking(response.data);
       });
-
     } catch (error) {
       console.error(error);
       Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Failed to save booking. Please try again.',
+        icon: "error",
+        title: "Error!",
+        text: "Failed to save booking. Please try again.",
       });
     }
   };
@@ -76,8 +97,12 @@ const AddPujaBooking = ({ onAddBooking }) => {
           <ChevronLeft size={24} className="text-gray-700" />
         </button>
         <div>
-          <h1 className="text-3xl font-semibold text-gray-800">New Puja Booking</h1>
-          <p className="text-gray-600 mt-1">Enter the details for the new booking.</p>
+          <h1 className="text-3xl font-semibold text-gray-800">
+            New Puja Booking
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Enter the details for the new booking.
+          </p>
         </div>
       </div>
 
@@ -87,15 +112,17 @@ const AddPujaBooking = ({ onAddBooking }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Puja Name */}
             <div className="md:col-span-2">
-              <label htmlFor="puja" className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Puja Name
               </label>
               <div className="relative">
-                <Flame className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
+                <Flame
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="text"
                   name="puja"
-                  id="puja"
                   value={pujaData.puja}
                   onChange={handleChange}
                   placeholder="e.g., Satyanarayan Puja"
@@ -107,15 +134,17 @@ const AddPujaBooking = ({ onAddBooking }) => {
 
             {/* Client Name */}
             <div>
-              <label htmlFor="client" className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Client Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
+                <User
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="text"
                   name="client"
-                  id="client"
                   value={pujaData.client}
                   onChange={handleChange}
                   placeholder="e.g., Ramesh Yadav"
@@ -127,15 +156,17 @@ const AddPujaBooking = ({ onAddBooking }) => {
 
             {/* Phone */}
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Phone Number
               </label>
               <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
+                <Phone
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="tel"
                   name="phone"
-                  id="phone"
                   value={pujaData.phone}
                   onChange={handleChange}
                   placeholder="e.g., 9988776655"
@@ -147,52 +178,79 @@ const AddPujaBooking = ({ onAddBooking }) => {
 
             {/* Date */}
             <div>
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Date
               </label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
+                <Calendar
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="date"
                   name="date"
-                  id="date"
                   value={pujaData.date}
                   onChange={handleChange}
+                  min={today} 
                   className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
                   required
                 />
               </div>
             </div>
 
-            {/* Time */}
-            <div>
-              <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">
-                Time
-              </label>
-              <div className="relative">
-                <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
-                <input
-                  type="time"
-                  name="time"
-                  id="time"
-                  value={pujaData.time}
+            {/* Custom Time Picker with AM/PM */}
+            <div className="flex items-end gap-3">
+              <div className="w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Time
+                </label>
+                <div className="relative">
+                  <Clock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
+                  <input
+                    type="time"
+                    name="time"
+                    value={pujaData.time}
+                    onChange={handleChange}
+                    placeholder="e.g., 10:30"
+                    pattern="^(0?[1-9]|1[0-2]):[0-5][0-9]$"
+                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
+                    required
+                  />
+                </div>
+              </div>
+              {/* AM/PM Dropdown */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1 invisible">
+                  AM/PM
+                </label>
+                <select
+                  name="ampm"
+                  value={pujaData.ampm}
                   onChange={handleChange}
-                  className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
-                />
+                  className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
               </div>
             </div>
 
             {/* Location */}
             <div className="md:col-span-2">
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Location / Address
               </label>
               <div className="relative">
-                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
+                <MapPin
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="text"
                   name="location"
-                  id="location"
                   value={pujaData.location}
                   onChange={handleChange}
                   placeholder="e.g., Home, Office Premises"
@@ -203,15 +261,17 @@ const AddPujaBooking = ({ onAddBooking }) => {
 
             {/* Amount */}
             <div>
-              <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Amount
               </label>
               <div className="relative">
-                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20}/>
+                <IndianRupee
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <input
                   type="number"
                   name="amount"
-                  id="amount"
                   value={pujaData.amount}
                   onChange={handleChange}
                   placeholder="e.g., 2000"

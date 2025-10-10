@@ -210,7 +210,7 @@ router.post("/projects", async (req, res) => {
   const { title, status, description, location, progress, budget, raised, expected, pm } = req.body;
 
   try {
-    // Agar expected missing ho, default today set karein
+    
     const expectedDate = new Date(req.body.expected);
 
 
@@ -254,6 +254,7 @@ router.get("/projects", async (req, res) => {
 });
 
 
+
 // Events 
 
 
@@ -272,8 +273,8 @@ router.post("/events", async (req, res) => {
     const eventDate = date ? new Date(date) : new Date();
     if (isNaN(eventDate.getTime())) return res.status(400).json({ error: "Invalid date" });
 
-    // Convert time string to desired format (keeping it as string)
-    const eventTime = time; // Example: "10:00 AM"
+    // Convert time string to desired format 
+    const eventTime = time; 
 
     // Create event in database
     const newEvent = await prisma.event.create({
@@ -401,28 +402,41 @@ router.get("/pujabookings", async (req, res) => {
 
 router.put("/pujabookings/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status, payment } = req.body;
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ error: "Invalid booking ID" });
+    }
+
+    const { status } = req.body;
 
     const existingBooking = await prisma.pujaBooking.findUnique({
-      where: { id: parseInt(id) },
+      where: { id },
     });
-    if (!existingBooking) return res.status(404).json({ error: "Booking not found" });
+
+    if (!existingBooking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
 
     const updatedBooking = await prisma.pujaBooking.update({
-      where: { id: parseInt(id) },
+      where: { id },
       data: {
-        status: status || existingBooking.status,
-        payment: payment || existingBooking.payment,
+        status: status ?? existingBooking.status,
       },
     });
 
-    res.status(200).json(updatedBooking);
+    res.status(200).json({
+      message: "Puja booking updated successfully",
+      data: updatedBooking,
+    });
   } catch (error) {
     console.error("Error updating booking:", error);
-    res.status(500).json({ error: "Failed to update Puja Booking" });
+    res.status(500).json({
+      error: "Failed to update Puja Booking",
+      details: error.message,
+    });
   }
 });
+
 
 // READ: Get a booking by ID
 router.get("/pujabookings/:id", async (req, res) => {
@@ -647,6 +661,106 @@ router.delete("/feedbacks/:id", async (req, res) => {
 });
 
 
+
+// =================== GET ALL SERVICES ===================
+
+
+router.get("/services", async (req, res) => {
+  try {
+    const services = await prisma.service.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    const baseURL = `${req.protocol}://${req.get("host")}`;
+
+    const updatedServices = services.map((service) => ({
+      ...service,
+      image: service.image ? `${baseURL}/${service.image}` : null, // ✅ Fixed key name
+    }));
+
+    res.json(updatedServices);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch services" });
+  }
+});
+
+/* =================== GET SERVICE BY ID =================== */
+router.get("/services/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const service = await prisma.service.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!service) return res.status(404).json({ error: "Service not found" });
+
+    const baseURL = `${req.protocol}://${req.get("host")}`;
+    const updatedService = {
+      ...service,
+      image: service.image ? `${baseURL}/${service.image}` : null, // ✅ Fixed key
+    };
+
+    res.json(updatedService);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch service" });
+  }
+});
+
+
+// =================== CREATE SERVICE ===================
+router.post('/services', async (req, res) => {
+  const { title, description, image } = req.body;
+
+  if (!title || !description) {
+    return res.status(400).json({ error: "Title and description are required" });
+  }
+
+  try {
+    const newService = await prisma.service.create({  // ⚠ lowercase 'service'
+      data: {
+        title,
+        description,
+        image: image || null
+      }
+    });
+    res.status(201).json(newService);
+  } catch (err) {
+    console.error(err); // exact error
+    res.status(500).json({ error: "Failed to create service" });
+  }
+});
+
+
+
+// =================== UPDATE SERVICE ===================
+router.put('/services/:id', upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+  const image = req.file ? req.file.path : undefined; // optional
+
+  try {
+    const updatedService = await prisma.service.update({
+      where: { id: parseInt(id) },
+      data: { title, description, ...(image && { image }) },
+    });
+    res.json(updatedService);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update service' });
+  }
+});
+
+// =================== DELETE SERVICE ===================
+router.delete('/services/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.service.delete({ where: { id: parseInt(id) } });
+    res.json({ message: 'Service deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete service' });
+  }
+});
 
 
 

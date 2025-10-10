@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-const newsData = [
-  {
-    id: 1,
-    title: "नया मंदिर उद्घाटन",
-    desc: "गुड़गांव में नवनिर्मित श्री राम मंदिर का भव्य उद्घाटन समारोह।",
-    date: "15 जनवरी 2024",
-    img: "/images/aarti.jpg",
-  },
-  {
-    id: 2,
-    title: "निःशुल्क स्वास्थ्य शिविर",
-    desc: "दिल्ली के 10 केंद्रों में निःशुल्क चिकित्सा जांच और परामर्श।",
-    date: "20–22 जनवरी 2024",
-    img: "/images/aarti.jpg",
-  },
-];
+import axios from "axios";
 
 const NewsUpdates = () => {
+  const [newsData, setNewsData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
+  // AOS initialization
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
+  // Backend se news fetch karna
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/news");
+        setNewsData(response.data);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+    fetchNews();
+  }, []);
+
+  // Slider Controls
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? newsData.length - 1 : prev - 1));
   };
@@ -34,6 +36,18 @@ const NewsUpdates = () => {
   const handleNext = () => {
     setCurrentIndex((prev) => (prev === newsData.length - 1 ? 0 : prev + 1));
   };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toISOString().split("T")[0]; // YYYY-MM-DD
+  };
+
+  if (newsData.length === 0) {
+    return (
+      <div className="py-20 text-center text-gray-600 text-xl">
+        समाचार लोड हो रहा है...
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#fff4ec] py-16 px-6">
@@ -52,14 +66,14 @@ const NewsUpdates = () => {
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {newsData.map((item) => (
+          {newsData.slice(0, 2).map((item) => (
             <div
               key={item.id}
               className="min-w-full bg-white rounded-2xl shadow-md overflow-hidden flex flex-col p-6"
               data-aos="zoom-in"
             >
               <img
-                src={item.img}
+                src={item.img || `http://localhost:8000/uploads/${item.image}`}
                 alt={item.title}
                 className="w-full h-60 object-cover rounded-xl"
               />
@@ -67,14 +81,18 @@ const NewsUpdates = () => {
                 <h3 className="text-2xl font-semibold text-gray-900">
                   {item.title}
                 </h3>
-                <p className="text-gray-600 mt-2 text-lg">{item.desc}</p>
+                <p className="text-gray-600 mt-2 text-lg">
+                  {item.description.length > 100
+                    ? item.description.substring(0, 100) + "..."
+                    : item.description}
+                </p>
                 <div className="mt-4 flex justify-between items-center">
                   <span className="text-orange-500 text-lg font-medium">
-                    {item.date}
+                    {formatDate(item.date)}
                   </span>
                   <button
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-                    data-aos="fade-up"
+                    onClick={() => navigate(`/news/${item.id}`)}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
                   >
                     अधिक जानें
                   </button>
@@ -103,14 +121,14 @@ const NewsUpdates = () => {
 
       {/* Large screen grid */}
       <div className="hidden md:grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
-        {newsData.map((item, index) => (
+        {newsData.slice(0, 2).map((item, index) => (
           <div
             key={item.id}
             className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col p-6"
             data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
           >
             <img
-              src={item.img}
+              src={item.img || `http://localhost:8000/uploads/${item.image}`}
               alt={item.title}
               className="w-full h-60 object-cover rounded-xl"
             />
@@ -118,14 +136,18 @@ const NewsUpdates = () => {
               <h3 className="text-3xl font-semibold text-gray-900">
                 {item.title}
               </h3>
-              <p className="text-gray-600 mt-2 text-lg max-w-xs">{item.desc}</p>
+              <p className="text-gray-600 mt-2 text-lg max-w-md">
+                {item.description.length > 100
+                  ? item.description.substring(0, 100) + "..."
+                  : item.description}
+              </p>
               <div className="mt-4 flex justify-between items-center">
                 <span className="text-orange-500 text-lg font-medium">
-                  {item.date}
+                  {formatDate(item.date)}
                 </span>
                 <button
+                  onClick={() => navigate(`/news/${item.id}`)}
                   className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 cursor-pointer rounded-md text-md font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-                  data-aos="zoom-in-up"
                 >
                   अधिक जानें
                 </button>

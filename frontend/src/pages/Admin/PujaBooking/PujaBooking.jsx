@@ -241,7 +241,7 @@ const PujaBooking = () => {
           placeholder="Search by client name, phone..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-orange-400 outline-none"
+          className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 outline-none"
         />
       </div>
 

@@ -30,6 +30,8 @@ import ContactList from "./pages/Admin/Contact/ContactList";
 import NewsList from "./pages/Admin/News/NewsList";
 import FeedBack from "./pages/Admin/FeedBack/FeedBack";
 import AddFeedBack from "./pages/Admin/FeedBack/AddFeedBack";
+import ServiceForm from "./pages/Admin/Services/ServiceForm";
+import ServicesList from "./pages/Admin/Services/ServiceList";
 
 // Public Layout
 const PublicLayout = () => (
@@ -85,6 +87,8 @@ function App() {
               <Route path="contactlist" element={<ContactList/>}/>
               <Route path="feedbacks" element={<FeedBack/>}/>
               <Route path="feedbacks/add-feedback" element={<AddFeedBack/>}/>
+              <Route path="services" element={<ServicesList/>}/>
+              <Route path="services/add-service" element={<ServiceForm/>}/>
             </Route>
           </Route>
         </Route>
