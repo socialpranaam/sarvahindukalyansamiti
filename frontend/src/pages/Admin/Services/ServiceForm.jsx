@@ -4,55 +4,50 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const ServiceForm = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    image: null,
-  });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
 
-  const navigate = useNavigate(); // ✅ useNavigate hook
-
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "image") {
-      setFormData({ ...formData, image: files[0] || null });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const payload = {
-        title: formData.title,
-        description: formData.description,
-        image: formData.image ? formData.image.name : null,
-      };
 
-      const response = await axios.post("http://localhost:8000/services", payload, {
-        headers: { "Content-Type": "application/json" },
+    // ✅ Prepare FormData for image upload
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    if (image) formData.append("image", image);
+
+    try {
+      const res = await axios.post("http://localhost:8000/services", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       Swal.fire({
         icon: "success",
-        title: "Service Created",
+        title: "Service Created Successfully 🎉",
         text: "Your service has been added successfully!",
         timer: 2000,
         showConfirmButton: false,
       });
 
-      setFormData({ title: "", description: "", image: null });
+      // Reset form
+      setTitle("");
+      setDescription("");
+      setImage(null);
 
-      // ✅ Redirect to ServicesList page after submission
-      navigate("/admin/services"); // <-- yahan aapka services list ka route daalein
+      // ✅ Redirect to service list page
+      navigate("/admin/services");
 
-      console.log(response.data);
+      console.log("✅ Service added:", res.data);
     } catch (err) {
-      console.error(err);
+      console.error("❌ Upload error:", err);
       Swal.fire({
         icon: "error",
-        title: "Failed to Create",
+        title: "Failed to Create Service",
         text: "Something went wrong while adding the service.",
       });
     }
@@ -113,7 +108,9 @@ const ServiceForm = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading} className="text-2xl font-bold">Add New Service</h2>
+      <h2 style={styles.heading} className="text-2xl font-bold">
+        Add New Service
+      </h2>
       <form
         onSubmit={handleSubmit}
         onMouseOver={(e) => {
@@ -128,8 +125,8 @@ const ServiceForm = () => {
           <input
             type="text"
             name="title"
-            value={formData.title}
-            onChange={handleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             style={styles.input}
             required
           />
@@ -138,15 +135,21 @@ const ServiceForm = () => {
           <label style={styles.label}>Description:</label>
           <textarea
             name="description"
-            value={formData.description}
-            onChange={handleChange}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             style={styles.textarea}
             required
           ></textarea>
         </div>
         <div>
           <label style={styles.label}>Image (optional):</label>
-          <input type="file" name="image" onChange={handleChange} style={styles.input} />
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            style={styles.input}
+          />
         </div>
         <button type="submit" style={styles.button}>
           Add Service

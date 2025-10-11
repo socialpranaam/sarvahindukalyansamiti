@@ -21,7 +21,7 @@ model FeedBack {
   id        Int      @id @default(autoincrement())
   name      String
   message   String
-  image     String?   // <- optional banaya
+  image     String?   
   createdAt DateTime @default(now())
 }
 
@@ -107,6 +107,6 @@ model Service {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  image       String?  // nullable
+  image       String?  
   createdAt   DateTime @default(now())
 }

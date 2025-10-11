@@ -61,9 +61,8 @@ export default function AnimatedServices({ autoplay = true }) {
                   className="absolute inset-0 origin-bottom"
                 >
                   <img
-                    src={services[active].image}
-                    alt={service.title}
-                    className="h-full w-full rounded-3xl object-cover object-center"
+                    src={services[active].image}                   
+                    className="h-full w-full rounded-4xl object-cover object-center"
                     draggable={false}
                   />
                 </motion.div>

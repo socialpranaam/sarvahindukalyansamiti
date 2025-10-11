@@ -23,6 +23,10 @@ const storage = multer.diskStorage({
   },
 });
 
+
+const uploadDir = path.join(process.cwd(), "uploads", "services");
+
+
 const upload = multer({ storage });
 
 // Serve static files from uploads
@@ -665,27 +669,28 @@ router.delete("/feedbacks/:id", async (req, res) => {
 // =================== GET ALL SERVICES ===================
 
 
+// GET all services
+// ✅ Get all services (with full image URL)
 router.get("/services", async (req, res) => {
   try {
     const services = await prisma.service.findMany({
       orderBy: { createdAt: "desc" },
     });
 
-    const baseURL = `${req.protocol}://${req.get("host")}`;
-
-    const updatedServices = services.map((service) => ({
+    
+    const formattedServices = services.map((service) => ({
       ...service,
-      image: service.image ? `${baseURL}/${service.image}` : null, // ✅ Fixed key name
+      image: service.image ? `${req.protocol}://${req.get("host")}${service.image}` : null,
     }));
 
-    res.json(updatedServices);
+    res.json(formattedServices);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching services:", err);
     res.status(500).json({ error: "Failed to fetch services" });
   }
 });
 
-/* =================== GET SERVICE BY ID =================== */
+// ✅ Get single service by ID (with full image URL)
 router.get("/services/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -693,41 +698,50 @@ router.get("/services/:id", async (req, res) => {
       where: { id: parseInt(id) },
     });
 
-    if (!service) return res.status(404).json({ error: "Service not found" });
+    if (!service) {
+      return res.status(404).json({ error: "Service not found" });
+    }
 
-    const baseURL = `${req.protocol}://${req.get("host")}`;
-    const updatedService = {
+    
+    const formattedService = {
       ...service,
-      image: service.image ? `${baseURL}/${service.image}` : null, // ✅ Fixed key
+      image: service.image
+       ? `${req.protocol}://${req.get("host")}${service.image}` : null,
     };
 
-    res.json(updatedService);
+    res.json(formattedService);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching service:", err);
     res.status(500).json({ error: "Failed to fetch service" });
   }
 });
 
 
+
+
+
+
 // =================== CREATE SERVICE ===================
-router.post('/services', async (req, res) => {
-  const { title, description, image } = req.body;
-
-  if (!title || !description) {
-    return res.status(400).json({ error: "Title and description are required" });
-  }
-
+router.post("/services", upload.single("image"), async (req, res) => {
   try {
-    const newService = await prisma.service.create({  // ⚠ lowercase 'service'
+    const { title, description } = req.body;
+    const imagePath = req.file ? `/uploads/services/${req.file.filename}` : null;
+
+    if (!title || !description) {
+      return res.status(400).json({ error: "Title and description are required" });
+    }
+
+    const newService = await prisma.service.create({
       data: {
         title,
         description,
-        image: image || null
-      }
+        image: imagePath, // ✅ Use path or null
+      },
     });
+
     res.status(201).json(newService);
   } catch (err) {
-    console.error(err); // exact error
+    console.error("Error creating service:", err);
     res.status(500).json({ error: "Failed to create service" });
   }
 });
