@@ -8,7 +8,7 @@ const SocialWork = () => {
   const [services, setServices] = useState([]);
   const [current, setCurrent] = useState(0);
 
-  // Initialize AOS
+  
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);

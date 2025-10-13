@@ -8,12 +8,11 @@ import fs from "fs";
 const router = Router();
 const prisma = new PrismaClient();
 
-/* ===================== NEWS ROUTES ===================== */
 
 // GET all news
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // uploads folder project root me
+   
     const uploadPath = path.join(process.cwd(), "uploads");
     cb(null, uploadPath);
   },
@@ -24,13 +23,50 @@ const storage = multer.diskStorage({
 });
 
 
-const uploadDir = path.join(process.cwd(), "uploads", "services");
-
-
 const upload = multer({ storage });
 
 // Serve static files from uploads
 router.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
+/* ===================== NEWS ROUTES ===================== */
+
+// ####### Create News ################################  
+
+router.post("/news", upload.single("image"), async (req, res) => {
+  try {
+    const { title, description, date } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    if (!title || !description) {
+      return res.status(400).json({ error: "Title and Description are required" });
+    }
+
+    // Date ko optional rakhte hain
+    let newsDate = null;
+    if (date) {
+      const parsedDate = new Date(date);
+      if (!isNaN(parsedDate.getTime())) {
+        newsDate = parsedDate;
+      }
+    }
+
+    const news = await prisma.news.create({
+      data: {
+        title,
+        description,
+        date: newsDate,
+        image: imageUrl,
+      },
+    });
+
+    console.log(" News saved:", news);
+    res.status(201).json(news);
+  } catch (err) {
+    console.error(" Error creating news:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // ================= GET NEWS =================
 
@@ -72,78 +108,9 @@ router.get("/news/:id", async (req, res) => {
   }
 });
 
-router.post("/news", upload.single("image"), async (req, res) => {
-  try {
-    const { title, description, date } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-
-    if (!title || !description) {
-      return res.status(400).json({ error: "Title and Description are required" });
-    }
-
-    // Date ko optional rakhte hain
-    let newsDate = null;
-    if (date) {
-      const parsedDate = new Date(date);
-      if (!isNaN(parsedDate.getTime())) {
-        newsDate = parsedDate;
-      }
-    }
-
-    const news = await prisma.news.create({
-      data: {
-        title,
-        description,
-        date: newsDate,
-        image: imageUrl,
-      },
-    });
-
-    console.log("✅ News saved:", news);
-    res.status(201).json(news);
-  } catch (err) {
-    console.error("❌ Error creating news:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 
-router.put("/news/:id", upload.single("image"), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, description, date } = req.body;
 
-    // Fetch existing news
-    const existingNews = await prisma.news.findUnique({ where: { id: parseInt(id) } });
-    if (!existingNews) return res.status(404).json({ error: "News not found" });
-
-    // Handle image update
-    let imageUrl = existingNews.image;
-    if (req.file) {
-      // Delete old image if exists
-      if (existingNews.image) {
-        const oldImagePath = path.join(__dirname, "..", existingNews.image);
-        if (fs.existsSync(oldImagePath)) fs.unlinkSync(oldImagePath);
-      }
-      imageUrl = `/uploads/${req.file.filename}`;
-    }
-
-    let newsDate = existingNews.date;
-    if (date) {
-      const parsedDate = new Date(date);
-      if (!isNaN(parsedDate.getTime())) newsDate = parsedDate;
-    }
-
-    const updatedNews = await prisma.news.update({
-      where: { id: parseInt(id) },
-      data: { title, description, date: newsDate, image: imageUrl },
-    });
-
-    res.status(200).json(updatedNews);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // -------------------- DELETE NEWS --------------------
 router.delete("/news/:id", async (req, res) => {
@@ -259,9 +226,7 @@ router.get("/projects", async (req, res) => {
 
 
 
-// Events 
-
-
+// ####################3 Create Events #####3333
 
 router.post("/events", async (req, res) => {
   const { tag, title, description, location, date, time, progress, attendees, pm } = req.body;
@@ -404,42 +369,6 @@ router.get("/pujabookings", async (req, res) => {
   }
 });
 
-router.put("/pujabookings/:id", async (req, res) => {
-  try {
-    const id = Number(req.params.id);
-    if (isNaN(id)) {
-      return res.status(400).json({ error: "Invalid booking ID" });
-    }
-
-    const { status } = req.body;
-
-    const existingBooking = await prisma.pujaBooking.findUnique({
-      where: { id },
-    });
-
-    if (!existingBooking) {
-      return res.status(404).json({ error: "Booking not found" });
-    }
-
-    const updatedBooking = await prisma.pujaBooking.update({
-      where: { id },
-      data: {
-        status: status ?? existingBooking.status,
-      },
-    });
-
-    res.status(200).json({
-      message: "Puja booking updated successfully",
-      data: updatedBooking,
-    });
-  } catch (error) {
-    console.error("Error updating booking:", error);
-    res.status(500).json({
-      error: "Failed to update Puja Booking",
-      details: error.message,
-    });
-  }
-});
 
 
 // READ: Get a booking by ID
@@ -529,7 +458,7 @@ router.get("/contacts/:id", async (req, res) => {
 
 // ================== Routes ================== //
 
-// 1️⃣ Get all feedbacks
+//  Get all feedbacks
 router.get("/feedbacks", async (req, res) => {
   try {
     const feedbacks = await prisma.feedBack.findMany({
@@ -549,7 +478,7 @@ router.get("/feedbacks", async (req, res) => {
   }
 });
 
-// 2️⃣ Get single feedback by ID
+//  Get single feedback by ID
 router.get("/feedbacks/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -573,7 +502,8 @@ router.get("/feedbacks/:id", async (req, res) => {
   }
 });
 
-// 3️⃣ Create new feedback
+
+// 3️ Create new feedback
 router.post("/feedbacks", upload.single("image"), async (req, res) => {
   const { name, message } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
@@ -593,50 +523,7 @@ router.post("/feedbacks", upload.single("image"), async (req, res) => {
   }
 });
 
-// 4️⃣ Update feedback
-router.put("/feedbacks/:id", upload.single("image"), async (req, res) => {
-  const { id } = req.params;
-  const { name, message } = req.body;
-
-  try {
-    const existingFeedback = await prisma.feedBack.findUnique({
-      where: { id: parseInt(id) },
-    });
-
-    if (!existingFeedback)
-      return res.status(404).json({ error: "Feedback not found" });
-
-    let image = existingFeedback.image;
-
-    // If new image uploaded
-    if (req.file) {
-      // delete old image
-      if (existingFeedback.image) {
-        const oldPath = path.join(
-          process.cwd(),
-          existingFeedback.image.replace("/uploads/", "uploads/")
-        );
-        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-      }
-      image = `/uploads/${req.file.filename}`;
-    }
-
-    const updatedFeedback = await prisma.feedBack.update({
-      where: { id: parseInt(id) },
-      data: { name, message, image },
-    });
-
-    res.json({
-      ...updatedFeedback,
-      image: image ? `${req.protocol}://${req.get("host")}${image}` : null,
-    });
-  } catch (err) {
-    console.error("Error updating feedback:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// 5️⃣ Delete feedback
+// 5️ Delete feedback
 router.delete("/feedbacks/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -665,12 +552,10 @@ router.delete("/feedbacks/:id", async (req, res) => {
 });
 
 
-
 // =================== GET ALL SERVICES ===================
 
 
 // GET all services
-// ✅ Get all services (with full image URL)
 router.get("/services", async (req, res) => {
   try {
     const services = await prisma.service.findMany({
@@ -690,7 +575,7 @@ router.get("/services", async (req, res) => {
   }
 });
 
-// ✅ Get single service by ID (with full image URL)
+//  Get single service by ID 
 router.get("/services/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -716,16 +601,11 @@ router.get("/services/:id", async (req, res) => {
   }
 });
 
-
-
-
-
-
 // =================== CREATE SERVICE ===================
 router.post("/services", upload.single("image"), async (req, res) => {
   try {
     const { title, description } = req.body;
-    const imagePath = req.file ? `/uploads/services/${req.file.filename}` : null;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
     if (!title || !description) {
       return res.status(400).json({ error: "Title and description are required" });
@@ -735,7 +615,7 @@ router.post("/services", upload.single("image"), async (req, res) => {
       data: {
         title,
         description,
-        image: imagePath, // ✅ Use path or null
+        image: imagePath, 
       },
     });
 
@@ -743,25 +623,6 @@ router.post("/services", upload.single("image"), async (req, res) => {
   } catch (err) {
     console.error("Error creating service:", err);
     res.status(500).json({ error: "Failed to create service" });
-  }
-});
-
-
-
-// =================== UPDATE SERVICE ===================
-router.put('/services/:id', upload.single('image'), async (req, res) => {
-  const { id } = req.params;
-  const { title, description } = req.body;
-  const image = req.file ? req.file.path : undefined; // optional
-
-  try {
-    const updatedService = await prisma.service.update({
-      where: { id: parseInt(id) },
-      data: { title, description, ...(image && { image }) },
-    });
-    res.json(updatedService);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update service' });
   }
 });
 
