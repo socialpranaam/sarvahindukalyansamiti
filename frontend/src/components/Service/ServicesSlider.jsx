@@ -35,7 +35,7 @@ export default function AnimatedServices({ autoplay = true }) {
   return (
     <div className="bg-[#ffeed8]">
       <div className="mx-auto max-w-sm px-4 py-12 md:max-w-5xl md:px-8 lg:px-12">
-        <h2 className="text-center text-2xl sm:text-3xl md:text-5xl font-semibold mb-10 sm:mb-12">
+        <h2 className="text-center text-2xl sm:text-3xl md:text-5xl font-medium mb-10 sm:mb-12">
           हमारी <span className="text-orange-500">मुख्य सेवाएँ</span>
           <div className="mx-auto mt-4 sm:mt-5 h-1 w-32 sm:w-40 bg-gradient-to-r from-transparent via-black to-transparent"></div>
         </h2>

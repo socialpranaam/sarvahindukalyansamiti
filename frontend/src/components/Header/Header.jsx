@@ -32,10 +32,11 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
-        isScrolled ? "bg-black/80" : "bg-transparent"
+        isScrolled ? "bg-black/90" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+
         {/* -------- Desktop Header -------- */}
         <div className="hidden md:flex justify-between items-center w-full text-white">
           {/* Logo */}
@@ -84,7 +85,7 @@ const Header = () => {
 
                 {/* Logo */}
                 <div className="text-xl font-bold cursor-pointer">
-                <Link to="/"><img src="/images/logo.png" className="w-13 h-12" /></Link>
+                <Link to="/" onClick={() => setIsOpen(false)} ><img src="/images/logo.png" className="w-13 h-12" /></Link>
             </div>
         </div>
 
@@ -93,6 +94,7 @@ const Header = () => {
             {/* Phone Icon */}
               <Link
                 to="/contact"
+                onClick={() => setIsOpen(false)} 
                 className={`${getLinkClasses(
                 "/contact"
                 )} flex items-center gap-1 text-lg`}>
@@ -103,6 +105,7 @@ const Header = () => {
               {/* Donate Button */}
               <Link
                 to="/donation"
+                onClick={() => setIsOpen(false)} 
                 className="px-3 py-2 rounded-lg bg-orange-400 text-white font-semibold
                 transform transition-all duration-300 ease-in-out
                 hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600">

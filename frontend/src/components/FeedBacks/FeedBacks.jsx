@@ -56,7 +56,7 @@ const FeedBacks = () => {
     <section className="bg-[#fff6eb] py-20">
       <div className="container mx-auto px-4">
         <h2
-          className="text-center text-3xl md:text-5xl font-semibold mb-12"
+          className="text-center text-3xl md:text-5xl font-medium mb-12"
           data-aos="fade-up"
         >
           लोग क्या <span className="text-orange-500">कहते हैं</span>

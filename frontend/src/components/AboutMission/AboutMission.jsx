@@ -5,14 +5,14 @@ import "aos/dist/aos.css";
 const AboutMission = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1200, // animation ki duration
-      once: true,     // ek hi baar chale scroll par
+      duration: 1200, 
+      once: true,     
     });
   }, []);
 
   return (
     <div className="relative bg-[#fdf3e7] overflow-x-hidden">
-      {/* Background Image with Overlay */}
+      
       <div
         className="absolute top-0 left-0 w-full h-64 md:h-80 bg-cover bg-center"
         style={{

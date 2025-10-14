@@ -53,7 +53,7 @@ const NewsUpdates = () => {
     <div className="bg-[#fff4ec] py-16 px-6">
       {/* Heading */}
       <div className="text-center mb-12" data-aos="fade-down">
-        <h2 className="text-3xl md:text-5xl font-semibold text-gray-900">
+        <h2 className="text-3xl md:text-5xl font-medium text-gray-900">
           ताजा <span className="text-orange-500">समाचार</span> और{" "}
           <span className="text-orange-500">अपडेट</span>
         </h2>
