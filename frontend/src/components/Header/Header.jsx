@@ -64,8 +64,8 @@ const Header = () => {
             <Link
               to="/donation"
               className="px-5 py-3 rounded-lg bg-orange-400 text-white font-semibold
-                         transform transition-all duration-300 ease-in-out
-                         hover:scale-110 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
+               transform transition-all duration-300 ease-in-out
+               hover:scale-110 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
             >
               दान करें
             </Link>
@@ -98,7 +98,7 @@ const Header = () => {
               onClick={() => setIsOpen(false)}
               className={`${getLinkClasses(
                 "/contact"
-              )} flex items-center gap-1 text-lg`}
+              )} flex items-center gap-1 text-sm`}
             >
               <IoMdCall />
               <span >संपर्क करें</span>
@@ -109,8 +109,8 @@ const Header = () => {
               to="/donation"
               onClick={() => setIsOpen(false)}
               className="px-3 py-2 rounded-lg bg-orange-400 text-white font-semibold
-                         transform transition-all duration-300 ease-in-out
-                         hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
+              transform transition-all duration-300 ease-in-out
+              hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:bg-orange-600"
             >
               दान करें
             </Link>

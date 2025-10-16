@@ -47,36 +47,38 @@ const NewWork = () => {
       </div>
 
       {/* Cards */}
-      <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-10 px-6">
-        {services.map((service, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-md rounded-xl p-6 flex flex-col space-y-4 h-[280px] w-full max-w-sm hover:shadow-xl"
-            data-aos="zoom-in-up"
-            data-aos-delay={index * 200} // har card thoda delay ke sath
-          >
-            {/* Icon */}
-            <div className="w-12 h-12 bg-orange-400 text-white flex items-center justify-center rounded-lg">
-              {service.icon}
-            </div>
-
-            {/* Title */}
-            <h3 className="text-2xl font-semibold text-gray-900">
-              {service.title}
-            </h3>
-
-            {/* Points */}
-            <ul className="text-gray-700 space-y-2 text-md">
-              {service.points.map((point, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="mt-1">•</span>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      {/* Cards */}
+<div className="max-w-4xl mx-auto flex flex-col md:flex-row md:flex-wrap justify-center gap-10 px-6">
+  {services.map((service, index) => (
+    <div
+      key={index}
+      className="bg-white shadow-md rounded-xl p-6 flex flex-col space-y-4 h-[280px] w-full md:w-[45%] hover:shadow-xl"
+      data-aos="zoom-in-up"
+      data-aos-delay={index * 200} 
+    >
+      {/* Icon */}
+      <div className="w-12 h-12 bg-orange-400 text-white flex items-center justify-center rounded-lg">
+        {service.icon}
       </div>
+
+      {/* Title */}
+      <h3 className="text-2xl font-semibold text-gray-900">
+        {service.title}
+      </h3>
+
+      {/* Points */}
+      <ul className="text-gray-700 space-y-2 text-md">
+        {service.points.map((point, i) => (
+          <li key={i} className="flex items-start gap-2">
+            <span className="mt-1">•</span>
+            <span>{point}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 };

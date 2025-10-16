@@ -24,7 +24,7 @@ db.getConnection()
 
 ;
 // app.get("/", (req, res) => {
-//   res.send("🚀 Server is running successfully!");
+//   res.send(" Server is running successfully!");
 // });
 
 app.use(cors())

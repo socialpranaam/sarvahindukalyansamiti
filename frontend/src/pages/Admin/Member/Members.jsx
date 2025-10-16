@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
-import { Phone, MapPin, CalendarDays, BriefcaseBusiness, LayoutGrid, List, Users } from "lucide-react";
+import { Phone, MapPin, CalendarDays, BriefcaseBusiness, Users } from "lucide-react";
 import { FaRegStar } from "react-icons/fa";
 import { FiUserCheck, FiUserPlus } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 // PDF libraries
 import jsPDF from "jspdf";
@@ -13,7 +14,8 @@ import autoTable from "jspdf-autotable";
 
 const initialMembers = [];
 
-const MemberCard = ({ member }) => {
+// Member Card component
+const MemberCard = ({ member, onDelete }) => {
   const statusColor =
     member.status === "Active"
       ? "bg-green-100 text-green-600"
@@ -42,15 +44,25 @@ const MemberCard = ({ member }) => {
         <div className="flex items-center gap-2"><CalendarDays size={16} /> Joined {member.joined}</div>
         {member.role && <div className="flex items-center gap-2"><BriefcaseBusiness size={16} /> {member.role}</div>}
       </div>
+
+      {/* Delete Button */}
+      <button
+        onClick={() => onDelete(member.id)}
+        className="mt-4 px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+      >
+        Delete
+      </button>
     </div>
   );
 };
 
+// Members Component
 const Members = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [members, setMembers] = useState(initialMembers);
 
+  // Fetch members from backend
   useEffect(() => {
     const fetchMembers = async () => {
       try {
@@ -73,11 +85,55 @@ const Members = () => {
         setMembers(membersWithInitials);
       } catch (error) {
         console.error("Error fetching members:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Failed to fetch members!",
+        });
       }
     };
     fetchMembers();
   }, []);
 
+  // Delete member handler with SweetAlert
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:8000/members/${id}`);
+        setMembers(prev => prev.filter(m => m.id !== id));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Member has been deleted.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      } catch (error) {
+        console.error("Error deleting member:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete member.",
+          icon: "error",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    }
+  };
+
+  // Filter members based on search term
   const filteredMembers = members.filter((member) => {
     const searchLower = searchTerm.toLowerCase();
     return member.name.toLowerCase().includes(searchLower) ||
@@ -85,6 +141,7 @@ const Members = () => {
            member.phone.toLowerCase().includes(searchLower);
   });
 
+  // Stats calculations
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
   const stats = [
@@ -100,6 +157,7 @@ const Members = () => {
       color: "text-purple-600", bg: "bg-purple-100", icon: <FiUserPlus size={25} className="text-sm"/> }
   ];
 
+  // Export members to PDF
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.text("Members List", 14, 20);
@@ -132,10 +190,18 @@ const Members = () => {
     });
 
     doc.save("members_list.pdf");
+    Swal.fire({
+      icon: "success",
+      title: "Exported!",
+      text: "Members PDF has been downloaded.",
+      timer: 2000,
+      showConfirmButton: false,
+    });
   };
 
   return (
     <div>
+      {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-semibold text-gray-900">Member Management</h1>
         <p className="text-lg text-gray-600">Manage community members and volunteers</p>
@@ -172,7 +238,7 @@ const Members = () => {
         ))}
       </div>
 
-      {/* Search & Filters */}
+      {/* Search */}
       <div className="mb-6">
         <input
           type="text"
@@ -186,8 +252,10 @@ const Members = () => {
       {/* Members List */}
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Members ({filteredMembers.length})</h2>
       <div className="grid sm:grid-cols-3 gap-6">
-        {filteredMembers.map((member, idx) => <MemberCard key={idx} member={member} />)}
-      </div>
+        {filteredMembers.map((member) => (
+          <MemberCard key={member.id} member={member} onDelete={handleDelete} />
+        ))}
+      </div>   
     </div>
   );
 };

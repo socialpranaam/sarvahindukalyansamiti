@@ -113,7 +113,7 @@ const AddDonation = () => {
           >
             <option>Temple Construction</option>
             <option>Cow Protection</option>
-            <option>Health Services</option>
+            <option>Health</option>
             <option>Education</option>
           </select>
           <select

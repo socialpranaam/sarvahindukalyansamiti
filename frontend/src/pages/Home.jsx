@@ -5,7 +5,7 @@ import Bhakti from "../components/Bhakti/Bhakti";
 import ServicesSlider from "../components/Service/ServicesSlider";
 import Prachar from "../components/Prachar/Prachar";
 import NewsUpdates from "../components/News&Updates/News&Updates";
-import FeedBacks from "../components/FeedBacks/FeedBacks"; // ✅ only one import
+import FeedBacks from "../components/FeedBacks/FeedBacks"; 
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
       <Hero />
       <Bhakti />
       <ServicesSlider />
-      <FeedBacks />  {/* ✅ Feedback section */}
+      <FeedBacks />  
       <Prachar />
       <NewsUpdates />
     </div>

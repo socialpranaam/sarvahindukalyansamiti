@@ -10,10 +10,8 @@ const Footer = () => {
       <div className="py-10 text-white">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10">
           {/* About */}
-          <div>
-            {/* <Link to="/" className="text-white flex items-center gap-1 font-medium mt-2 hover:text-orange-600"> */}
+          <div className="mt-4 font-bold text-xl">
               सर्व हिन्दू कल्याण समिति
-            
             <p className="text-white mt-4 text-sm leading-relaxed">
               धर्म, सेवा और समाज कल्याण की दिशा में आपका विश्वसनीय साथी
             </p>
@@ -47,8 +45,8 @@ const Footer = () => {
             <ul className="space-y-3 text-white text-sm">
               <li className="flex items-center gap-2">
                 <FaPhoneAlt className="text-white" />
-                <a href="tel:+919876543210" className="hover:text-orange-600">
-                  +91-9876543210
+                <a href="tel:+91XXXXXXXXXX" className="hover:text-orange-600">
+                  +91-XXXXXXXXXX
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -60,12 +58,12 @@ const Footer = () => {
               <li className="flex items-center gap-2">
                 <MdLocationOn className="text-white" />
                 <a
-                  href="https://www.google.com/maps/search/123+धर्म+मार्ग,+नई+दिल्ली"
+                  href="https://www.google.com/maps/search/लेवाना+साइबर+हाइट्स,+विभूति+खंड,+लखनऊ"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-orange-600"
                 >
-                  123 धर्म मार्ग, नई दिल्ली
+                  लेवाना साइबर हाइट्स, लखनऊ
                 </a>
               </li>
             </ul>

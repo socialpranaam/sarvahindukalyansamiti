@@ -5,8 +5,8 @@ import "aos/dist/aos.css";
 const Team = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1200, // animation ki speed (ms me)
-      once: true,     // ek hi baar chale, scroll karne par repeat na ho
+      duration: 1200, 
+      once: true,     
     });
   }, []);
 
@@ -46,20 +46,20 @@ const Team = () => {
             borderRadius: "1.5rem",
           }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl text-center font-medium mb-6">
+          <h2 className="text-xl mt-2 sm:text-3xl md:text-4xl text-center width-3xl font-medium mb-4">
             हमारे <span className="text-orange-500">अध्यक्ष</span> के बारे में
           </h2>
-          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+          <p className="text-gray-700  text-base ">
             सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
             जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
             सहारा बनाने के लिए कार्यरत है।
           </p>
-          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+          <p className="text-gray-700 text-lg  ">
             सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
             जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
             सहारा बनाने के लिए कार्यरत है।
           </p>
-          <p className="text-gray-700 text-lg leading-relaxed">
+          <p className="text-gray-700 text-lg ">
             सर्व हिन्दू कल्याण समिति एक धार्मिक एवं सामाजिक ट्रस्ट है,
             जो भारत की सनातन परंपरा, संस्कृति और आध्यात्मिकता को
             सहारा बनाने के लिए कार्यरत है।

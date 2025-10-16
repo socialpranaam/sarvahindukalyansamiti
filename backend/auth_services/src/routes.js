@@ -9,7 +9,7 @@ const router = Router();
 const prisma = new PrismaClient();
 
 
-// GET all news
+// GET all images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
    
@@ -30,7 +30,7 @@ router.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 /* ===================== NEWS ROUTES ===================== */
 
-// ####### Create News ################################  
+// ################# Create News ################################  
 
 router.post("/news", upload.single("image"), async (req, res) => {
   try {
@@ -68,7 +68,7 @@ router.post("/news", upload.single("image"), async (req, res) => {
 });
 
 
-// ================= GET NEWS =================
+// *********************** GET NEWS **********************
 
 router.get("/news", async (req, res) => {
   try {
@@ -109,9 +109,6 @@ router.get("/news/:id", async (req, res) => {
 });
 
 
-
-
-
 // -------------------- DELETE NEWS --------------------
 router.delete("/news/:id", async (req, res) => {
   try {
@@ -135,11 +132,6 @@ router.delete("/news/:id", async (req, res) => {
     res.status(500).json({ error: err.message, stack: err.stack });
   }
 });
-
-
-
-
-
 
 
 /* ===================== DONATIONS ROUTES ===================== */
@@ -172,11 +164,7 @@ router.get("/donations", async (req, res) => {
   }
 });
 
-
-
-// ====================== CREATE PROJECT ======================
-
-
+// $$$$$$$$$$$$$$$$$$$$$$$$ CREATE PROJECT $$$$$$$$$$$$$$$$$$$$$$$$
 router.post("/projects", async (req, res) => {
   const { title, status, description, location, progress, budget, raised, expected, pm } = req.body;
 
@@ -224,9 +212,7 @@ router.get("/projects", async (req, res) => {
   }
 });
 
-
-
-// ####################3 Create Events #####3333
+// #################### Create Events ###########################
 
 router.post("/events", async (req, res) => {
   const { tag, title, description, location, date, time, progress, attendees, pm } = req.body;
@@ -267,7 +253,6 @@ router.post("/events", async (req, res) => {
   }
 });
 
-
 router.get("/events", async (req, res) => {
   try {
     const events = await prisma.event.findMany({
@@ -283,9 +268,7 @@ router.get("/events", async (req, res) => {
   }
 });
 
-
-// #########################  Add a new member ###############################
-
+// ^^^^^^^^^^^^^^^^^^^^^^^^^  Add a new member ^^^^^^^^^^^^^^^^^^^^^^^^^^6
 
 router.post("/members", async (req, res) => {
   try {
@@ -332,9 +315,34 @@ router.get("/members:id", async (req, res) => {
   }
 });
 
+// Delete a member by ID
+router.delete("/members/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if member exists
+    const member = await prisma.member.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!member) {
+      return res.status(404).json({ error: "Member not found" });
+    }
+
+    // Delete the member
+    await prisma.member.delete({
+      where: { id: Number(id) },
+    });
+
+    res.json({ message: "Member deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting member:", error);
+    res.status(500).json({ error: "Failed to delete member" });
+  }
+});
 
 
-  // ################  CREATE: New Puja Booking   #########################
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  CREATE: New Puja Booking   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 router.post("/pujabookings", async (req, res) => {
   try {
@@ -369,8 +377,6 @@ router.get("/pujabookings", async (req, res) => {
   }
 });
 
-
-
 // READ: Get a booking by ID
 router.get("/pujabookings/:id", async (req, res) => {
   try {
@@ -385,6 +391,40 @@ router.get("/pujabookings/:id", async (req, res) => {
     res.status(500).json({ error: "Error fetching Puja Booking" });
   }
 });
+  
+
+
+// UPDATE a Puja Booking by ID
+router.put("/pujabookings/:id", async (req, res) => {
+  try {
+    const idParam = req.params.id;
+    console.log("Received ID:", idParam);
+    const id = parseInt(idParam);
+    if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+
+    console.log("Request body:", req.body);
+    const { status, payment } = req.body;
+
+    const updatedBooking = await prisma.pujaBooking.update({
+      where: { id },
+      data: {
+        ...(status ? { status } : {}),
+        ...(payment ? { payment } : {}),
+      },
+    });
+
+    console.log("Updated booking:", updatedBooking);
+    res.json(updatedBooking);
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 
 
 // DELETE: Delete a booking
@@ -400,6 +440,7 @@ router.delete("/pujabookings/:id", async (req, res) => {
     res.status(500).json({ error: "Error deleting Puja Booking" });
   }
 });
+
 
 
 //  Create Contact 
@@ -452,12 +493,8 @@ router.get("/contacts/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
-
-
-// ================== Routes ================== //
-
+  
+  // ##################### FEEDBACK ####################
 //  Get all feedbacks
 router.get("/feedbacks", async (req, res) => {
   try {
@@ -502,8 +539,7 @@ router.get("/feedbacks/:id", async (req, res) => {
   }
 });
 
-
-// 3️ Create new feedback
+//  Create new feedback
 router.post("/feedbacks", upload.single("image"), async (req, res) => {
   const { name, message } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
@@ -523,7 +559,7 @@ router.post("/feedbacks", upload.single("image"), async (req, res) => {
   }
 });
 
-// 5️ Delete feedback
+//  Delete feedback
 router.delete("/feedbacks/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -552,7 +588,7 @@ router.delete("/feedbacks/:id", async (req, res) => {
 });
 
 
-// =================== GET ALL SERVICES ===================
+// =================== SERVICES ===================
 
 
 // GET all services
@@ -636,7 +672,6 @@ router.delete('/services/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete service' });
   }
 });
-
 
 
 

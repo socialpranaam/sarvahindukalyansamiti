@@ -1,12 +1,15 @@
 import React from 'react'
 import ContactCard from '../components/Contact/ContactCard'
 import ContactForm from '../components/Contact/ContactForm'
+import ContactHero from '../components/Contact/ContactHero'
+
 
 const ContactUs = () => {
   return (
     <div>
-      <ContactCard/>
-      <ContactForm/>
+      <ContactHero/>     
+      <ContactForm/>  
+      <ContactCard/>   
     </div>
   )
 }

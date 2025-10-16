@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Bell, Calendar, Clock } from "lucide-react";
 import { FiPlus } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
-import {  FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const EventCard = ({ event }) => {
@@ -15,11 +15,15 @@ const EventCard = ({ event }) => {
 
   return (
     <div className="bg-white border rounded-lg shadow-sm p-5 flex flex-col">
-      <span className={`px-3 py-1 text-sm font-medium rounded-full self-start mb-3 ${tagColor}`}>
+      <span
+        className={`px-3 py-1 text-sm font-medium rounded-full self-start mb-3 ${tagColor}`}
+      >
         {event.tag}
       </span>
 
-      <h3 className="text-lg font-semibold text-gray-900 mb-1">{event.title}</h3>
+      <h3 className="text-lg font-semibold text-gray-900 mb-1">
+        {event.title}
+      </h3>
       <p className="text-gray-600 text-sm mb-4">{event.description}</p>
 
       <div className="flex items-center text-sm text-gray-600 mb-2">
@@ -43,14 +47,16 @@ const EventCard = ({ event }) => {
           <span>{event.progress}%</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
-          <div className="bg-orange-500 h-2 rounded-full" style={{ width: `${event.progress}%` }}></div>
+          <div
+            className="bg-orange-500 h-2 rounded-full"
+            style={{ width: `${event.progress}%` }}
+          ></div>
         </div>
         <p className="text-xs text-gray-600 mt-1">{event.attendees}</p>
       </div>
 
       <p className="flex items-center text-sm gap-2 text-gray-500">
-        <FaUser />PM: {event.pm}
-          
+        <FaUser /> PM: {event.pm}
       </p>
     </div>
   );
@@ -61,13 +67,19 @@ const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch events from backend
+  // 🔹 Fetch events from backend (latest first)
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch("http://localhost:8000/events"); // Backend endpoint
+        const res = await fetch("http://localhost:8000/events");
         const data = await res.json();
-        setEvents(data);
+
+        // 🔸 Sort by latest date (descending order)
+        const sortedEvents = data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+
+        setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {
@@ -78,7 +90,7 @@ const Events = () => {
   }, []);
 
   return (
-    <div className=" min-h-screen">
+    <div className="min-h-screen">
       <div className="flex items-center bg-white justify-between mb-6 p-4">
         <div>
           <h1 className="text-3xl font-semibold text-gray-900">Events</h1>
@@ -91,15 +103,9 @@ const Events = () => {
             ● System Online
           </div>
           <button className="relative">
-            <Bell size={30} className="text-gray-600"/>
-            {/* {notifications > 0 && (
-              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-                {notifications}
-              </span> */}
-            
+            <Bell size={30} className="text-gray-600" />
           </button>
         </div>
-        
       </div>
 
       <div className="flex items-center justify-between mt-8">

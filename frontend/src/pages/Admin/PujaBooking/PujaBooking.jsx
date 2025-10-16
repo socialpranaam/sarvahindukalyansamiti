@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Phone,
-  Flame,
-  IndianRupee,
-} from "lucide-react";
+import {Calendar,Clock,MapPin,Phone,Flame,IndianRupee,} from "lucide-react";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { LuPlus } from "react-icons/lu";
 import { FiCheckCircle } from "react-icons/fi";
@@ -14,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // ✅ Correct import
+import autoTable from "jspdf-autotable"; 
 
 const PujaBooking = () => {
   const [bookings, setBookings] = useState([]);
@@ -46,7 +39,10 @@ const PujaBooking = () => {
       const booking = bookings.find((b) => b.id === id);
       const updatedBooking = { ...booking, status: "Confirmed", payment: "Done" };
 
-      await axios.put(`http://localhost:8000/pujabookings/${id}`, updatedBooking);
+      await axios.put(`http://localhost:8000/pujabookings/${id}`, {
+  status: "Confirmed",
+  payment: "Done",
+});
       setBookings((prev) => prev.map((b) => (b.id === id ? updatedBooking : b)));
       Swal.fire({ icon: "success", title: "Confirmed!" });
     } catch (err) {
