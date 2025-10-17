@@ -73,7 +73,7 @@ const Header = () => {
         </div>
 
         {/* -------- Mobile & Tablet Header -------- */}
-        <div className="flex lg:hidden items-center justify-between w-full text-white">
+        <div className="flex lg:hidden items-center justify-between w-full md:mr-8 md:ml-8  text-white">
           {/* Left Section (Menu + Logo) */}
           <div className="flex items-center gap-6">
             {/* Mobile Menu Button */}
@@ -164,6 +164,11 @@ const Header = () => {
           >
             समाचार
           </Link>
+          <Link to="/admin" 
+          className={getLinkClasses("/admin")}
+          onClick={()=> setIsOpen(false)}
+          >
+          डैशबोर्ड</Link>
         </div>
       )}
     </header>

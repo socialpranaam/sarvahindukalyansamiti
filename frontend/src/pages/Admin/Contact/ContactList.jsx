@@ -66,8 +66,8 @@ const ContactList = () => {
   };
 
   return (
-    <section className=" min-h-screen">
-      <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-8">
+    <section className=" h-full">
+      <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-2 lg:p-8">
         <h1 className="text-3xl font-semibold text-gray-800 mb-2">Contacts</h1>
         <p className="text-gray-500 mb-6">Welcome back, Admin</p>
 
@@ -99,7 +99,7 @@ const ContactList = () => {
           <table className="min-w-full text-sm text-left">
             <thead className="bg-orange-100 text-gray-700 uppercase text-xs font-semibold">
               <tr>
-                <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3">No.</th>
                 <th className="px-4 py-3">Date</th>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Email</th>

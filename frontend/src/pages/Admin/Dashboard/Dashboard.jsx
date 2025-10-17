@@ -1,27 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  Search,
-  Bell,
-  Users,
-  CalendarDays,
-  HandCoins,
-  Handshake,
-  IndianRupee,
-  Calendar,
-  Landmark,
-} from "lucide-react";
+import {Search,Bell,Users,CalendarDays,HandCoins,Handshake,IndianRupee,Calendar,Landmark,} from "lucide-react";
 import { FiUserPlus } from "react-icons/fi";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
+import {LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,BarChart,Bar,} from "recharts";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -72,7 +52,7 @@ const Dashboard = () => {
         }));
         setCategoryData(categoryAmounts);
 
-        // 🔹 Latest Donation
+        //  Latest Donation
         const latestDonation = donations.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
         const donationItem = latestDonation && {
           type: "donation",
@@ -93,7 +73,7 @@ const Dashboard = () => {
         const activeCount = members.filter((m) => m.status === "Active").length;
         setActiveVolunteers(activeCount);
 
-        // 🔹 Latest Member
+        //  Latest Member
         const latestMember = members.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
         const memberItem = latestMember && {
           type: "member",
@@ -106,7 +86,7 @@ const Dashboard = () => {
         const events = eventRes.data;
         setUpcomingEvents(events.length);
 
-        // 🔹 Latest Event
+        //  Latest Event
         const latestEvent = events.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
         const eventItem = latestEvent && {
           type: "event",
@@ -120,19 +100,20 @@ const Dashboard = () => {
         setTempleProjects(projectRes.data.length);
 
         // -------------------- Puja Bookings --------------------
-        const pujaRes = await axios.get("http://localhost:8000/pujabookings");
-        const pujas = pujaRes.data;
-        setPujaBookings(pujas.length);
+     const pujaRes = await axios.get("http://localhost:8000/pujabookings");
+     const pujas = pujaRes.data;
+     setPujaBookings(pujas.length);
 
-        // 🔹 Latest Puja Booking
-        const latestPuja = pujas.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
-        const pujaItem = latestPuja && {
-          type: "booking",
-          name: latestPuja.name,
-          service: latestPuja.pujaType || latestPuja.service || "Puja",
-          amount: latestPuja.amount,
-          time: new Date(latestPuja.date || latestPuja.createdAt),
-        };
+      //  Latest Puja Booking
+     const latestPuja = pujas.sort((a, b) => new Date(b.bookingTime || b.createdAt) - new Date(a.bookingTime || a.createdAt))[0];
+
+    const pujaItem = latestPuja && {
+      type: "booking",
+      name: latestPuja.puja,
+      service: latestPuja.pujaType || latestPuja.service || "Puja",
+      amount: latestPuja.amount,
+      time: new Date(latestPuja.bookingTime || latestPuja.createdAt), 
+    };
 
         //  Combine all latest activities
         const finalActivity = [donationItem, memberItem, eventItem, pujaItem].filter(Boolean);
@@ -149,31 +130,38 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-semibold">Dashboard</h1>
-          <p className="text-lg text-gray-500">Admin User</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center bg-white border rounded-lg px-3 py-2 w-72 shadow-sm">
-            <Search size={18} className="text-gray-400 mr-2" />
-            <input type="text" placeholder="Search..." className="outline-none w-full text-sm"/>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
-              ● System Online
-            </div>
-          </div>
-          <button className="relative">
-            <Bell size={30} className="text-gray-600"/>
-            {notifications > 0 && (
-              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-                {notifications}
-              </span>
-            )}
-          </button>
-        </div>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
+  <div>
+    <h1 className="text-2xl sm:text-3xl font-semibold">Dashboard</h1>
+    <p className="text-sm sm:text-lg text-gray-500">Admin User</p>
+  </div>
+
+  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full md:w-auto">
+    {/* Search Box */}
+    <div className="flex items-center bg-white border rounded-lg px-3 py-2 w-full sm:w-72 shadow-sm">
+      <Search size={18} className="text-gray-400 mr-2" />
+      <input type="text" placeholder="Search..." className="outline-none w-full text-sm"/>
+    </div>
+
+    {/* Status */}
+    <div className="flex items-center space-x-0 sm:gap-2 sm:space-x-4 mt-2 sm:mt-0">
+      <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium text-sm sm:text-base">
+        ● System Online
       </div>
+    
+
+    {/* Notification Bell */}
+    <button className="relative">
+      <Bell size={30} className="text-gray-600"/>
+      {notifications > 0 && (
+        <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+          {notifications}
+        </span>
+      )}
+    </button></div>
+  </div>
+</div>
+
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

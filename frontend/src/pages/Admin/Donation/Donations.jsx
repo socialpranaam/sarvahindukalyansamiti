@@ -73,7 +73,7 @@ const Donations = () => {
   const totalDonations = filteredDonations.length;
 
   return (
-    <div className="min-h-screen p-4 md:p-6 flex flex-col gap-6">
+    <div className="min-h-screen  md:p-6 flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
         <div>
@@ -106,17 +106,19 @@ const Donations = () => {
               Total: ₹{totalAmount.toLocaleString()} – {totalDonations} donations
             </span>
           </h2>
-          <div className="flex flex-wrap items-center gap-3">
-            <button className="px-4 py-2 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100">
-              <FiFileText size={20} /> Export CSV
-            </button>
-            <button
-              onClick={() => navigate("add-donation")}
-              className="px-4 py-2 flex gap-2 items-center rounded-lg bg-orange-500 text-white hover:bg-orange-600"
-            >
-              <FiPlus size={20} /> Add Donation
-            </button>
-          </div>
+         <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
+  <button className="flex-1 sm:flex-none px-2 sm:px-4 py-2 border border-gray-300 flex gap-2 items-center rounded-lg text-gray-700 hover:bg-gray-100 justify-center text-sm sm:text-base">
+    <FiFileText size={18} className="sm:mr-2"/> Export CSV
+  </button>
+  <button
+    onClick={() => navigate("add-donation")}
+    className="flex-1 sm:flex-none px-2 sm:px-4 py-2 flex gap-2 items-center rounded-lg bg-orange-500 text-white hover:bg-orange-600 justify-center text-sm sm:text-base"
+  >
+    <FiPlus size={18} className="sm:mr-2"/> Add Donation
+  </button>
+</div>
+
+
         </div>
 
         {/* Filters */}

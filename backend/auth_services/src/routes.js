@@ -268,7 +268,7 @@ router.get("/events", async (req, res) => {
   }
 });
 
-// ^^^^^^^^^^^^^^^^^^^^^^^^^  Add a new member ^^^^^^^^^^^^^^^^^^^^^^^^^^6
+// ^^^^^^^^^^^^^^^^^^^^^^^^^  Add a new member ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 router.post("/members", async (req, res) => {
   try {
@@ -393,41 +393,49 @@ router.get("/pujabookings/:id", async (req, res) => {
 });
   
 
-
-// UPDATE a Puja Booking by ID
+// UPDATE: Update a Puja Booking by ID
 router.put("/pujabookings/:id", async (req, res) => {
   try {
-    const idParam = req.params.id;
-    console.log("Received ID:", idParam);
-    const id = parseInt(idParam);
-    if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+    const { id } = req.params;
+    const { puja, client, date, time, location, phone, amount, status } = req.body;
 
-    console.log("Request body:", req.body);
-    const { status, payment } = req.body;
+    // Check if at least one field is provided
+    if (!puja && !client && !date && !time && !location && !phone && !amount && !status) {
+      return res.status(400).json({ error: "At least one field is required to update" });
+    }
 
+    // Check if booking exists
+    const existingBooking = await prisma.pujaBooking.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingBooking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    // Update booking
     const updatedBooking = await prisma.pujaBooking.update({
-      where: { id },
+      where: { id: parseInt(id) },
       data: {
-        ...(status ? { status } : {}),
-        ...(payment ? { payment } : {}),
+        puja: puja !== undefined ? puja : existingBooking.puja,
+        client: client !== undefined ? client : existingBooking.client,
+        date: date !== undefined ? new Date(date) : existingBooking.date,
+        time: time !== undefined ? time : existingBooking.time,
+        location: location !== undefined ? location : existingBooking.location,
+        phone: phone !== undefined ? phone : existingBooking.phone,
+        amount: amount !== undefined ? parseFloat(amount) : existingBooking.amount,
+        status: status !== undefined ? status : existingBooking.status,
       },
     });
 
-    console.log("Updated booking:", updatedBooking);
     res.json(updatedBooking);
   } catch (error) {
-    console.error("Error updating booking:", error);
-    if (error.code === "P2025") {
-      return res.status(404).json({ error: "Booking not found" });
-    }
-    res.status(500).json({ error: "Internal server error" });
+    console.error(error);
+    res.status(500).json({ error: "Error updating Puja Booking" });
   }
 });
 
-
-
-
-// DELETE: Delete a booking
+// DELETE: Delete a booking by ID
 router.delete("/pujabookings/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -589,7 +597,6 @@ router.delete("/feedbacks/:id", async (req, res) => {
 
 
 // =================== SERVICES ===================
-
 
 // GET all services
 router.get("/services", async (req, res) => {

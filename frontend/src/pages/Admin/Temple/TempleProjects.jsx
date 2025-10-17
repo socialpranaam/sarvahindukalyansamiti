@@ -38,7 +38,7 @@ const TempleProjects = () => {
   }
 
   return (
-    <div className="p-4 md:p-6 lg:p-8">
+    <div className=" md:p-6 lg:p-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between border-b pb-4 mb-6 gap-4 md:gap-0">
         <div>

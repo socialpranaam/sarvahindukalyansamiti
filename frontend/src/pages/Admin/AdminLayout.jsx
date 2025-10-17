@@ -10,6 +10,19 @@ import { VscFeedback } from "react-icons/vsc";
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const menuItems = [
+    { to: "/admin/dashboard", label: "Dashboard", icon: <Home size={24} /> },
+    { to: "/admin/donations", label: "Donations", icon: <HandCoins size={20} /> },
+    { to: "/admin/projects", label: "Temple Projects", icon: <Landmark size={20} /> },
+    { to: "/admin/events", label: "Events", icon: <Calendar size={20} /> },
+    { to: "/admin/members", label: "Members", icon: <Users size={20} /> },
+    { to: "/admin/pujabooking", label: "Puja Booking", icon: <HandHelping size={20} /> },
+    { to: "/admin/newslist", label: "News", icon: <IoNewspaperOutline size={20} /> },
+    { to: "/admin/contactlist", label: "Contacts", icon: <MdOutlineContactPhone size={20} /> },
+    { to: "/admin/feedbacks", label: "FeedBacks", icon: <VscFeedback size={20} /> },
+    { to: "/admin/services", label: "Services", icon: <GrServices size={20} /> },
+  ];
+
   return (
     <div className="admin-font">
       {/* Mobile Header */}
@@ -45,133 +58,22 @@ const AdminLayout = () => {
 
             {/* Menu */}
             <nav className="flex flex-col mt-2 text-md gap-2 text-gray-700">
-              <NavLink
-                to="/admin/dashboard"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <Home size={24} /> Dashboard
-              </NavLink>
-
-              <NavLink
-                to="/admin/donations"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <HandCoins size={20}/> Donations
-              </NavLink>
-
-              <NavLink
-                to="/admin/projects"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <Landmark size={20}/> Temple Projects
-              </NavLink>
-
-              <NavLink
-                to="/admin/events"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <Calendar size={20}/> Events
-              </NavLink>
-
-              <NavLink
-                to="/admin/members"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <Users size={20}/> Members
-              </NavLink>
-
-              <NavLink
-                to="/admin/pujabooking"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <HandHelping size={20}/> Puja Booking
-              </NavLink>
-              <NavLink
-                to="/admin/newslist"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <IoNewspaperOutline   size={20}/> News
-              </NavLink>
-
-              <NavLink
-                to="/admin/contactlist"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <MdOutlineContactPhone   size={20}/> Contacts
-              </NavLink>
-              <NavLink
-                to="/admin/feedbacks"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <VscFeedback    size={20}/> FeedBacks
-              </NavLink>
-
-               <NavLink
-                to="/admin/services"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-orange-400 text-white font-semibold"
-                      : "hover:bg-orange-100 hover:text-orange-600"
-                  }`
-                }
-              >
-                <GrServices  size={20}/> Services
-              </NavLink>
+              {menuItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                      isActive
+                        ? "bg-orange-400 text-white font-semibold"
+                        : "hover:bg-orange-100 hover:text-orange-600"
+                    }`
+                  }
+                  onClick={() => sidebarOpen && setSidebarOpen(false)} // Mobile view close
+                >
+                  {item.icon} {item.label}
+                </NavLink>
+              ))}
             </nav>
           </div>
 

@@ -9,8 +9,8 @@ const Bhakti = () => {
   }, []);
 
   return (
-    <section className="bg-[#fdf6ef] py-12 md:py-20">
-      <div className="max-w-7xl mx-auto px-2 grid md:grid-cols-2 gap-10 items-center">
+    <section className="bg-[#fdf6ef] py-12 md:py-20 ">
+      <div className="max-w-7xl mx-auto px-2 grid  md:grid-cols-2 gap-10 items-center">
         
         {/* LEFT CONTENT */}
         <div
@@ -75,7 +75,7 @@ const Bhakti = () => {
             <div className="text-center">
               <h2 className="text-5xl font-medium">56+</h2>
               <p className="text-gray-500 text-lg mt-2">पारंपरिक वास्तुकला</p>
-              <img src="/images/mdi_om.png" alt="" className="h-30 w-30 mb-5 md:ml-5 " />
+              <img src="/images/mdi_om.png" alt="" className="h-30 w-30 mb-5  " />
             </div>
 
             <img

@@ -33,24 +33,29 @@ const PujaBooking = () => {
     fetchBookings();
   }, []);
 
-  // ---- Confirm Booking ----
-   const confirmBooking = async (id) => {
-    try {
-      const booking = bookings.find((b) => b.id === id);
-      const updatedBooking = { ...booking, status: "Confirmed", payment: "Done" };
+ const confirmBooking = async (id) => {
+  try {
+    const res = await axios.put(`http://localhost:8000/pujabookings/${id}`, {
+      status: "Confirmed",
+      payment: "Done",
+    });
 
-      await axios.put(`http://localhost:8000/pujabookings/${id}`, {
-  status: "Confirmed",
-  payment: "Done",
-});
-      setBookings((prev) => prev.map((b) => (b.id === id ? updatedBooking : b)));
-      Swal.fire({ icon: "success", title: "Confirmed!" });
-    } catch (err) {
-      console.error(err);
-      Swal.fire({ icon: "error", title: "Error", text: "Failed to confirm booking" });
-    }
-  };
+    // Update local state to reflect changes immediately
+    setBookings((prev) =>
+      prev.map((b) =>
+        b.id === id ? { ...b, status: res.data.status, payment: res.data.payment } : b
+      )
+    );
 
+    Swal.fire("Success", "Booking confirmed successfully!", "success");
+  } catch (error) {
+    console.error(error);
+    Swal.fire("Error", "Failed to confirm booking", "error");
+  }
+};
+
+
+    
   // ---- Cancel Booking ----
   const cancelBooking = async (id) => {
     try {
@@ -174,21 +179,22 @@ const PujaBooking = () => {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-          <button
-            onClick={exportPDF}
-            className="w-full sm:w-auto px-4 sm:px-6 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-600 hover:bg-gray-100"
-          >
-            <HiArrowDownTray size={20} /> Export
-          </button>
+        <div className="flex flex-row flex-wrap gap-2 w-full sm:justify-end">
+  <button
+    onClick={exportPDF}
+    className="flex-1 sm:flex-none px-4 sm:px-6 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-600 hover:bg-gray-100 whitespace-nowrap"
+  >
+    <HiArrowDownTray size={20} /> Export
+  </button>
 
-          <button
-            className="w-full sm:w-auto px-4 sm:px-6 py-2 flex justify-center sm:justify-between items-center gap-2 rounded-lg cursor-pointer bg-orange-500 text-white hover:bg-orange-600"
-            onClick={() => navigate("add-pujabooking")}
-          >
-            <LuPlus size={20} /> New Booking
-          </button>
-        </div>
+  <button
+    onClick={() => navigate("add-pujabooking")}
+    className="flex-1 sm:flex-none px-4 sm:px-6 py-2 flex items-center justify-center gap-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 whitespace-nowrap"
+  >
+    <LuPlus size={20} /> New Booking
+  </button>
+</div>
+
       </div>
 
       {/* Stats Cards */}
@@ -293,14 +299,14 @@ const PujaBooking = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                {b.status === "Pending" && (
-                  <button
-                    onClick={() => confirmBooking(b.id)}
-                    className="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
-                  >
-                    ✓ Confirm
-                  </button>
-                )}
+                {b.status === "Pending" && b.payment !== "Done" && (
+  <button
+    onClick={() => confirmBooking(b.id)}
+    className="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+  >
+    ✓ Confirm
+  </button>
+)}
                 <button
                   onClick={() => cancelBooking(b.id)}
                   className="flex-1 border border-red-500 text-red-500 py-2 rounded-lg hover:bg-red-50"

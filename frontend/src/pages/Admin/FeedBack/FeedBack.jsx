@@ -12,7 +12,6 @@ const FeedbackListPage = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  // Fetch feedbacks
   const fetchFeedbacks = async () => {
     try {
       const res = await fetch("http://localhost:8000/feedbacks");
@@ -29,7 +28,6 @@ const FeedbackListPage = () => {
     fetchFeedbacks();
   }, []);
 
-  // Filter feedbacks
   const filteredFeedbacks = useMemo(() => {
     return feedbacks.filter(
       (f) =>
@@ -38,7 +36,6 @@ const FeedbackListPage = () => {
     );
   }, [feedbacks, search]);
 
-  // Export PDF
   const exportPDF = () => {
     const doc = new jsPDF();
     const tableColumn = ["#", "Name", "Message", "Avatar"];
@@ -61,7 +58,6 @@ const FeedbackListPage = () => {
     doc.save("feedbacks.pdf");
   };
 
-  // Delete feedback
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -89,35 +85,35 @@ const FeedbackListPage = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-8">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-2">Feedback List</h1>
-        <p className="text-gray-500 mb-6">Welcome back, Admin</p>
+    <section className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-6 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-1">Feedback List</h1>
+        <p className="text-gray-500 mb-6 text-sm sm:text-base">Welcome back, Admin</p>
 
         {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 w-full md:w-1/2">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 items-start sm:items-center mb-6 w-full">
+          <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 w-full sm:w-1/2">
             <FiSearch className="text-gray-400" />
             <input
               type="text"
               placeholder="Search feedback..."
-              className="w-full bg-transparent outline-none text-sm"
+              className="w-full bg-transparent outline-none text-sm sm:text-base"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-row gap-2 w-full sm:w-auto lg:justify-end flex-nowrap">
             <button
               onClick={exportPDF}
-              className="px-5 py-3 flex justify-between border border-gray-300 rounded-lg gap-2 text-gray-700 hover:bg-gray-100"
+              className="flex-1 sm:flex-none px-3 sm:px-5 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-700 hover:bg-gray-100 whitespace-nowrap"
             >
               <HiArrowDownTray className="text-lg" /> Export PDF
             </button>
 
             <button
               onClick={() => navigate("/admin/feedbacks/add-feedback")}
-              className="px-5 py-3 flex justify-between items-center gap-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600"
+              className="flex-1 sm:flex-none px-3 sm:px-5 py-2 flex items-center justify-center gap-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 whitespace-nowrap"
             >
               <GoPlus /> Add Feedback
             </button>
@@ -127,7 +123,7 @@ const FeedbackListPage = () => {
         {/* Table */}
         <div className="overflow-x-auto border border-gray-200 rounded-xl">
           <table className="min-w-full text-sm text-left">
-            <thead className="bg-orange-100 text-gray-700 uppercase text-xs font-semibold">
+            <thead className="bg-orange-100 text-gray-700 uppercase text-xs sm:text-sm font-semibold">
               <tr>
                 <th className="px-4 py-3">#</th>
                 <th className="px-4 py-3">Name</th>
@@ -155,10 +151,10 @@ const FeedbackListPage = () => {
                         />
                       )}
                     </td>
-                    <td className="px-4 py-3 flex gap-2">
+                    <td className="px-4 py-3 flex gap-2 flex-wrap">
                       <button
                         onClick={() => handleDelete(f.id)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-700 whitespace-nowrap"
                       >
                         Delete
                       </button>
