@@ -39,7 +39,7 @@ const AdminLayout = () => {
       <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
         <aside
-          className={`fixed top-0 left-0 z-50 w-64 h-full bg-white border-r p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out
+          className={`fixed top-0 left-0 z-50 w-64 h-full bg-white border-r border-gray-300 p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out
             ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
         >
           <div>
@@ -53,7 +53,7 @@ const AdminLayout = () => {
                 <p className="text-md text-gray-500">Kalyan Samiti</p>
               </div>
             </div>
-            <hr />
+            <hr className="border-gray-300" />
             <p className="mt-2 font-medium">Main Menu</p>
 
             {/* Menu */}
@@ -69,7 +69,7 @@ const AdminLayout = () => {
                         : "hover:bg-orange-100 hover:text-orange-600"
                     }`
                   }
-                  onClick={() => sidebarOpen && setSidebarOpen(false)} // Mobile view close
+                  onClick={() => sidebarOpen && setSidebarOpen(false)}
                 >
                   {item.icon} {item.label}
                 </NavLink>
@@ -78,7 +78,7 @@ const AdminLayout = () => {
           </div>
 
           {/* Admin Info */}
-          <hr className="w-full mt-4" />
+          <hr className="w-full mt-4 border-gray-300" />
           <div className="flex items-center gap-3 mt-4">
             <div className="h-10 w-10 rounded-full bg-purple-400 flex items-center justify-center text-white font-bold">
               AD
@@ -97,6 +97,21 @@ const AdminLayout = () => {
           </div>
         </main>
       </div>
+
+      {/* Tablet Responsive CSS */}
+      <style>
+        {`
+          @media (min-width: 768px) and (max-width: 1024px) {
+            aside.w-64 {
+              width: 13rem !important; /* Narrower sidebar for tablet */
+              border-right: 1px solid #d1d5db !important; /* keep vertical line */
+            }
+            main.md\\:ml-64 {
+              margin-left: 13rem !important;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };

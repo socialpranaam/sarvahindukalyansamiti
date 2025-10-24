@@ -85,7 +85,7 @@ const FeedbackListPage = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <section className="min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-6 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-1">Feedback List</h1>
         <p className="text-gray-500 mb-6 text-sm sm:text-base">Welcome back, Admin</p>
@@ -103,7 +103,7 @@ const FeedbackListPage = () => {
             />
           </div>
 
-          <div className="flex flex-row gap-2 w-full sm:w-auto lg:justify-end flex-nowrap">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <button
               onClick={exportPDF}
               className="flex-1 sm:flex-none px-3 sm:px-5 py-2 flex items-center justify-center gap-2 border rounded-lg text-gray-700 hover:bg-gray-100 whitespace-nowrap"
@@ -126,9 +126,9 @@ const FeedbackListPage = () => {
             <thead className="bg-orange-100 text-gray-700 uppercase text-xs sm:text-sm font-semibold">
               <tr>
                 <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3">Avatar</th>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Message</th>
-                <th className="px-4 py-3">Avatar</th>
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
@@ -140,17 +140,27 @@ const FeedbackListPage = () => {
                     className="border-t border-gray-200 hover:bg-orange-50 transition"
                   >
                     <td className="px-4 py-3 text-gray-600">{index + 1}</td>
-                    <td className="px-4 py-3 font-medium text-gray-800">{f.name}</td>
-                    <td className="px-4 py-3 text-gray-600">{f.message}</td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {f.avatar && (
-                        <img
-                          src={f.avatar}
-                          alt={f.name}
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
+
+                    {/* Avatar */}
+                    <td className="px-4 py-3">
+                      {f.image ? (
+                        <div className="flex items-center">
+                          <img
+                            src={f.image}
+                            alt={f.name}
+                            className="w-12 h-12 rounded-full object-cover border border-gray-300 shadow-sm"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                          N/A
+                        </div>
                       )}
                     </td>
+
+                    <td className="px-4 py-3 font-medium text-gray-800">{f.name}</td>
+                    <td className="px-4 py-3 text-gray-600 max-w-xs truncate">{f.message}</td>
+
                     <td className="px-4 py-3 flex gap-2 flex-wrap">
                       <button
                         onClick={() => handleDelete(f.id)}

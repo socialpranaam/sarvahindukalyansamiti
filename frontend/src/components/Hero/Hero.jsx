@@ -22,7 +22,7 @@ const Hero = () => {
 
       {/* Content */}
       <div
-        className="relative z-10 max-w-5xl px-4 md:px-12 text-left  text-white  md:ml-0 lg:ml-22 flex flex-col justify-center h-full"
+        className="relative z-10 max-w-5xl px-4 md:px-10 text-left  text-white  md:ml-0 lg:ml-22 flex flex-col justify-center h-full"
       >
         <h1
           className="text-3xl md:text-5xl  font-medium leading-snug max-w-xl"

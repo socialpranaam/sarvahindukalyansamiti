@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { IoMdCall } from "react-icons/io";
-import { FaBars, FaTimes } from "react-icons/fa";
+import {  FaTimes } from "react-icons/fa";
+import { FaBarsStaggered } from "react-icons/fa6";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +82,7 @@ const Header = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="text-2xl focus:outline-none"
             >
-              <FaBars />
+              <FaBarsStaggered />
             </button>
 
             {/* Logo */}

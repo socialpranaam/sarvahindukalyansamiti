@@ -1,7 +1,27 @@
 import { useState, useEffect } from "react";
-import {Search,Bell,Users,CalendarDays,HandCoins,Handshake,IndianRupee,Calendar,Landmark,} from "lucide-react";
+import {
+  Search,
+  Bell,
+  Users,
+  CalendarDays,
+  HandCoins,
+  Handshake,
+  IndianRupee,
+  Calendar,
+  Landmark,
+} from "lucide-react";
 import { FiUserPlus } from "react-icons/fi";
-import {LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,BarChart,Bar,} from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from "recharts";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -52,7 +72,6 @@ const Dashboard = () => {
         }));
         setCategoryData(categoryAmounts);
 
-        //  Latest Donation
         const latestDonation = donations.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
         const donationItem = latestDonation && {
           type: "donation",
@@ -66,14 +85,10 @@ const Dashboard = () => {
         const memberRes = await axios.get("http://localhost:8000/members");
         const members = memberRes.data;
 
-        // Total Members
         setActiveMembers(members.length);
-
-        // Active Volunteers (status = "Active")
         const activeCount = members.filter((m) => m.status === "Active").length;
         setActiveVolunteers(activeCount);
 
-        //  Latest Member
         const latestMember = members.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
         const memberItem = latestMember && {
           type: "member",
@@ -86,7 +101,6 @@ const Dashboard = () => {
         const events = eventRes.data;
         setUpcomingEvents(events.length);
 
-        //  Latest Event
         const latestEvent = events.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))[0];
         const eventItem = latestEvent && {
           type: "event",
@@ -100,22 +114,19 @@ const Dashboard = () => {
         setTempleProjects(projectRes.data.length);
 
         // -------------------- Puja Bookings --------------------
-     const pujaRes = await axios.get("http://localhost:8000/pujabookings");
-     const pujas = pujaRes.data;
-     setPujaBookings(pujas.length);
+        const pujaRes = await axios.get("http://localhost:8000/pujabookings");
+        const pujas = pujaRes.data;
+        setPujaBookings(pujas.length);
 
-      //  Latest Puja Booking
-     const latestPuja = pujas.sort((a, b) => new Date(b.bookingTime || b.createdAt) - new Date(a.bookingTime || a.createdAt))[0];
+        const latestPuja = pujas.sort((a, b) => new Date(b.bookingTime || b.createdAt) - new Date(a.bookingTime || a.createdAt))[0];
+        const pujaItem = latestPuja && {
+          type: "booking",
+          name: latestPuja.puja,
+          service: latestPuja.pujaType || latestPuja.service || "Puja",
+          amount: latestPuja.amount,
+          time: new Date(latestPuja.bookingTime || latestPuja.createdAt),
+        };
 
-    const pujaItem = latestPuja && {
-      type: "booking",
-      name: latestPuja.puja,
-      service: latestPuja.pujaType || latestPuja.service || "Puja",
-      amount: latestPuja.amount,
-      time: new Date(latestPuja.bookingTime || latestPuja.createdAt), 
-    };
-
-        //  Combine all latest activities
         const finalActivity = [donationItem, memberItem, eventItem, pujaItem].filter(Boolean);
         setRecentActivity(finalActivity);
 
@@ -128,50 +139,39 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 xl:space-y-8 px-2 sm:px-4 lg:px-6 xl:px-10">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
-  <div>
-    <h1 className="text-2xl sm:text-3xl font-semibold">Dashboard</h1>
-    <p className="text-sm sm:text-lg text-gray-500">Admin User</p>
-  </div>
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 lg:gap-6">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-semibold">Dashboard</h1>
+          <p className="text-sm sm:text-lg text-gray-500">Admin User</p>
+        </div>
 
-  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full md:w-auto">
-    {/* Search Box */}
-    <div className="flex items-center bg-white border rounded-lg px-3 py-2 w-full sm:w-72 shadow-sm">
-      <Search size={18} className="text-gray-400 mr-2" />
-      <input type="text" placeholder="Search..." className="outline-none w-full text-sm"/>
-    </div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 w-full lg:w-auto">
+          <div className="flex items-center bg-white border rounded-lg px-3 py-2 w-full sm:w-72 lg:w-80 shadow-sm">
+            <Search size={18} className="text-gray-400 mr-2" />
+            <input type="text" placeholder="Search..." className="outline-none w-full text-sm"/>
+          </div>
 
-    {/* Status */}
-    <div className="flex items-center space-x-0 sm:gap-2 sm:space-x-4 mt-2 sm:mt-0">
-      <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium text-sm sm:text-base">
-        ● System Online
+          <div className="flex items-center gap-3 mt-2 sm:mt-0">
+            <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium text-sm sm:text-base">
+              ● System Online
+            </div>
+            <button className="relative">
+              <Bell size={28} className="text-gray-600"/>
+              {notifications > 0 && (
+                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                  {notifications}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
       </div>
-    
-
-    {/* Notification Bell */}
-    <button className="relative">
-      <Bell size={30} className="text-gray-600"/>
-      {notifications > 0 && (
-        <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-          {notifications}
-        </span>
-      )}
-    </button></div>
-  </div>
-</div>
-
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard
-          title="Total Donations"
-          value={`₹ ${totalDonations}`}
-          valueColor="text-green-500"
-          icon={<IndianRupee className="text-orange-400"/>}
-          color="bg-orange-100"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8">
+        <StatCard title="Total Donations" value={`₹ ${totalDonations}`} valueColor="text-green-500" icon={<IndianRupee className="text-orange-400"/>} color="bg-orange-100"/>
         <StatCard title="Total Members" value={activeMembers} icon={<Users className="text-blue-500"/>} color="bg-blue-100"/>
         <StatCard title="Upcoming Events" value={upcomingEvents} icon={<Calendar className="text-purple-500"/>} color="bg-purple-100"/>
         <StatCard title="Temple Projects" value={templeProjects} icon={<Landmark className="text-red-500"/>} color="bg-red-100"/>
@@ -180,7 +180,7 @@ const Dashboard = () => {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-8">
         <ChartCard title="Monthly Donations Trend">
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={monthlyData}>
@@ -207,8 +207,8 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white p-6 rounded-xl shadow">
-        <h3 className="font-semibold mb-4">Recent Activity</h3>
+      <div className="bg-white p-6 xl:p-8 rounded-xl shadow">
+        <h3 className="font-semibold mb-4 text-lg">Recent Activity</h3>
         <div className="space-y-4">
           {recentActivity.length > 0 ? (
             recentActivity.map((item, idx) => <ActivityItem key={idx} item={item}/>)
@@ -219,9 +219,9 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white p-6 rounded-xl shadow">
-        <h3 className="font-semibold mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="bg-white p-6 xl:p-8 rounded-xl shadow">
+        <h3 className="font-semibold mb-4 text-lg">Quick Actions</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-6">
           <QuickAction icon={<HandCoins className="text-orange-500 mb-2"/>} label="Add Donation" to="/admin/donations/add-donation"/>
           <QuickAction icon={<CalendarDays className="text-purple-500 mb-2"/>} label="Schedule Event" to="/admin/events/add-event"/>
           <QuickAction icon={<FiUserPlus className="text-blue-500 mb-2 text-2xl"/>} label="Add Member" to="/admin/members/add-member"/>
@@ -234,7 +234,7 @@ const Dashboard = () => {
 
 // ---------------------- Reusable Components ----------------------
 const StatCard = ({ title, value, icon, color, valueColor }) => (
-  <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center">
+  <div className="p-6 bg-white rounded-xl shadow flex justify-between items-center hover:shadow-md transition-all duration-200">
     <div>
       <h3 className="text-gray-500 text-md">{title}</h3>
       <p className={`text-2xl font-semibold mt-2 ${valueColor}`}>{value}</p>
@@ -244,8 +244,8 @@ const StatCard = ({ title, value, icon, color, valueColor }) => (
 );
 
 const ChartCard = ({ title, children }) => (
-  <div className="bg-white p-6 rounded-xl shadow">
-    <h3 className="font-semibold mb-4">{title}</h3>
+  <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-all duration-200">
+    <h3 className="font-semibold mb-4 text-lg">{title}</h3>
     {children}
   </div>
 );
@@ -311,10 +311,10 @@ const QuickAction = ({ icon, label, to }) => {
   return (
     <button
       onClick={() => to && navigate(to)}
-      className="p-4 bg-gray-50 rounded-xl flex flex-col items-center justify-center hover:bg-gray-100 transition"
+      className="p-4 bg-gray-50 rounded-xl flex flex-col items-center justify-center hover:bg-gray-100 hover:scale-[1.03] transition-all duration-200"
     >
       {icon}
-      <span className="font-medium text-gray-700">{label}</span>
+      <span className="font-medium text-gray-700 text-sm sm:text-base">{label}</span>
     </button>
   );
 };

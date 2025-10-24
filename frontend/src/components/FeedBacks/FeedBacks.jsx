@@ -5,7 +5,7 @@ import "aos/dist/aos.css";
 const FeedBacks = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [currentMainfeedback, setCurrentMainfeedback] = useState(null);
-  const indexRef = useRef(0); // Auto rotation ke liye stable index
+  const indexRef = useRef(0); 
 
   // Backend se data fetch karna
   useEffect(() => {
@@ -14,7 +14,7 @@ const FeedBacks = () => {
         const res = await fetch("http://localhost:8000/feedbacks");
         const data = await res.json();
 
-        // Sirf 8 feedbacks hi frontend me dikhane hain
+        
         const limitedData = data.slice(0, 8);
 
         setFeedbacks(limitedData);
@@ -34,7 +34,7 @@ const FeedBacks = () => {
     const interval = setInterval(() => {
       indexRef.current = (indexRef.current + 1) % feedbacks.length;
       setCurrentMainfeedback(feedbacks[indexRef.current]);
-    }, 4000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [feedbacks]);

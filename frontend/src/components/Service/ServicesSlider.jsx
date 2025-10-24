@@ -40,10 +40,10 @@ export default function AnimatedServices({ autoplay = true }) {
           <div className="mx-auto mt-4 sm:mt-5 h-1 w-32 sm:w-40 bg-gradient-to-r from-transparent via-black to-transparent"></div>
         </h2>
 
-        {/* ✅ Responsive Grid Layout */}
+        {/*  Responsive Grid Layout */}
         <div className="relative max-w-6xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-center">
           
-          {/* ✅ Left Image Section (mobile me upar dikhayega) */}
+          {/*  Left Image Section (mobile me upar dikhayega) */}
           <div className="relative h-64 sm:h-80 md:h-96 w-full order-1 md:order-none">
             <AnimatePresence>
               {services.map((service, index) => (
