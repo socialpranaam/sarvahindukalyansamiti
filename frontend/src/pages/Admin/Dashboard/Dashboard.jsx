@@ -139,7 +139,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="space-y-6 xl:space-y-8 px-2 sm:px-4 lg:px-6 xl:px-10">
+    <div className="space-y-6 xl:space-y-8 p-4 sm:p-6 lg:p-8 px-2 sm:px-4 lg:px-6 xl:px-10">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 lg:gap-6">
         <div>
@@ -170,7 +170,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-6 xl:gap-8">
         <StatCard title="Total Donations" value={`₹ ${totalDonations}`} valueColor="text-green-500" icon={<IndianRupee className="text-orange-400"/>} color="bg-orange-100"/>
         <StatCard title="Total Members" value={activeMembers} icon={<Users className="text-blue-500"/>} color="bg-blue-100"/>
         <StatCard title="Upcoming Events" value={upcomingEvents} icon={<Calendar className="text-purple-500"/>} color="bg-purple-100"/>

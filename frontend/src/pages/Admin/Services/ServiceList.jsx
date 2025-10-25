@@ -88,7 +88,7 @@ const ServicesList = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <section className="min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-6 sm:p-8">
         <h1 className="text-3xl font-semibold text-gray-800 mb-2">Services</h1>
         <p className="text-gray-500 mb-6">Welcome back, Admin</p>
@@ -126,9 +126,9 @@ const ServicesList = () => {
         {/* Table */}
         <div className="overflow-x-auto border border-gray-200 rounded-xl">
           <table className="min-w-full text-sm text-left whitespace-nowrap">
-            <thead className="bg-orange-100 text-gray-700 uppercase text-xs font-semibold">
+            <thead className="bg-orange-100 text-gray-700 uppercase text-xs sm:text-sm font-semibold">
               <tr>
-                <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3">No.</th>
                 <th className="px-4 py-3">Title</th>
                 <th className="px-4 py-3">Description</th>
                 <th className="px-4 py-3">Image</th>
@@ -159,17 +159,12 @@ const ServicesList = () => {
                     </td>
 
                     <td className="px-4 py-3 flex gap-3 flex-wrap">
-                      <button
-                        onClick={() => navigate(`/admin/services/edit-service/${s.id}`)}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        <FiEdit />
-                      </button>
+                      
                       <button
                         onClick={() => handleDelete(s.id)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-700 flex gap-2 cursor-pointer"
                       >
-                        <FiTrash2 />
+                        <FiTrash2 size={20}/> Delete
                       </button>
                     </td>
                   </tr>

@@ -36,6 +36,7 @@ import ServicesList from "./pages/Admin/Services/ServiceList";
 import MemberForm from "./components/Contact/MemberForm";
 import EventForm from "./components/Contact/EventForm";
 import ProjectForm from "./components/Contact/ProjectForm";
+import UpdateNews from "./pages/Admin/News/UpdateNews";
 
 // Public Layout (with Header + Footer)
 const PublicLayout = () => (
@@ -99,6 +100,7 @@ function App() {
               />
               <Route path="newslist" element={<NewsList />} />
               <Route path="newslist/add-news" element={<AddNews />} />
+              <Route path="newslist/edit-news/:id" element={<UpdateNews />} />
               <Route path="contactlist" element={<ContactList />} />
               <Route path="feedbacks" element={<FeedBack />} />
               <Route

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiTrash2 } from "react-icons/fi";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import jsPDF from "jspdf";
@@ -38,7 +38,7 @@ const FeedbackListPage = () => {
 
   const exportPDF = () => {
     const doc = new jsPDF();
-    const tableColumn = ["#", "Name", "Message", "Avatar"];
+    const tableColumn = ["S. No.", "Name", "Message", "Avatar"];
     const tableRows = [];
 
     filteredFeedbacks.forEach((item, index) => {
@@ -125,7 +125,7 @@ const FeedbackListPage = () => {
           <table className="min-w-full text-sm text-left">
             <thead className="bg-orange-100 text-gray-700 uppercase text-xs sm:text-sm font-semibold">
               <tr>
-                <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3">No.</th>
                 <th className="px-4 py-3">Avatar</th>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Message</th>
@@ -164,9 +164,9 @@ const FeedbackListPage = () => {
                     <td className="px-4 py-3 flex gap-2 flex-wrap">
                       <button
                         onClick={() => handleDelete(f.id)}
-                        className="text-red-500 hover:text-red-700 whitespace-nowrap"
+                        className="text-red-500 hover:text-red-700 whitespace-nowrap flex gap-2 cursor-pointer"
                       >
-                        Delete
+                       <FiTrash2 size={20}/> Delete
                       </button>
                     </td>
                   </tr>

@@ -108,6 +108,58 @@ router.get("/news/:id", async (req, res) => {
   }
 });
 
+router.put("/news/:id", upload.single("image"), async (req, res) => {
+  const { id } = req.params;
+  if (!id || isNaN(id)) return res.status(400).json({ message: "Invalid news ID" });
+
+  const { title, description, date } = req.body;
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+  try {
+    // 🔹 Check if the news item exists
+    const existingNews = await prisma.news.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingNews) {
+      return res.status(404).json({ message: "News not found" });
+    }
+
+    // 🔹 Optional date parsing
+    let newsDate = existingNews.date;
+    if (date) {
+      const parsedDate = new Date(date);
+      if (!isNaN(parsedDate.getTime())) {
+        newsDate = parsedDate;
+      }
+    }
+
+    // 🔹 Update the news item (without updatedAt)
+    const updatedNews = await prisma.news.update({
+      where: { id: parseInt(id) },
+      data: {
+        title: title || existingNews.title,
+        description: description || existingNews.description,
+        date: newsDate,
+        image: imagePath || existingNews.image, // keep old image if no new image
+      },
+    });
+
+    // 🔹 Return formatted item
+    const formattedItem = {
+      ...updatedNews,
+      img: updatedNews.image
+        ? `${req.protocol}://${req.get("host")}${updatedNews.image}`
+        : null,
+    };
+
+    res.status(200).json({ message: "News updated successfully", news: formattedItem });
+  } catch (err) {
+    console.error("Error updating news:", err);
+    res.status(500).json({ message: "Error updating news" });
+  }
+});
+
 
 // -------------------- DELETE NEWS --------------------
 router.delete("/news/:id", async (req, res) => {
