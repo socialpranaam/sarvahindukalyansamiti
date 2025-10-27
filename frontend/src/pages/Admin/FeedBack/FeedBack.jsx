@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSearch, FiTrash2 } from "react-icons/fi";
+import { FiSearch, FiTrash2, FiEdit } from "react-icons/fi";
 import { HiArrowDownTray } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import jsPDF from "jspdf";
@@ -161,12 +161,21 @@ const FeedbackListPage = () => {
                     <td className="px-4 py-3 font-medium text-gray-800">{f.name}</td>
                     <td className="px-4 py-3 text-gray-600 max-w-xs truncate">{f.message}</td>
 
-                    <td className="px-4 py-3 flex gap-2 flex-wrap">
+                    <td className="px-4 py-3 flex gap-3 flex-wrap">
+                      {/* ✅ Edit Button */}
+                      <button
+                        onClick={() => navigate(`/admin/feedbacks/edit-feedback/${f.id}`)}
+                        className="text-blue-500 hover:text-blue-700 flex items-center gap-1 whitespace-nowrap"
+                      >
+                        <FiEdit size={18} /> Edit
+                      </button>
+
+                      {/* ❌ Delete Button */}
                       <button
                         onClick={() => handleDelete(f.id)}
-                        className="text-red-500 hover:text-red-700 whitespace-nowrap flex gap-2 cursor-pointer"
+                        className="text-red-500 hover:text-red-700 flex items-center gap-1 whitespace-nowrap"
                       >
-                       <FiTrash2 size={20}/> Delete
+                        <FiTrash2 size={18} /> Delete
                       </button>
                     </td>
                   </tr>

@@ -619,6 +619,57 @@ router.post("/feedbacks", upload.single("image"), async (req, res) => {
   }
 });
 
+// =================== UPDATE FEEDBACK ===================
+router.put("/feedbacks/:id", upload.single("image"), async (req, res) => {
+  const { id } = req.params;
+  const { name, message } = req.body;
+
+  try {
+    // Check if feedback exists
+    const existingFeedback = await prisma.feedBack.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingFeedback) {
+      return res.status(404).json({ error: "Feedback not found" });
+    }
+
+    // Determine new image path (keep old if not replaced)
+    let imagePath = existingFeedback.image;
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
+
+    // Update feedback record
+    const updatedFeedback = await prisma.feedBack.update({
+      where: { id: parseInt(id) },
+      data: {
+        name,
+        message,
+        image: imagePath,
+      },
+    });
+
+    // Format the image URL before sending response
+    const formattedFeedback = {
+      ...updatedFeedback,
+      image: updatedFeedback.image
+        ? `${req.protocol}://${req.get("host")}${updatedFeedback.image}`
+        : null,
+    };
+
+    res.json({
+      message: "Feedback updated successfully",
+      feedback: formattedFeedback,
+    });
+  } catch (err) {
+    console.error("Error updating feedback:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 //  Delete feedback
 router.delete("/feedbacks/:id", async (req, res) => {
   const { id } = req.params;
@@ -720,6 +771,56 @@ router.post("/services", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: "Failed to create service" });
   }
 });
+
+// =================== UPDATE SERVICE ===================
+router.put("/services/:id", upload.single("image"), async (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+
+  try {
+    // Check if the service exists
+    const existingService = await prisma.service.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingService) {
+      return res.status(404).json({ error: "Service not found" });
+    }
+
+    // Determine image path (if uploaded or keep old one)
+    let imagePath = existingService.image;
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
+
+    // Update service
+    const updatedService = await prisma.service.update({
+      where: { id: parseInt(id) },
+      data: {
+        title,
+        description,
+        image: imagePath,
+      },
+    });
+
+    // Format image URL for frontend
+    const formattedService = {
+      ...updatedService,
+      image: updatedService.image
+        ? `${req.protocol}://${req.get("host")}${updatedService.image}`
+        : null,
+    };
+
+    res.json({
+      message: "Service updated successfully",
+      service: formattedService,
+    });
+  } catch (err) {
+    console.error("Error updating service:", err);
+    res.status(500).json({ error: "Failed to update service" });
+  }
+});
+
 
 // =================== DELETE SERVICE ===================
 router.delete('/services/:id', async (req, res) => {

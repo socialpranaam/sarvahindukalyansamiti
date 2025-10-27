@@ -76,7 +76,9 @@ const ServicesList = () => {
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:8000/services/${id}`, { method: "DELETE" });
+        const res = await fetch(`http://localhost:8000/services/${id}`, {
+          method: "DELETE",
+        });
         if (!res.ok) throw new Error("Failed to delete service");
         Swal.fire("Deleted!", "Service has been deleted.", "success");
         fetchServices();
@@ -85,6 +87,11 @@ const ServicesList = () => {
         Swal.fire("Error!", err.message || "Failed to delete service.", "error");
       }
     }
+  };
+
+  // Navigate to Edit Page
+  const handleEdit = (id) => {
+    navigate(`/admin/services/edit-service/${id}`);
   };
 
   return (
@@ -144,7 +151,9 @@ const ServicesList = () => {
                   >
                     <td className="px-4 py-3 text-gray-600">{index + 1}</td>
                     <td className="px-4 py-3 font-medium text-gray-800">{s.title}</td>
-                    <td className="px-4 py-3 text-gray-600 max-w-xs truncate">{s.description}</td>
+                    <td className="px-4 py-3 text-gray-600 max-w-xs truncate">
+                      {s.description}
+                    </td>
 
                     <td className="px-4 py-3">
                       {s.image ? (
@@ -159,19 +168,28 @@ const ServicesList = () => {
                     </td>
 
                     <td className="px-4 py-3 flex gap-3 flex-wrap">
-                      
+                      <button
+                        onClick={() => handleEdit(s.id)}
+                        className="text-blue-500 hover:text-blue-700 flex gap-2 cursor-pointer"
+                      >
+                        <FiEdit size={20} /> Edit
+                      </button>
+
                       <button
                         onClick={() => handleDelete(s.id)}
                         className="text-red-500 hover:text-red-700 flex gap-2 cursor-pointer"
                       >
-                        <FiTrash2 size={20}/> Delete
+                        <FiTrash2 size={20} /> Delete
                       </button>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5" className="text-center py-6 text-gray-500 italic">
+                  <td
+                    colSpan="5"
+                    className="text-center py-6 text-gray-500 italic"
+                  >
                     No services found.
                   </td>
                 </tr>
