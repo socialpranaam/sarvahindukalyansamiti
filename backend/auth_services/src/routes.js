@@ -553,8 +553,31 @@ router.get("/contacts/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// PUT: /contacts/:id/status
+router.put("/contacts/:id/status", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updated = await prisma.contact.update({
+      where: { id: Number(id) },
+      data: { status },
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error("Error updating contact status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+
+
   
-  // ##################### FEEDBACK ####################
+// ##################### FEEDBACK ####################
 //  Get all feedbacks
 router.get("/feedbacks", async (req, res) => {
   try {

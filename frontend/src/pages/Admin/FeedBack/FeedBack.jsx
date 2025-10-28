@@ -162,7 +162,7 @@ const FeedbackListPage = () => {
                     <td className="px-4 py-3 text-gray-600 max-w-xs truncate">{f.message}</td>
 
                     <td className="px-4 py-3 flex gap-3 flex-wrap">
-                      {/* ✅ Edit Button */}
+                      {/*  Edit Button */}
                       <button
                         onClick={() => navigate(`/admin/feedbacks/edit-feedback/${f.id}`)}
                         className="text-blue-500 hover:text-blue-700 flex items-center gap-1 whitespace-nowrap"

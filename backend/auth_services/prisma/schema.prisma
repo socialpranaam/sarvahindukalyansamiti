@@ -100,6 +100,7 @@ model Contact {
   phone     String
   subject   String
   message   String
+  status    String   @default("Pending")  
   createdAt DateTime @default(now())
 }
   
