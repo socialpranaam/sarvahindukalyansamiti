@@ -320,6 +320,8 @@ router.get("/events", async (req, res) => {
   }
 });
 
+
+
 // ^^^^^^^^^^^^^^^^^^^^^^^^^  Add a new member ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 router.post("/members", async (req, res) => {
@@ -392,6 +394,8 @@ router.delete("/members/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete member" });
   }
 });
+
+
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  CREATE: New Puja Booking   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -503,7 +507,8 @@ router.delete("/pujabookings/:id", async (req, res) => {
 
 
 
-//  Create Contact 
+
+// ############################################  Create Contact @@@@@@@@@@@@@@@@@@@@@@@@@
 router.post("/contacts", async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
@@ -571,9 +576,6 @@ router.put("/contacts/:id/status", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
-
 
 
   
