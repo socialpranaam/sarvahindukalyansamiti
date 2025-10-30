@@ -1,27 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  Search,
-  Bell,
-  Users,
-  CalendarDays,
-  HandCoins,
-  Handshake,
-  IndianRupee,
-  Calendar,
-  Landmark,
-} from "lucide-react";
+import { Search, Bell, Users, CalendarDays, HandCoins, Handshake, IndianRupee, Calendar, Landmark,} from "lucide-react";
 import { FiUserPlus } from "react-icons/fi";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar,} from "recharts";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

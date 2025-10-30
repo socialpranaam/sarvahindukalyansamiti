@@ -1,33 +1,46 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const fixedEmail = "admin@example.com";
-  const fixedPassword = "admin123";
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === fixedEmail && password === fixedPassword) {
-      localStorage.setItem("authToken", "adminToken123");
+
+    try {
+      const res = await axios.post("http://localhost:8000/login", {
+        email,
+        password,
+      });
+
+      const token = res.data.token;
+      const expiryTime = new Date().getTime() + 50* 60* 1000; 
+
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("authExpiry", expiryTime);
 
       Swal.fire({
         icon: "success",
-        title: "Admin Login Successful!",
-        confirmButtonColor: "#f97316", 
+        title: "Login Successful!",
+        text: `Welcome ${email}`,
+        confirmButtonColor: "#f97316",
       }).then(() => {
         navigate("/admin/dashboard");
       });
-      
-    } else {
+    } catch (error) {
+      console.error("Login failed:", error);
+
       Swal.fire({
         icon: "error",
-        title: "Invalid email or password!",
+        title: "Login Failed!",
+        text:
+          error.response?.data?.error ||
+          "Something went wrong, please try again!",
         confirmButtonColor: "#f97316",
       });
     }
@@ -40,7 +53,6 @@ const Login = () => {
     >
       <div className="absolute inset-0 bg-black/70"></div>
 
-      {/* Animated Login Form */}
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -81,6 +93,7 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <motion.button
           whileHover={{
             scale: 1.05,
@@ -88,7 +101,7 @@ const Login = () => {
           }}
           whileTap={{ scale: 0.95 }}
           type="submit"
-          className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg text-lg font-semibold transition-colors"
+          className="w-full bg-orange-400 hover:bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold transition-colors cursor-pointer"
         >
           Login
         </motion.button>
@@ -98,3 +111,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

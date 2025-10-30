@@ -46,7 +46,7 @@ const NewWork = () => {
         </p>
       </div>
 
-      {/* Cards */}
+   
       {/* Cards */}
 <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:flex-wrap justify-center gap-10 px-6">
   {services.map((service, index) => (

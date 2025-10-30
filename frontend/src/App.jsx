@@ -11,6 +11,10 @@ import ContactUs from "./pages/ContactUs";
 import News from "./pages/News";
 import NewsDetails from "./components/News/NewsDetails";
 import PujaBookingForm from "./components/Contact/PujaBookingForm";
+import MemberForm from "./components/Contact/MemberForm";
+import EventForm from "./components/Contact/EventForm";
+import ProjectForm from "./components/Contact/ProjectForm";
+
 
 // Admin Components
 import AdminLayout from "./pages/Admin/AdminLayout";
@@ -29,18 +33,15 @@ import AddNews from "./pages/Admin/News/AddNews";
 import Login from "./pages/Admin/Login/Login";
 import ContactList from "./pages/Admin/Contact/ContactList";
 import NewsList from "./pages/Admin/News/NewsList";
-import FeedBack from "./pages/Admin/FeedBack/FeedBack";
 import AddFeedBack from "./pages/Admin/FeedBack/AddFeedBack";
 import ServiceForm from "./pages/Admin/Services/ServiceForm";
 import ServicesList from "./pages/Admin/Services/ServiceList";
-import MemberForm from "./components/Contact/MemberForm";
-import EventForm from "./components/Contact/EventForm";
-import ProjectForm from "./components/Contact/ProjectForm";
 import UpdateNews from "./pages/Admin/News/UpdateNews";
 import EditService from "./pages/Admin/Services/EditService";
 import EditFeedbacks from "./pages/Admin/FeedBack/EditFeedBacks";
+import FeedbackList from "./pages/Admin/FeedBack/FeedBackList";
 
-// Public Layout (with Header + Footer)
+//  Public Layout (Header + Footer)
 const PublicLayout = () => (
   <>
     <Header />
@@ -49,72 +50,77 @@ const PublicLayout = () => (
   </>
 );
 
-// Protected Admin Wrapper
+//  Protected route with expiry
 const ProtectedAdmin = () => {
-  const isLoggedIn = !!localStorage.getItem("authToken");
-  return isLoggedIn ? <Outlet /> : <Navigate to="/admin" replace />;
+  const token = localStorage.getItem("authToken");
+  const expiry = localStorage.getItem("authExpiry");
+
+  if (!token || !expiry || new Date().getTime() > expiry) {
+    // Token expired  logout
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("authExpiry");
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return <Outlet />;
 };
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 🔸 Public Pages with Header/Footer */}
+        {/*  Public Routes */}
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="ourworks" element={<OurWorks />} />
           <Route path="donation" element={<Donation />} />
-          <Route path="news" element={<News />} />
           <Route path="contact" element={<ContactUs />} />
+          <Route path="news" element={<News />} />
         </Route>
 
-        {/* 🔸 Modal-type Page WITHOUT Header/Footer */}
+        {/*  Public Forms (no header/footer) */}
         <Route path="/contact/pujabookingform" element={<PujaBookingForm />} />
-        <Route path="/contact/memberform" element={<MemberForm/>}/>
-        <Route path="/contact/eventform" element={<EventForm/>}/>
-        <Route path="/contact/projectform" element={<ProjectForm/>}/>
+        <Route path="/contact/memberform" element={<MemberForm />} />
+        <Route path="/contact/eventform" element={<EventForm />} />
+        <Route path="/contact/projectform" element={<ProjectForm />} />
+        <Route path="/news/:id" element={<NewsDetails />} />
 
-        {/* 🔸 News Details (outside layout too, optional) */}
-        <Route path="news/:id" element={<NewsDetails />} />
-
-        {/* 🔸 Admin Pages */}
+        {/*  Admin Routes */}
         <Route path="/admin">
-          <Route index element={<Login />} />
+          {/* Login Page */}
+          <Route path="login" element={<Login />} />
+
+          {/* Protected Routes (need login) */}
           <Route element={<ProtectedAdmin />}>
             <Route element={<AdminLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="donations" element={<Donations />} />
               <Route path="donations/add-donation" element={<AddDonation />} />
               <Route path="projects" element={<TempleProjects />} />
-              <Route
-                path="projects/add-templeproject"
-                element={<AddTempleProject />}
-              />
+              <Route path="projects/add-templeproject" element={<AddTempleProject />} />
               <Route path="events" element={<Events />} />
               <Route path="events/add-event" element={<AddEvent />} />
               <Route path="members" element={<Members />} />
               <Route path="members/add-member" element={<AddMember />} />
               <Route path="pujabooking" element={<PujaBooking />} />
-              <Route
-                path="pujabooking/add-pujabooking"
-                element={<AddPujaBooking />}
-              />
+              <Route path="pujabooking/add-pujabooking" element={<AddPujaBooking />} />
               <Route path="newslist" element={<NewsList />} />
               <Route path="newslist/add-news" element={<AddNews />} />
               <Route path="newslist/edit-news/:id" element={<UpdateNews />} />
               <Route path="contactlist" element={<ContactList />} />
-              <Route path="feedbacks" element={<FeedBack />} />
-              <Route path="feedbacks/add-feedback" element={<AddFeedBack />}/>
-              <Route path="feedbacks/edit-feedback/:id" element={<EditFeedbacks/>}/>
+              <Route path="feedbacks" element={<FeedbackList />} />
+              <Route path="feedbacks/add-feedback" element={<AddFeedBack />} />
+              <Route path="feedbacks/edit-feedback/:id" element={<EditFeedbacks />} />
               <Route path="services" element={<ServicesList />} />
               <Route path="services/add-service" element={<ServiceForm />} />
-              <Route path="services/edit-service/:id" element={<EditService/>}/>
+              <Route path="services/edit-service/:id" element={<EditService />} />
             </Route>
           </Route>
         </Route>
 
-        {/* 🔸 Catch-all Redirect */}
+        {/* 404 Redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

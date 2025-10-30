@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Swal from "sweetalert2";
 
-const FeedbackListPage = () => {
+const FeedbackList = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ const FeedbackListPage = () => {
   };
 
   return (
-    <section className="min-h-screen p-4 sm:p-6 lg:p-8">
+    <section className="min-h-screen p-4 sm:p-6 lg:p-4">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-6 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-1">Feedback List</h1>
         <p className="text-gray-500 mb-6 text-sm sm:text-base">Welcome back, Admin</p>
@@ -165,15 +165,15 @@ const FeedbackListPage = () => {
                       {/*  Edit Button */}
                       <button
                         onClick={() => navigate(`/admin/feedbacks/edit-feedback/${f.id}`)}
-                        className="text-blue-500 hover:text-blue-700 flex items-center gap-1 whitespace-nowrap"
+                        className="text-blue-500 hover:text-blue-700 flex items-center gap-1 whitespace-nowrap cursor-pointer"
                       >
                         <FiEdit size={18} /> Edit
                       </button>
 
-                      {/* ❌ Delete Button */}
+                      {/*  Delete Button */}
                       <button
                         onClick={() => handleDelete(f.id)}
-                        className="text-red-500 hover:text-red-700 flex items-center gap-1 whitespace-nowrap"
+                        className="text-red-500 hover:text-red-700 flex items-center gap-1 whitespace-nowrap cursor-pointer"
                       >
                         <FiTrash2 size={18} /> Delete
                       </button>
@@ -195,4 +195,4 @@ const FeedbackListPage = () => {
   );
 };
 
-export default FeedbackListPage;
+export default FeedbackList;

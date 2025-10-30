@@ -71,7 +71,7 @@ const ReligiousWork = () => {
             key={index}
             className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition p-4"
             data-aos="zoom-in-up"
-            data-aos-delay={index * 200} // har card delay ke sath
+            data-aos-delay={index * 200} 
           >
             <img
               src={item.img}

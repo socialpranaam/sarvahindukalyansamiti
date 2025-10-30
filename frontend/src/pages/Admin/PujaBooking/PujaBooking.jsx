@@ -56,16 +56,33 @@ const PujaBooking = () => {
 
 
     
-  // ---- Cancel Booking ----
-  const cancelBooking = async (id) => {
+ // ---- Cancel Booking ----
+const cancelBooking = async (id) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "This booking will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, cancel it!",
+    cancelButtonText: "No, keep it",
+  });
+
+  if (result.isConfirmed) {
     try {
       await axios.delete(`http://localhost:8000/pujabookings/${id}`);
       setBookings((prev) => prev.filter((b) => b.id !== id));
+      Swal.fire("Cancelled!", "The booking has been cancelled.", "success");
     } catch (err) {
       console.error(err);
-      Swal.fire({ icon: "error", title: "Error", text: "Failed to cancel booking" });
+      Swal.fire("Error", "Failed to cancel booking", "error");
     }
-  };
+  } else {
+    Swal.fire("Cancelled", "The booking is safe.", "info");
+  }
+};
+
 
   // ---- Export PDF ----
   const exportPDF = () => {

@@ -15,12 +15,61 @@ const AddDonation = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDonationData({ ...donationData, [name]: value });
+
+    // ✨ Auto-trim for name and remove extra spaces
+    if (name === "name") {
+      setDonationData({ ...donationData, [name]: value.replace(/\s+/g, " ") });
+    } else {
+      setDonationData({ ...donationData, [name]: value });
+    }
+  };
+
+  // ✅ Validation function
+  const validateForm = () => {
+    const { name, email, phone, amount } = donationData;
+
+    // ✅ Name validation
+    const nameRegex = /^[A-Za-z\s]{3,}$/;
+    if (!nameRegex.test(name.trim())) {
+      Swal.fire(
+        "Validation Error",
+        "Please enter a valid name (only letters, at least 3 characters).",
+        "warning"
+      );
+      return false;
+    }
+
+    // ✅ Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Swal.fire("Validation Error", "Please enter a valid email address.", "warning");
+      return false;
+    }
+
+    // ✅ Phone validation (6–9 start, total 10 digits)
+    const phoneRegex = /^[6-9][0-9]{9}$/;
+    if (!phoneRegex.test(phone)) {
+      Swal.fire(
+        "Validation Error",
+        "Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.",
+        "warning"
+      );
+      return false;
+    }
+
+    // ✅ Amount validation
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      Swal.fire("Validation Error", "Please enter a valid donation amount.", "warning");
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting donation:", donationData);
+
+    if (!validateForm()) return;
 
     try {
       const response = await fetch("http://localhost:8000/donations", {
@@ -30,7 +79,7 @@ const AddDonation = () => {
         },
         body: JSON.stringify({
           ...donationData,
-          amount: parseInt(donationData.amount), // ensure number type
+          amount: parseInt(donationData.amount),
         }),
       });
 
@@ -39,23 +88,19 @@ const AddDonation = () => {
         throw new Error(errorData.error || "Failed to submit donation");
       }
 
-      const result = await response.json();
-      console.log("Server response:", result);
+      await response.json();
 
       Swal.fire({
         icon: "success",
         title: "Donation Submitted!",
         text: "Your donation has been added successfully.",
         confirmButtonColor: "#f97316",
-      }).then(() => {
-        navigate("/admin/donations");
-      });
+      }).then(() => navigate("/admin/donations"));
     } catch (error) {
-      console.error("Error submitting donation:", error);
       Swal.fire({
         icon: "error",
         title: "Submission Failed",
-        text: error.message || "There was an error submitting your donation. Please try again.",
+        text: error.message || "There was an error submitting your donation.",
         confirmButtonColor: "#f97316",
       });
     }
@@ -70,7 +115,6 @@ const AddDonation = () => {
             type="text"
             name="name"
             placeholder="Name"
-            required
             value={donationData.name}
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-md"
@@ -79,7 +123,6 @@ const AddDonation = () => {
             type="email"
             name="email"
             placeholder="Email"
-            required
             value={donationData.email}
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-md"
@@ -88,18 +131,15 @@ const AddDonation = () => {
             type="text"
             name="phone"
             placeholder="Phone"
-            required
             value={donationData.phone}
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-md"
-            pattern="[0-9]{10}"
-            title="Enter 10 digit phone number"
+            maxLength="10"
           />
           <input
             type="number"
             name="amount"
             placeholder="Amount"
-            required
             value={donationData.amount}
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-md"

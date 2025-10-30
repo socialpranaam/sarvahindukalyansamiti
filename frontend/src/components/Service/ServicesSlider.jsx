@@ -9,7 +9,7 @@ export default function AnimatedServices({ autoplay = true }) {
   const [services, setServices] = useState([]);
   const [active, setActive] = useState(0);
 
-  // ✅ Fetch services from backend
+  //  Fetch services from backend
   useEffect(() => {
     axios
       .get("http://localhost:8000/services")
@@ -73,7 +73,7 @@ export default function AnimatedServices({ autoplay = true }) {
             </AnimatePresence>
           </div>
 
-          {/* ✅ Right Text Section (mobile me niche aayega) */}
+          {/*  Right Text Section  */}
           <div className="flex flex-col justify-between py-6 md:ml-10  sm:py-10 md:py-28 text-center md:text-left order-2 md:order-none">
             <motion.div
               key={active}

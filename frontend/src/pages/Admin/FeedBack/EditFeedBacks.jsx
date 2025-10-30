@@ -12,7 +12,7 @@ const EditFeedbacks = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // 🟠 Fetch existing feedback data
+  // Fetch existing feedback data
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
@@ -34,12 +34,12 @@ const EditFeedbacks = () => {
     fetchFeedback();
   }, [id]);
 
-  // 🟢 Handle input change
+  //  Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🟣 Handle form submit
+  //  Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,7 +77,7 @@ const EditFeedbacks = () => {
         <p className="text-gray-500 mb-6 text-sm">Update the feedback details below</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* 🟠 Name Field */}
+          {/*  Name Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Name
@@ -93,7 +93,7 @@ const EditFeedbacks = () => {
             />
           </div>
 
-          {/* 🟠 Message Field */}
+          {/*  Message Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Message
@@ -109,7 +109,7 @@ const EditFeedbacks = () => {
             ></textarea>
           </div>
 
-          {/* 🟠 Image URL Field */}
+          {/*  Image URL Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Avatar Image URL
@@ -124,7 +124,7 @@ const EditFeedbacks = () => {
             />
           </div>
 
-          {/* 🖼️ Image Preview */}
+          {/*  Image Preview */}
           {formData.image && (
             <div className="flex justify-center mb-4">
               <img
@@ -135,7 +135,7 @@ const EditFeedbacks = () => {
             </div>
           )}
 
-          {/* 🔘 Buttons */}
+          {/*  Buttons */}
           <div className="flex justify-between mt-6">
             <button
               type="button"

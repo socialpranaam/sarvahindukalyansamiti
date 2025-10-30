@@ -93,7 +93,7 @@ const NewsList = () => {
   };
 
   return (
-    <section className="min-h-screen p-4 sm:p-6 lg:p-8">
+    <section className="min-h-screen p-4 sm:p-6 lg:p-4">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-6 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-1">News</h1>
         <p className="text-gray-500 mb-6 text-sm sm:text-base">Welcome back, Admin</p>
@@ -133,9 +133,9 @@ const NewsList = () => {
           <table className="min-w-full text-sm text-left">
             <thead className="bg-orange-100 text-gray-700 uppercase text-xs sm:text-sm font-semibold">
               <tr>
-                <th className="px-4 py-3">No.</th>
+                <th className="px-2 py-1">No.</th>
                 <th className="px-4 py-3">Date</th>
-                <th className="px-4 py-3">Title</th>
+                <th className="px-6 py-2">Title</th>
                 <th className="px-4 py-3">Description</th>
                 <th className="px-4 py-3">Actions</th>
               </tr>
@@ -148,20 +148,20 @@ const NewsList = () => {
                     <td className="px-4 py-3 text-gray-600">
                       {new Date(n.date || n.createdAt).toLocaleDateString("en-IN")}
                     </td>
-                    <td className="px-4 py-3 font-medium text-gray-800">{n.title}</td>
+                    <td className="px-6 py-2 font-medium text-gray-800">{n.title}</td>
                     <td className="px-4 py-3 text-gray-600">{n.description}</td>
                     <td className="px-4 py-3 flex gap-2">
                       <button
                         onClick={() => navigate(`/admin/newslist/edit-news/${n.id}`)}
-                        className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                        className="text-blue-500 flex gap-2 hover:text-blue-700 cursor-pointer"
                       >
-                        <FiEdit size={18}/>
+                        <FiEdit size={18}/> Edit
                       </button>
                       <button
                         onClick={() => handleDelete(n.id)}
-                        className="text-red-500 hover:text-red-700 cursor-pointer"
+                        className="text-red-500 flex gap-2 hover:text-red-700 cursor-pointer"
                       >
-                        <FiTrash2 size={18}/>
+                        <FiTrash2 size={18}/> Delete
                       </button>
                     </td>
                   </tr>

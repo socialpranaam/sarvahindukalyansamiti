@@ -95,7 +95,7 @@ const ServicesList = () => {
   };
 
   return (
-    <section className="min-h-screen p-4 sm:p-6 lg:p-8">
+    <section className="min-h-screen p-4 sm:p-6 lg:p-4">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-6 sm:p-8">
         <h1 className="text-3xl font-semibold text-gray-800 mb-2">Services</h1>
         <p className="text-gray-500 mb-6">Welcome back, Admin</p>

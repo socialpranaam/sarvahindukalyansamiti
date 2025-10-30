@@ -103,7 +103,7 @@ const ContactList = () => {
   };
 
   return (
-    <section className="p-4 sm:p-6 lg:p-8 h-full">
+    <section className="p-4 sm:p-6 lg:p-4 h-full">
       <div className="max-w-7xl mx-auto bg-white shadow-md rounded-2xl p-2 lg:p-8">
         <h1 className="text-3xl font-semibold text-gray-800 mb-2">Contacts</h1>
         <p className="text-gray-500 mb-6">Welcome back, Admin</p>
