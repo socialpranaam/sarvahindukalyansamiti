@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import axios from "axios";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // ✅ Function to handle login
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -19,8 +21,7 @@ const Login = () => {
       });
 
       const token = res.data.token;
-      const expiryTime = new Date().getTime() + 50* 60* 1000; 
-
+      const expiryTime = new Date().getTime() + 50 * 60 * 1000;
       localStorage.setItem("authToken", token);
       localStorage.setItem("authExpiry", expiryTime);
 
@@ -45,6 +46,39 @@ const Login = () => {
       });
     }
   };
+
+  //  Session expiry checker 
+  useEffect(() => {
+    const checkSession = () => {
+      const expiry = localStorage.getItem("authExpiry");
+      const token = localStorage.getItem("authToken");
+      const currentTime = new Date().getTime();
+
+      if (token && expiry && currentTime > parseInt(expiry)) {
+        // Session expired
+        Swal.fire({
+          icon: "warning",
+          title: "Session Expired!",
+          text: "Your session has expired. Please login again.",
+          confirmButtonColor: "#f97316",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        }).then(() => {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("authExpiry");
+          navigate("/admin/login");
+        });
+      }
+    };
+
+    // Check every 1 minute
+    const interval = setInterval(checkSession, 60 * 1000);
+
+    // Also check once when page loads
+    checkSession();
+
+    return () => clearInterval(interval);
+  }, [navigate]);
 
   return (
     <div
@@ -111,5 +145,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

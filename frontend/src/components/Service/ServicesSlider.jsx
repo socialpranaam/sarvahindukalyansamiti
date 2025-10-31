@@ -93,7 +93,7 @@ export default function AnimatedServices({ autoplay = true }) {
             <div className="flex justify-center md:justify-start gap-4 mt-8 sm:mt-12 md:mt-16">
               <button
                 onClick={handlePrev}
-                className="group/button flex bg-white h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow"
+                className="group/button flex bg-white h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow cursor-pointer"
               >
                 <ArrowLeft
                   size={26}
@@ -102,11 +102,11 @@ export default function AnimatedServices({ autoplay = true }) {
               </button>
               <button
                 onClick={handleNext}
-                className="group/button flex bg-white h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow"
+                className="group/button flex bg-white h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow cursor-pointer"
               >
                 <ArrowRight
                   size={26}
-                  className="text-black transition-transform duration-300 group-hover/button:-rotate-12"
+                  className="text-black transition-transform duration-300 group-hover/button:-rotate-12 "
                 />
               </button>
             </div>
